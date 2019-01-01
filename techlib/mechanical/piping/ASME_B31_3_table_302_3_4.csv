@@ -1,0 +1,12 @@
+Weld_type,Description ,E
+W0,Not Applicable (Seamless) ,1
+W1,Furnace Butt Weld ,0.6
+W2,Electric Resistance Weld,0.85
+W3a,Electric Fusion -Single Butt Weld,0.8
+W3a_spot,Electric Fusion -Single Butt Weld with Spot Radiography,0.9
+W3a_full,Electric Fusion – Single Butt Weld with 100% Radiography,1
+W3b,Electric Fusion - Double Butt Weld,0.85
+W3b_spot,Electric Fusion - Double Butt Weld with spot radiography,0.9
+W3b_full,Electric Fusion - Double Butt Weld with 100% radiography,1
+W4,API 5L Pipe,0.95
+W4_full,API 5L Pipe with 100% radiography,1

@@ -1,0 +1,6 @@
+Got to site
+cssminifier.com and copy individual files in the box one by one and generate minified version.
+
+The two files to be compressed are:
+1) bulma.css
+2) codecalculation.css

@@ -1,0 +1,308 @@
+@page {
+    margin: 19mm;
+}
+
+@media print {
+
+    nav {
+        display: none;
+    }
+
+    html.has-navbar-fixed-top {
+        padding-top: 0rem;
+    }
+
+    .datasheet {
+        font-size: 2.5mm;
+    }
+
+    .hideprint {
+        display: none;
+        color: red;
+    }
+
+    .datasheet select{
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+
+    .datasheet nav{
+      display: none;
+    }
+
+    .keep-together {
+        page-break-inside: avoid;
+    }
+
+    .break-before {
+        page-break-before: always !important;
+    }
+
+    .break-after {
+        page-break-after: always !important;
+    }
+
+}
+
+@media screen {
+    .datasheet {
+        font-size: 10pt;
+    }
+
+    .overflowme{
+      overflow: auto;
+    }
+}
+
+[v-cloak] {
+    display: none;
+}
+
+/*
+.inp {
+    height: 1.5em;
+    border: 0px;
+    outline: 0px;
+    box-shadow: inset 0px 0px 0px #888;
+    background-color: #f6f6f6;
+    width:100%;
+    font-weight: bold;
+}
+
+
+.section {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.table td, .table th {
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+}
+
+
+.avoid {
+    page-break-inside: avoid;
+}
+
+*/
+
+html,body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  background: #FFFFFF;
+}
+
+tr, td, th, thead {
+  page-break-inside: avoid;
+}
+
+div.datasheet {
+    background-color: white;
+    display: block;
+    margin: auto;
+    width: 68em;
+    box-sizing: content-box;
+    font-family: Arial, Helvetica, serif;
+    letter-spacing: normal;
+    line-height: 1.5em;
+}
+
+
+.datasheet table.main tr td{
+    width: 8em;
+    box-sizing: border-box;
+    padding: 0.25em;
+    vertical-align: top;
+    page-break-inside: avoid;
+    /* white-space: nowrap; */
+    border-top: 1px solid black;
+    border-bottom: 0px solid black;
+}
+
+.datasheet table.main tr th {
+    width: 8em;
+    box-sizing: border-box;
+    padding: 0.25em;
+    vertical-align: top;
+    text-align: center;
+    page-break-inside: avoid;
+    white-space: nowrap;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 0px solid black;
+}
+
+.datasheet table.main tr.header{
+  background-color: antiquewhite;
+}
+
+.datasheet table.main tr.separator td{
+  border-left: 0px;
+  border-right: 0px;
+}
+
+.datasheet table.main tr:last-child td, .datasheet table.main tr:last-child th {
+    border-bottom: 1px solid black;
+}
+
+.datasheet table.main tr td:first-child, .datasheet table.main tr th:first-child  {
+    width: 2em;
+    border-left: 1px solid black;
+    border-right: 0px solid black;
+}
+
+
+.datasheet table.main tr td:last-child, .datasheet table.main tr th:last-child {
+    width: 2em;
+    border-left: 0px solid black;
+    border-right: 1px solid black;
+}
+
+.datasheet input {
+    font-size: 1em;
+    height: 1.5em;
+    width: 100%;
+    border: 0px;
+    outline: 0px;
+    background-color: #eee;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, serif;
+    font-weight: bold;
+}
+
+.datasheet select{
+/*  -webkit-appearance: none;
+  -moz-appearance: none;
+*/
+  text-indent: 1px;
+  text-overflow: '';
+  font-size: 1em;
+  height: 1.5em;
+  width: 100%;
+  border: 0px;
+  outline: 0px;
+  background-color: #eee;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, serif;
+  font-weight: bold;
+}
+
+
+.datasheet table.main tr td span {
+    display: inline-block;
+    vertical-align: top;
+    height: 100%;
+    box-sizing: border-box;
+    page-break-inside: avoid;
+}
+
+span.result {
+  background-color: #eee;
+  font-weight : bold;
+  color: #000000;
+
+}
+
+.datasheet .w1 {
+    width: 1em;
+}
+
+.datasheet .w2 {
+    width: 2em;
+}
+
+.datasheet .w3 {
+    width: 3em;
+}
+
+.datasheet .w4 {
+    width: 4em;
+}
+
+.datasheet .w5 {
+    width: 5em;
+}
+
+.datasheet .w6 {
+    width: 6em;
+}
+
+.datasheet .w7 {
+    width: 7em;
+}
+
+.datasheet .w8 {
+    width: 8em;
+}
+
+.datasheet .w9 {
+    width: 9em;
+}
+
+.datasheet .w10 {
+    width: 10em;
+}
+
+.datasheet .w11 {
+    width: 11em;
+}
+
+.datasheet .w12 {
+    width: 12em;
+}
+
+.datasheet .w13 {
+    width: 13em;
+}
+
+.datasheet .w14 {
+    width: 14em;
+}
+
+.datasheet .w16 {
+    width: 16em;
+}
+
+.datasheet .w18 {
+    width: 18em;
+}
+
+.datasheet .w20 {
+    width: 20em;
+}
+
+.datasheet .w22 {
+    width: 22em;
+}
+
+.datasheet .w24 {
+    width: 24em;
+}
+
+.datasheet .w26 {
+    width: 26em;
+}
+
+.datasheet .w28 {
+    width: 28em;
+}
+
+.datasheet .w30 {
+    width: 30em;
+}
+
+.datasheet .w32 {
+    width: 32em;
+}
+.datasheet .w34 {
+    width: 34em;
+}
+.datasheet .w36 {
+    width: 36em;
+}
+
+.datasheet .w40 {
+    width: 40em;
+}

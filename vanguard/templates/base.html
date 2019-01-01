@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+
+<head>
+  {% block head %}
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="cache-control" content="no-cache" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %} {% endblock title %}</title>
+  <meta name="author" content="Sandeep Raheja">
+  <meta name="description" content="{% block meta_description %}{% endblock meta_description %}" />
+  <meta name="keywords" content="{% block meta_keywords %}{% endblock meta_keywords %}" />
+  {% block sharing %}{% endblock sharing %}
+  {% endblock head %}
+
+  {% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css', _external=True) }}">
+  <!--
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bulma.css', _external=True) }}">
+  -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bulma.min.css', _external=True) }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/codecalculation.css', _external=True) }}">
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.png', _external=True) }}"/>
+  {% endblock css %}
+  {% block extra_styles %}{% endblock extra_styles %}
+  {% block script_top %}
+  <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5ad5c157d0b9d300137e39ca&product=inline-share-buttons"></script>
+  {% endblock script_top %}
+</head>
+
+<body>
+  <div id="app">
+    {% block page_header %}
+    <nav class="navbar is-fixed-top is-primary" id="top" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">codecalculation</a>
+        <button class="button navbar-burger is-primary" data-target="navMenu" id='burgerMain'>
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-start">
+          <a href="/index" class="navbar-item">Home</a> {% block navbar_left %}
+          <a href="/htm/document/" class="navbar-item">SpecGenerator</a>
+          <a href="/calculations/" class="navbar-item">Calculations</a>
+          <a href="#" class="navbar-item">Directory</a>
+          <a href="#" class="navbar-item">eBiz</a>
+          {% endblock navbar_left %}
+        </div>
+        <div class="navbar-end">
+          <a class="navbar-item is-right" @click="launchHelp()">Help</a>
+          <a href="/login/" class="navbar-item is-right" v-if="!userAuthenticated">Login</a>
+          <div class="navbar-item is-right has-dropdown is-hoverable" v-if="userAuthenticated">
+            <a class="navbar-link">
+                <i class="fa fa-user" aria-hidden="true">&nbsp; [[username]]</i>
+            </a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="/htm/user/account/">Profile</a>
+              <a class="navbar-item" @click="logout()">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    {% endblock page_header %}
+    {% block messages %}
+    <div class="section hideprint" v-cloak>
+      <div class="container">
+        <article class="hideprint message" v-bind:class="messageClass" v-show="messageIsActive" v-cloak>
+          <div class="message-header">
+            <p>[[messageType]]</p>
+            <button class="delete" aria-label="delete" @click="hide_message"></button>
+          </div>
+          <div class="message-body">
+            <p v-bind:class="messageClass">[[message]]</p>
+          </div>
+        </article>
+      </div>
+    </div>
+    {% endblock messages %}
+    {% block modals %}
+    {% endblock modals %}
+    {% block pagetitle %}
+    {% endblock pagetitle %}
+     {% block content %}
+     {% endblock content %}
+     {% block disclaimers %}
+     {% endblock disclaimers %}
+     {% block acknowledgements %}
+     {% endblock acknowledgements %}
+
+
+     {% block page_footer %}
+    <div class="container">
+      <footer>
+        <br/>
+        <br/>
+        <hr/>
+        <div class="columns ">
+          <div class="column is-4"></div>
+          <div class="column is-4 ">
+            <div class="hideprint">
+              <div class="has-text-centered sharethis-inline-share-buttons">
+              </div>
+            </div>
+          </div>
+          <div class="column is-4"></div>
+        </div>
+      </footer>
+    </div>
+    {% endblock page_footer %}
+  </div>
+
+  {% block script_bottom %}
+  <script type="text/javascript" src="{{ url_for('static', filename='js/bulma.js', _external=True) }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/vue.js', _external=True) }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/units.js', _external=True) }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/codecalculation.js', _external=True) }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/document.js', _external=True) }}"></script>
+  {% endblock script_bottom %}
+
+  {% block script_vueapp %}
+  <script type="text/javascript">
+    var app = new Vue({
+      el: '#app',
+      delimiters: ['[[', ']]'],
+      mixins: [app_common],
+      data: {},
+      computed: {},
+      methods: {}
+    })
+  </script>
+  {% endblock script_vueapp %}
+
+</body>
+
+</html>

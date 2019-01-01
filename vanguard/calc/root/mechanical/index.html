@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+{% block title %}Mechanical Engineering Calculations{% endblock title %}
+
+{% block meta_description %}
+Perform mechanial engineering calculations related to pumps, turbines, noise, piping, flare, fired heater, combustion, emissions and psychrometry.
+{% endblock meta_description %}
+
+{% block meta_keywords %}
+mechanical engineering calculation pumps turbines noise piping psychrometry flare fired heater combustion emissions
+{% endblock meta_keywords %}
+
+{% block content %}
+
+<div class="section">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/calculations/">Calculations</a></li>
+        <li class="is-active"><a href="#">Mechanical</a></li>
+      </ul>
+    </nav>
+
+    <div class="box">
+      <h1 class="title is-3">Mechanical Calculations</h1>
+    </div>
+
+    <div class="box">
+      <h2 class="title is-5">Pumps</h2>
+      <div class="content">
+        <ul>
+          <li>
+            <a href="pumps/water2viscous/">Determine pump performance on viscous liquid when water performance is known</a>
+            <p>
+              Calculation based on Hydraulic Institute Standard, ANSI/HI 9.6.7. Inputs include flow, head, efficiency,speed, best efficiency point head and flow for water along with viscosity value. Outputs include correction factors on head, flow and efficiency and the viscous head and flow.
+            </p>
+          </li>
+          <li>
+            <a href="pumps/viscous2water/">Determine pump performance on water when viscous performance is known</a>
+            <p>
+              Calculation based on Hydraulic Institute Standard, ANSI/HI 9.6.7. Inputs include viscous flow, viscous head and viscosity. Outputs include correction factors on head, flow and efficiency and the viscous head and flow.
+            </p>
+          </li>
+          <li>
+            <a href="pumps/viscosity-conversions/">Viscosity Conversions</a>
+            <p>
+              Calculation based on Hydraulic Institute Standard, ANSI/HI 9.6.7 Appendix A.
+              Conversions of viscosity units between kinematic viscosity, dynamic viscosity and SSU viscosity units.
+            </p>
+          </li>
+          <li>
+            <a href="pumps/design-estimate/">Pump Design Estimates</a>
+            <p>
+              Determine pump estimated design parameters in terms of predicted efficiency, power, motor rating, NPSHR, impeller diameter, nozzle size, weights and dimensions etc.
+            </p>
+          </li>
+        </ul>
+      </div>
+
+      <h2 class="title is-5">Compressors</h2>
+      <div class="content">
+        <ul>
+          <li>
+            <a href="compressors/centrifugal-estimate/">Centrifugal Compressor Estimates</a>
+            <p>
+              Determine centrifugal compressor estimated design parameters in terms of frame size, predicted efficiency, absorbed power, driver rating, discharge temperatures, weights and dimensions etc.
+              Calculation uses inputs for gas composition and operating conditions.
+            </p>
+          </li>
+          <li>
+            <a href="compressors/fad-calculate/">Air Compressor FAD requirement Calculation</a>
+            <p>
+              Determine the free air delivery (FAD) requirement for an air compressor when the normal flow and design ambient air conditions (pressure, temperature, humidity) are known. The FAD calculated can then be used to make a selection from air compressor suppliers catalogue.
+            </p>
+          </li>
+        </ul>
+      </div>
+
+      <h2 class="title is-5">Engines, Gas Turbines and Steam Turbine</h2>
+      <div class="content">
+        <ul>
+          <li>
+            <a href="engines/gas-turbine-deration/">Gas Turbine Deration Calculations</a>
+            <p>
+              Estimate the site power of Gas Turbine, if the ISO power and site conditions (including temperature, altitude, humidity, inlet and exhaust losses and fuel type) are known.
+            </p>
+          </li>
+          <li>
+            <a href="engines/steam-turbine-performance/">Steam Turbine Performance Calculations</a>
+            <p>
+              Calculate isentropic efficiency of steam turbine using the inlet and outlet steam conditions or vice versa. Either power or mass flow can be used to define turbine parameters.
+            </p>
+          </li>
+          <li>
+            <a href="engines/diesel-fuel-consumption/">Diesel Engine Fuel Consumption Estimation</a>
+            <p>
+              Calculate diesel engine fuel consumption based on estimated specific fuel consumption rates. Use the default/typical value if specific fuel consumption is not known. Stack height due to gas dispersion considerations are to be separately analysed and are therefore not covered under this calculation.
+            </p>
+          </li>
+        </ul>
+      </div>
+
+      <h2 class="title is-5">Flares</h2>
+      <div class="content">
+        <ul>
+          <li>
+            <a href="flare/stack-height-estimation/">Flare Stack Height Estimation-Radiation Effect</a>
+            <p>
+              Estimate the height of flare stack based on the radiation effect. The calculation is based on API RP 521 simple approach.
+            </p>
+          </li>
+        </ul>
+      </div>
+      <h2 class="title is-5">Fired Heaters and Boilers</h2>
+      <div class="content">
+        <ul>
+          <li>
+            <a href="heater/efficiency-measurements/">Measurement of Efficiency of Fired Process Heaters (API 560)</a>
+            <p>
+              This calculation helps in the measurement of efficiency of fired process heaters. The calculation is currently applicable to gaseous fuel based Fired Heaters. Inputs used are ambient conditions such as temperature and humidity, assumptive radiation losses, flue gas exit temperatures, flue gas oxygen content, fuel gas composition and fuel supply temperatures. Oxygen sampling is supported on 'wet basis' as well as 'dry basis'. Outputs include, Flue gas composition by consituent mass per mass of fuel gas burned, net thermal efficiency, gross thermal efficiency and fuel efficiency.
+            </p>
+          </li>
+        </ul>
+      </div>
+      <h2 class="title is-5">Pressure Vessels</h2>
+      <div class="content">
+        <ul>
+          <li>
+            <a href="pressure-vessel/thickness-calculation-pressure/">Pressure Vessel Thickness/MAWP/Weight Estimation</a>
+            <p>
+              This calculation helps determine the thickness, MAWP and estimated volumes and weight of vessel under internal desgin pressure in accordance with the provisions of ASME Section VIII Div-1. This calculation is intended to be used for estimation and gross evaluation purposes only and not for fabrication purposes.
+            </p>
+          </li>
+        </ul>
+      </div>
+      <h2 class="title is-5">Noise</h2>
+      <div class="content">
+        <ul>
+          <li>
+            <a href="noise/distance-attenuation/">Noise Attenuation with Distance</a>
+            <p>
+              Calculate Sound Pressure Level (SPL) at a distance R2 when the sound pressure level at distance R1 is known. The source of sound can be either a point, a line or a planar wall.
+            </p>
+          </li>
+          <li>
+            <a href="noise/conversions/">Common Noise Conversions</a>
+            <p>
+              Calculate Sound Pressure Level if Sound Power Level, distance and directivity factor are known.
+              <br/>
+              Calculate Sound Power Level if Sound Pressure Level, distance and directivity factor are known.
+              <br/>
+              Calculate distance if Sound Pressure Level, Sound Power Level and directivity factor are known.
+            </p>
+          </li>
+          <li>
+            <a href="noise/Aweighted-spectrum/">A-weighting of Noise Spectrum</a>
+            <p>
+              Get A-weighted noise spectrum from unfiltered noise spectrum.
+            </p>
+          </li>
+          <li>
+            <a href="noise/background-correction/">Background Noise Correction</a>
+            <p>
+              Get corrected noise levels from total noise levels and background noise levels. Correction can be performed either on the overall noise levels or on spectrum levels.
+            </p>
+          </li>
+          <li>
+            <a href="noise/map/">Noise map due to multiple noise sources</a>
+            <p>
+              Get noise levels on a predifined area(grid) due to multiple noise sources located on ground. Inputs include the sound power level, directivity factor and the x & y coordinate locations.
+            </p>
+          </li>
+          <li>
+            <a href="noise/sum/">Noise Addition</a>
+            <p>
+              Perform logarithmic addition of noise levels. Sound pressure levels at a point can be added up using logarithmic addition. Similarly if addition of sound power levels for various octave bands is done, the overall sound power level can be obtained.
+            </p>
+          </li>
+        </ul>
+      </div>
+
+      <h2 class="title is-5">Emissions</h2>
+      <div class="content">
+        <ul>
+          <li>
+            <a href="emissions/conversions/">Emission Measurement Conversions & Corrections</a>
+            <p>
+              Convert emissions from ppm units to mg/m3 units, from wet basis to dry basis and perform corrections to reference Oxygen levels from measured Oxygen levels.
+            </p>
+          </li>
+          <li>
+            <a href="emissions/gas-combustion-SOx/">Combustion and SOx emissions</a>
+            <p>
+              Perform combustion calculations with full flexibility. Fuel can be specified in mole percent or in mass percent. Flue gas composition can be obtained, in 'mole per mole of fuel' or in 'kg per kg of fuel'. The calculations also calculate the SOx emissions in the required units, while correcting for moisture and oxygen levels. The program also provides the flexibility to set the standard conditions for reporting of emission levels if 'mg/Sm3' are chosen as the emission units.
+            </p>
+          </li>
+        </ul>
+      </div>
+
+      <h2 class="title is-5">Piping</h2>
+      <div class="content">
+        <ul>
+          <li>
+            <a href="piping/pipe-dimensions/">Nearest Pipe Dimensions to ANSI/ASME B36.10/19</a>
+            <p>
+              Enter either pipe size in NPS, an approximate inner dia or an approximate outer dia together with schedule to get the standard pipe dimensions as per ANSI/ASME B36.10/19.
+            </p>
+          </li>
+          <li>
+            <a href="/htm/calculate/mechanical/piping/pipe-wall-thickness/">Pipe Wall Thickness Calculation(ASME B31.3)</a>
+            <p>
+              Determine straight pipe wall thickness (schedule) for a given internal pressure as per ASME B31.3.
+            </p>
+          </li>
+        </ul>
+      </div>
+
+      <h2 class="title is-5">Psychrometry</h2>
+      <div class="content">
+        <ul>
+          <li>
+            <a href="psychrometry/humid-air-props/">Humid Air Properties</a>
+            <p>
+              Input Air Dry Bulb temperature, temperature and either of wet bulb, dew point, humidity ratio or enthalphy to obtain thermophysical properties of humid air.
+            </p>
+          </li>
+        </ul>
+      </div>
+
+      <h2 class="title is-5">Fluid Mechanics</h2>
+      <div class="content">
+        <ul>
+          <li>
+            <a href="flumech/orifice-leakage/">Reservoir Leaks through small orifice</a>
+            <p>
+              Estimation of gas leak rate through small sharp orifice in a reservoir
+            </p>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

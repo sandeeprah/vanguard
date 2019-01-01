@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Process Engineering Calculations{% endblock title %}
+{% block meta_description %} Perform common process engineering calculations. - Get thermophysical property data for various fluids, hydrocarbon data, water
+and steam. - Perform pressure drop calculations for pipes and fittings.
+{% endblock meta_description %}
+{% block meta_keywords %}process engineering calculation thermophysical pressure drop{% endblock meta_keywords %} {% block content %}
+
+<div class="section">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/calculations/">Calculations</a></li>
+        <li class="is-active"><a href="#">Process</a></li>
+      </ul>
+    </nav>
+
+    <div class="box">
+      <h1 class="title is-3">Process Calculations</h1>
+    </div>
+
+    <div class="box">
+      <h2 id="thermophysical" class="title is-5">Thermophysical Property Calculations</h2>
+      <div class="content">
+        <ul>
+          <li>
+            <a href="thermophysical/chemical-fluid/">Chemical Fluid</a>
+            <p>
+              The inputs include state variables of pressure and temperature. Outputs include several properties including critical presssure, temperature, acentric factor, specific volume, enthalphy, entropy, internal energy, specific heat, global warming potential,
+              ozone depletion potential etc,
+            </p>
+          </li>
+          <li>
+            <a href="thermophysical/water-steam/">Water/Steam</a>
+            <p>
+              The inputs include state variables of pressure and temperature for determination of properties for superheated steam or compressed water. For saturated state the inputs required are Pressure-Quality or Temperature-Quality. Outputs include phase information,
+              saturation temperature or pressure and specific volume, enthalphy, entropy, internal energy etc.
+            </p>
+          </li>
+          <li>
+            <a href="thermophysical/hydrocarbon-mixture/">Hydrocarbon/Gas Mixture</a>
+            <p>
+              The inputs include state variables of pressure and temperature. Typical composition list of API 617 gas compressors is used. The input include state variables of pressure and temperature. The outputs include crtiical pressure, temperature, compressibility
+              factor (Z), ideal gas specific heat etc. The compressibility factor is determined using Nelson-Obert, LeeKesler and PengRobinson equation of state.
+            </p>
+          </li>
+        </ul>
+      </div>
+      <h2 id="pressure-drop" class="title is-5">Pressure Drop Calculations</h2>
+      <div class="content">
+        <ul>
+          <li>
+            <a href="pressure-drop/hooper-2K/">Hooper 2K Method</a>
+            <p>Get pressure drop in pipes and fittings using the Hooper 2K method</p>
+          </li>
+        </ul>
+      </div>
+      <h2 id="pressure-drop" class="title is-5">Storage</h2>
+      <div class="content">
+        <ul>
+          <li>
+            <a href="storage/receiver-sizing/">Reciever Sizing</a>
+            <p>
+              Calculation to obtain the volume of receiver vessels based on hold up time consideration or maximum permissible switching(load/unload) frequency of the associated compressor.
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

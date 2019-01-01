@@ -1,0 +1,9 @@
+Got to site
+jscompress.com and upload individual files and compress them into one.
+
+The two files to be compressed are:
+1) bulma.js
+2) codecalculation.js
+3) clappetsDoc.js 
+3) units.js
+4) vue.js

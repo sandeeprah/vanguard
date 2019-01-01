@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Electrical Engineering Calculations{% endblock title %}
+
+{% block meta_description %}
+Perform electrical engineering calculations related to cables, motors, lighting/photometry etc.
+{% endblock meta_description %}
+
+{% block meta_keywords %}calculation Cable Lighting Motors{% endblock meta_keywords %}
+
+{% block content %}
+
+<div class="section">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/calculations/">Calculations</a></li>
+        <li class="is-active"><a href="#">Electrical</a></li>
+      </ul>
+    </nav>
+
+    <div class="box">
+      <h1 class="title is-4">Electrical Calculations</h1>
+    </div>
+
+    <div class="box">
+      <h2 class="title is-5">Cables</h2>
+      <div class="content">
+        <ul>
+          <li><a href="cables/iec-sizing/">Cable Sizing Calculations as per IEC 60364</a></li>
+        </ul>
+      </div>
+      <h2 class="title is-5">UPS and Battery</h2>
+      <div class="content">
+        <ul>
+          <li><a href="ups-battery/ups-sizing/">UPS Sizing Calculation</a></li>
+          <li>
+            <a href="ups-battery/NiCad-battery-sizing/">NiCad Battery Sizing Calculation (IEEE 1115)</a>
+          </li>
+        </ul>
+      </div>
+      <h2 class="title is-5">Lighting</h2>
+      <div class="content">
+        <ul>
+          <li><a href="lighting/candela2lumens/">Candela-Lumens Conversions</a></li>
+          <li><a href="lighting/candela2lux/">Candela-Lux Conversions</a></li>
+          <li><a href="lighting/lumens2lux/">Lumens-Lux Conversions</a></li>
+          <li><a href="lighting/watts2lumens/">Watts-Lumens Conversions</a></li>
+          <li><a href="lighting/watts2lux/">Watts-Lux Conversions</a></li>
+        </ul>
+      </div>
+      <h2 class="title is-5">Motors</h2>
+      <div class="content">
+        <ul>
+          <li>
+            <a href="motors/starting-time/">Motor Starting Time Estimation</a>
+            <p>
+              Get estimated motor acceleration time using inputs including motor speed, motor inertia, inrush torque, max torque, load type and load torque.
+            </p>
+          </li>
+          <li>
+            <a href="motors/estimated-parameters/">LV Motor Estimated Parameters</a>
+            <p>
+              Get estimated LV motor parameters
+            </p>
+          </li>
+        </ul>
+      </div>
+
+      <h2 class="title is-5">Miscellaneous</h2>
+      <div class="content">
+        <ul>
+          <li>
+            <a href="miscellaneous/three-phase/">Three Phase Calculations</a>
+            <p>
+              Using either of current, active power, apparent power or reactive power as inputs other parameters can be obtained for a three phase system where line to line voltage(VLL) and power factor are known.
+            </p>
+          </li>
+          <li>
+            <a href="miscellaneous/power-factor-correction/">Power Factor Correction</a>
+            <p>
+              Obtain the required power factor compensation in kVAr if active power and the actual and desired power factors are known.
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

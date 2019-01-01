@@ -1,0 +1,587 @@
+{% extends "document.html" %}
+
+{% block title %}Pipe Wall Thickness Calculation (ASME B31.3){% endblock title %}
+
+{% block meta_description %}
+Determine Pipe wall thickness as per ASME B31.3. Enter a pipe size along with material grade,
+design pressure and temperature etc. and obtain required thickness and next appropriate schedule accordingly.
+{% endblock meta_description %}
+
+{% block meta_keywords %}
+pipe wall thickness calculation  ASME B31.3
+{% endblock meta_keywords %}
+
+
+{% block content %}
+<div style="overflow:auto;">
+<div class="datasheet">
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculations/">Calculations</a></li>
+      <li><a href="/calculations/mechanical/">Mechanical</a></li>
+      <li class="is-active"><a href="#">Piping - Wall thickness</a></li>
+    </ul>
+  </nav>
+  <table class="main">
+    <thead>
+        <tr style='border-top:0px;'>
+          <th style='border-left:0px;'>&nbsp;</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+          <th style='border-right:0px;'>&nbsp;</th>
+        </tr>
+    </thead>
+    <tfoot>
+          <td colspan="10" style="text-align:right;">
+              <i>Calculation Performed at www.codecalculation.com</i>
+          </td>
+    </tfoot>
+    <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8" class="has-text-centered">
+            <h1 class="title is-5">[[ doc['meta']['docClass_title'] ]]</h1>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="header">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Project</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Project No:</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['project_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w8">Project Title:</span>
+          <span class="w36"><input class="inp" v-model="doc['meta']['project_title']"/></span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Document No:</span>
+          <span class="w16"><input class="inp" v-model="doc['meta']['doc_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Revision No:</span>
+          <span class="w4"><input class="inp" v-model="doc['meta']['rev']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Date :</span>
+          <span class="w4"><input class="inp" v-model="doc['meta']['date']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Inputs</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Calculation Option</span>
+          <span class="w16">
+            <select class="inp" v-model="doc['input']['calculation_option']['_val']">
+              <option value="NPS">Using NPS</option>
+              <option value="d">Using Inner Dia</option>
+              <option value="D">Using Outer Dia</option>
+            </select>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['calculation_option'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-if="calculation_option=='NPS'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">NPS</span>
+          <span class="w6">
+            <select class="inp" v-model="doc['input']['NPS']['_val']">
+              <option v-for="item in fixed['nps_list']" :value="item" v-text="item"></option>
+            </select>
+          </span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['NPS'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-if="calculation_option=='d'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Inner Dia (d)</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['d']['_val']"/></span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['d'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-if="calculation_option=='D'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Outer Dia (D)</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['D']['_val']"/></span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['D'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Schedule</span>
+          <span class="w6">
+            <select class="inp" v-model="doc['input']['Schedule']['_val']">
+              <option v-for="item in fixed['schedule_list']" :value="item" v-text="item"></option>
+            </select>
+          </span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Schedule'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w14">Design Pressure</span>
+          <span class="w8">P</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['P']['_val']"/></span>
+          <span class="w6">[[ gUL('pressure') ]] (gauge)</span>
+        </td>
+        <td colspan="2">
+          <p class="help is-danger" v-for="err in getErrs(['P'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w14">Design Temperature</span>
+          <span class="w8">T<sub>design</sub></span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['Tdesign']['_val']"/></span>
+          <span class="w6">[[ gUL('temperature') ]]</span>
+        </td>
+        <td colspan="2">
+          <p class="help is-danger" v-for="err in getErrs(['Tdesign'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w14">Material Specification</span>
+          <span class="w30">
+            <select class="inp" v-model="doc['input']['materialSpec']['_val']">
+              <option value="A106-B">CS Seamless Pipe, A106-B</option>
+              <option value="A333-6">LTCS Seamless Pipe, A333-6</option>
+              <option value="A671-CC65">LTCS EFW Pipe, A671-CC65</option>
+              <option value="A335-P5">Alloy Steel Seamless Pipe, A335-P5</option>
+              <option value="A691-5CR">Alloy Steel EFW Pipe, A691-5CR</option>
+              <option value="A312-TP316L">SS316L Seamless Pipe, A312-TP316L</option>
+              <option value="A358-Gr316L">SS316L EFW Pipe, A358-Gr316L</option>
+              <option value="A312-TP304">SS304 Seamless Pipe, A312-TP316L</option>
+              <option value="A358-Gr304">SS304 EFW Pipe, A358-Gr304</option>
+            </select>
+          </span>
+        </td>
+        <td colspan="2">
+          <p class="help is-danger" v-for="err in getErrs(['materialSpec'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w14">Longitudinal Weld Type</span>
+          <span class="w30">
+            <select class="inp" v-model="doc['input']['weldType']['_val']">
+              <option value="W0">Not Applicable (Seamless)</option>
+              <option value="W1">Furnace Butt Weld</option>
+              <option value="W2">Electric Resistance Weld</option>
+              <option value="W3a">Electric Fusion - Single Butt Weld</option>
+              <option value="W3a_spot">Electric Fusion - Single Butt Weld with spot radiography</option>
+              <option value="W3a_full">Electric Fusion - Single Butt Weld with 100% radiography</option>
+              <option value="W3b">Electric Fusion - Double Butt Weld</option>
+              <option value="W3b_spot">Electric Fusion - Double Butt Weld with spot radiography</option>
+              <option value="W3b_full">Electric Fusion - Double Butt Weld with 100% radiography</option>
+              <option value="W4">API 5L Pipe</option>
+              <option value="W4_full">API 5L Pipe with 100% radiography</option>
+            </select>
+          </span>
+        </td>
+        <td colspan="2">
+          <p class="help is-danger" v-for="err in getErrs(['weldType'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w14">Weld Joint Str. Redn Factor</span>
+          <span class="w8">W</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['W']['_val']" min=0/></span>
+        </td>
+        <td colspan="2">
+          <p class="help is-danger" v-for="err in getErrs(['W'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w14">Corrosion Allowance</span>
+          <span class="w8">ca</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['ca']['_val']"/></span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="2">
+          <p class="help is-danger" v-for="err in getErrs(['ca'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w14">Thread/Groove Depth</span>
+          <span class="w8">h</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['h']['_val']"/></span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="2">
+          <p class="help is-danger" v-for="err in getErrs(['h'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w14">Manuf. Undertolerance</span>
+          <span class="w8">ut</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['ut']['_val']"/></span>
+          <span class="w6">%</span>
+        </td>
+        <td colspan="2">
+          <p class="help is-danger" v-for="err in getErrs(['ut'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+
+      </tbody>
+
+      <tbody >
+        <tr>
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+        <tr class="hideprint" style='border-top:0px;'>
+          <td style='border-left:0px;'></td>
+          <td colspan="8" style="text-align:center" >
+            <span class="w8">
+              <button class="button is-primary" @click="calculate" style="width:100%">Calculate</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="openModal('unitsModalisActive')" style="width:100%">Units</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="saveDoc()" style="width:100%">Save</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="openModal('uploadModalisActive')" style="width:100%">Load</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="pdf_download()" style="width:100%">PDF</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="launch_help" style="width:100%">Help</button>
+            </span>
+          </td>
+          <td style='border-right:0px;'></td>
+        </tr>
+        <tr style='border-top:0px;' class="hideprint">
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td style='border-top:0px;'colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+      </tbody>
+
+
+      <tbody v-if="doc['errors'].length > 0">
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger"><b>Errors</b></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger" v-for = "err in doc['errors']">[[ err ]]</p>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+
+      <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Results</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w14">NPS</span>
+          <span class="w8"></span>
+          <span class="w6 result"> [[ getResult(['NPS']) ]]</span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w14">Inner Dia</span>
+          <span class="w8">d</span>
+          <span class="w6 result"> [[ getResult(['d']) ]] </span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w14">Outer Dia</span>
+          <span class="w8">D</span>
+          <span class="w6 result"> [[ getResult(['D']) ]]</span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w14">Nominal thickness</span>
+          <span class="w8">t<sub>n</sub></span>
+          <span class="w6 result"> [[ getResult(['tn']) ]]</span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w14">Undertol. thickness</span>
+          <span class="w8">t<sub>n</sub>*ut/100</span>
+          <span class="w6 result"> [[ getResult(['t_ut']) ]]</span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w14">Minimum  thickness</span>
+          <span class="w8">T = t<sub>n</sub>(1-ut/100)</span>
+          <span class="w6 result"> [[ getResult(['T']) ]]</span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w14">Allowable Stress</span>
+          <span class="w8">S</span>
+          <span class="w6 result"> [[ getResult(['S']) ]]</span>
+          <span class="w6">[[ gUL('pressure') ]]</span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w14">Coefficient Y </span>
+          <span class="w8">Y</span>
+          <span class="w6 result"> [[ getResult(['Y'])  ]]</span>
+          <span class="w6"></span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w14">Weld Joint Quality Factor</span>
+          <span class="w8">E</span>
+          <span class="w6 result"> [[ getResult(['E']) ]]</span>
+          <span class="w6"></span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w14">Design pressure thickness</span>
+          <span class="w8">t</span>
+          <span class="w6 result"> [[ getResult(['t']) ]]</span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+          <td></td>
+          <td colspan="6">
+            <span class="w14">Total Mechanical Allowance</span>
+            <span class="w8">c=ca+h</span>
+            <span class="w6 result"> [[ getResult(['c']) ]]</span>
+            <span class="w6">[[ gUL('length') ]]</span>
+          </td>
+          <td colspan="2">
+          </td>
+          <td></td>
+        </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w14">Required thickness</span>
+          <span class="w8">t<sub>m</sub></span>
+          <span class="w6 result"> [[ getResult(['tm']) ]]</span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w14">Acceptability of Selection</span>
+          <span class="w8">T &gt; t<sub>m</sub></span>
+          <span class="w6 result"> [[ getResult(['acceptability']) ]]</span>
+          <span class="w6"></span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr class="nosideborder">
+        <td colspan="10">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+{% endblock content %}
+
+
+{% block contributors %}
+<p>
+  <a href="//www.linkedin.com/in/bireswar-halder-51b89341/">Bireswar Halder</a>
+</p>
+{% endblock contributors %}
+
+{% block script_vueapp %}
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        delimiters : ['[[',']]'],
+        mixins: [app_common, app_doc],
+        data: {
+            doc : {{ doc | safe }},
+            fixed:{
+              nps_list:["0.125", "0.25", "0.375", "0.5", "0.75", "1", "1.25", "1.5", "2", "2.5", "3", "3.5", "4", "5", "6", "8", "10", "12", "14", "16", "18", "20", "22", "24", "26", "28", "30", "32", "34", "36"],
+              schedule_list: ['5', '10', '20', '30', '40', '60', '80', '100', '120', '140', '160', 'STD', 'XS', 'XXS', '5S', '10S', '40S', '80S']
+
+            }
+        },
+        computed: {
+          calculation_option : function(){
+            return this.doc['input']['calculation_option']['_val'];
+          },
+
+
+        },
+        methods: {}
+    });
+</script>
+{% endblock script_vueapp %}

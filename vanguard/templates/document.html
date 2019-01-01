@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block modals %}
+{{ super()}}
+<div class="modal hideprint" v-bind:class="{'is-active': unitsModalisActive}">
+  <div class="modal-background">
+  </div>
+  <div class="modal-content" style="background-color:white; height: 360px; overflow:auto;padding:20px;">
+      <h4 class="title is-4">Units</h4>
+      <div style="height:180px; overflow:auto;">
+        <table class="table" style="width:100%;">
+          <tr v-for="dimension in dimensions_used ">
+            <td style="width:50%">
+              [[ dimension ]]
+            </td>
+            <td style="width:50%">
+              <div class="select" style="width:100%">
+                <select v-model="doc.units[dimension]" style="width:100%;">
+                        <option v-for="unit in getUnits(dimension)" :value="unit['unit']" v-text="unit['label']" style="width:100%"></option>
+                </select>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    <div class="field is-grouped is-grouped-centered">
+      <p class="control">
+        <button class="button is-primary" @click="closeModal('unitsModalisActive')" style="width:6em">Done</button>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="modal hideprint" v-bind:class="{'is-active': uploadModalisActive}">
+  <div class="modal-background">
+  </div>
+  <div class="modal-content" style="background-color:white; maximum-height: 480px; width: 600px; overflow:auto;">
+    <form action= "" method="post" enctype="multipart/form-data" style="margin:20px;">
+      <h4 class="title is-4">Open Document</h4>
+      <div class="field">
+        <div class="control">
+          <input class="input" type="file" placeholder="" name="doc" required>
+        </div>
+      </div>
+      <div class="field is-grouped is-grouped-centered">
+        <p class="control">
+          <input class="button is-primary" type="submit" value="Submit">
+        </p>
+        <p class="control">
+          <a class="button is-light" @click="closeModal('uploadModalisActive')">Cancel</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal hideprint" v-bind:class="{'is-active': loadingModalisActive}">
+  <div class="modal-background">
+  </div>
+  <div class="modal-content" style="background-color:white; maximum-height: 50px; width: 200px;text-align:center">
+    <h3 class="title is-3">Please Wait</h3>
+  </div>
+</div>
+
+
+<div style="display:none;">
+  <a href="" ref="save_anchor">Save Anchor </a>
+</div>
+{% endblock modals %}
+
+
+{% block script_bottom %}
+{{ super()}}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+{% endblock script_bottom %}
