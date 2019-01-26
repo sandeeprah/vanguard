@@ -1,0 +1,33 @@
+{
+  "sub_url": "/calculate/electrical/lighting/watts2lumens",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Watts-Lumens Conversions",
+    "docInstance_title": "Watts-Lumens Conversions",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length": "m",
+    "area": "m2",
+    "angle" : "degrees"
+  },
+
+  "input": {
+    "convert" : {"_val":"watts2lumens"},
+    "watts": {"_val":"24"},
+    "lumens": {"_val":""},
+    "luminous_efficacy": {"_val":""}
+  },
+
+  "result": {
+    "watts": {"_val":""},
+    "lumens": {"_val":""}
+  },
+
+  "errors": []
+}

@@ -59,6 +59,7 @@ def htm_calculate(calc_path):
         return render_template(doc_html_path, doc=doc_string)
     except Exception as e:
         print(str(e))
+        print('there were errors')
         return "Failure in loading the calculation from path"
 
 
@@ -102,7 +103,6 @@ def api_calculate(calc_path):
 def json_response(input):
     str_response = json.dumps(input, indent=4)
     return current_app.response_class(str_response, mimetype='application/json')
-
 
 
 @app.route('/pdf/calculate/<path:calc_path>', methods=['POST'])

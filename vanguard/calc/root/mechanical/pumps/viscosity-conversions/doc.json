@@ -1,0 +1,34 @@
+{
+  "sub_url": "/calculate/mechanical/pumps/water2viscous",
+  "meta": {
+    "project_no": "0000",
+    "project_title": "Local",
+    "docClass_code": "aaa",
+    "docClass_title": "Viscosity Unit Conversions",
+    "docInstance_title": "Viscosity Unit Conversions",
+    "doc_no":"0000-MEC-CAL-PMP-VCN-01",
+    "rev": "A",
+    "date":""
+  },
+  "units": {
+    "density":"kg/m3",
+    "dynViscosity":"cP",
+    "kinViscosity":"cSt"
+  },
+
+  "input": {
+    "convert" : {"_val":"nu2mu"},
+    "nu" :{"_val":"1", "_dim":"kinViscosity"},
+    "mu" :{"_val":"", "_dim":"dynViscosity"},
+    "ssu" :{"_val":""},
+    "rho": {"_val":"1000", "_dim":"density"}
+  },
+
+  "result": {
+    "nu" :{"_val":"", "_dim":"kinViscosity"},
+    "mu" :{"_val":"", "_dim":"dynViscosity"},
+    "ssu" :{"_val":""}
+  },
+
+  "errors": []
+}

@@ -1,0 +1,65 @@
+{
+  "sub_url": "/calculate/mechanical/emissions/gas-combustion-SOx",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Combustion and SOx emissions",
+    "docInstance_title": "Combustion and SOx emissions",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "mass": "kg",
+    "molecularMass": "g/mol",
+    "temperature": "C",
+    "pressure":"kPa"
+  },
+
+  "input": {
+    "fuel_as" : {"_val": "mole_percent"},
+    "flue_as" : {"_val": "mole_per_fuelmole"},
+    "gasfuel":[
+      {"fluid" : "Carbon", "percent" :"0"},
+      {"fluid" : "Hydrogen", "percent" :"3.82"},
+      {"fluid" : "Oxygen", "percent" :"0"},
+      {"fluid" : "Nitrogen", "percent" :"9.96"},
+      {"fluid" : "CarbonMonoxide", "percent" :"0"},
+      {"fluid" : "CarbonDioxide", "percent" :"0"},
+      {"fluid" : "Methane", "percent" :"75.31"},
+      {"fluid" : "Ethane", "percent" :"2.33"},
+      {"fluid" : "Ethylene", "percent" :"5.08"},
+      {"fluid" : "Acetylene", "percent" :"0"},
+      {"fluid" : "Propane", "percent" :"1.54"},
+      {"fluid" : "Propylene", "percent" :"1.86"},
+      {"fluid" : "Butane", "percent" :"0"},
+      {"fluid" : "Butylene", "percent" :"0"},
+      {"fluid" : "Pentane", "percent" :"0"},
+      {"fluid" : "Hexane", "percent" :"0"},
+      {"fluid" : "Benzene", "percent" :"0"},
+      {"fluid" : "Methanol", "percent" :"0"},
+      {"fluid" : "Ammonia", "percent" :"0"},
+      {"fluid" : "Sulphur", "percent" :"0"},
+      {"fluid" : "HydrogenSulphide", "percent" :"0.1"},
+      {"fluid" : "Water", "percent" :"0"}
+    ],
+    "Tair" : {"_val": "25", "_dim":"temperature"},
+    "Pair" : {"_val": "101.325", "_dim":"pressure"},
+    "RH" : {"_val": "50"},
+    "excess_air" : {"_val": "15"},
+    "emission_units" : {"_val": "ppmv"},
+    "Ts" : {"_val": "25", "_dim":"temperature"},
+    "Ps" : {"_val": "101.325", "_dim":"pressure"},
+    "O2_reference" : {"_val": "3"}
+  },
+
+  "result": {
+    "SOx_concentration" : {"_val": ""},
+    "emission_units" : {"_val": "ppmv"},
+    "O2_reference" : {"_val": "3"}
+  },
+
+  "errors": []
+}

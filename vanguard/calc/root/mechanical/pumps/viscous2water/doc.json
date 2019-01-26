@@ -1,0 +1,42 @@
+{
+  "sub_url": "/calculate/mechanical/pumps/viscous2water",
+  "meta": {
+    "project_no": "0000",
+    "project_title": "Local",
+    "docClass_code": "aaa",
+    "docClass_title": "Centrifugal Pump Selection for Viscous Liquid",
+    "docInstance_title": "Centrifugal Pump Selection for Viscous Liquid",
+    "doc_no":"0000-MEC-CAL-PMP-V2W-01",
+    "rev": "A",
+    "date":""
+  },
+
+
+  "units": {
+    "length": "m",
+    "flow" : "m3/hr",
+    "density":"kg/m3",
+    "dynViscosity":"cP",
+    "kinViscosity":"cSt"
+  },
+
+  "input": {
+    "Qvis": {"_val":"100", "_dim":"flow"},
+    "Hvis": {"_val":"70", "_dim":"length"},
+    "viscosity_basis" : {"_val":"kinematic"},
+    "nu" :{"_val":"120", "_dim":"kinViscosity"},
+    "mu" :{"_val":"", "_dim":"dynViscosity"},
+    "rho": {"_val":"900", "_dim":"density"}
+  },
+
+  "result": {
+    "nu" :{"_val":"", "_dim":"kinViscosity"},
+    "Cq": {"_val":""},
+    "Ch": {"_val":""},
+    "Ceta": {"_val":""},
+    "Qw": {"_val":"", "_dim":"flow"},
+    "Hw": {"_val":"", "_dim":"length"}
+  },
+
+  "errors": []
+}

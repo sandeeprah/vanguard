@@ -1,0 +1,376 @@
+{% extends "document.html" %}
+{% block title %}
+Orifice Leakage Calculation
+{% endblock title %}
+{% block meta_description %}
+Calculate gas leakage rate through orifice
+{% endblock meta_description %}
+{% block meta_keywords %}
+Orifice leakage rate
+{% endblock meta_keywords %}
+{% block sharing %}
+<meta property='og:title' content='Orifice Leakage Rate Calculation' />
+<meta property='og:image' content='http://docs.codecalculation.com/_images/reservoir-orifice.png'/>
+<meta property='og:description' content='Calculation to obtain leakage rate of compressible fluid through an orifice.'/>
+<meta property='og:url' content='https://www.codecalculation.com/calculations/mechanical/flumech/orifice-leakage/' />
+{% endblock sharing %}
+{% block content %}
+<div class="overflowme">
+  <div class="datasheet">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/calculations/">Calculations</a></li>
+        <li><a href="/calculations/mechanical/">Mechanical</a></li>
+        <li class="is-active"><a href="#">Orifice Leakage</a></li>
+      </ul>
+    </nav>
+    <table class="main">
+      <thead>
+        <tr style='border-top:0px;'>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <td colspan="10" style="text-align:right;">
+          <i>Calculation Performed at www.codecalculation.com</i>
+        </td>
+      </tfoot>
+      <tbody>
+        <tr class="section_title">
+          <td></td>
+          <td colspan="8" class="has-text-centered">
+            <h1 class="title is-5">[[ doc['meta']['docClass_title'] ]]</h1>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+        <tr class="section_title">
+          <td></td>
+          <td colspan="8">
+            <h2 class="title is-6">Project</h2>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w8">Project No:</span>
+            <span class="w8"><input class="inp" v-model="doc['meta']['project_no']"/></span>
+          </td>
+          <td colspan="4">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="6">
+            <span class="w8">Project Title:</span>
+            <span class="w36"><input class="inp" v-model="doc['meta']['project_title']"/></span>
+          </td>
+          <td colspan="2">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w8">Document No:</span>
+            <span class="w16"><input class="inp" v-model="doc['meta']['doc_no']"/></span>
+          </td>
+          <td colspan="4">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w8">Revision No:</span>
+            <span class="w4"><input class="inp" v-model="doc['meta']['rev']"/></span>
+          </td>
+          <td colspan="4">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w8">Date :</span>
+            <span class="w8"><input class="inp" v-model="doc['meta']['date']"/></span>
+          </td>
+          <td colspan="4">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+        <tr class="section_title">
+          <td></td>
+          <td colspan="8">
+            <h2 class="title is-6">Inputs</h2>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w16">Pressure Upstream of Orifice</span>
+            <span class="w4"><i>P<sub>i</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Pi']['_val']"/></span>
+            <span class="w6">[[gUL('pressure')]],a</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['Pi'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w16">Pressure Downstream of Orifice</span>
+            <span class="w4"><i>P<sub>e</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Pe']['_val']"/></span>
+            <span class="w6">[[gUL('pressure')]],a</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['Pe'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w16">Temperature Upstream of Orifice</span>
+            <span class="w4"><i>P<sub>e</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Ti']['_val']"/></span>
+            <span class="w6">[[gUL('temperature')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['Ti'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w16">Molecular Mass</span>
+            <span class="w4"><i>MW</i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['MW']['_val']"/></span>
+            <span class="w6">[[gUL('molecularMass')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['MW'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w16">Specific Heat Ratio</span>
+            <span class="w4"><i>k</i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['k']['_val']"/></span>
+            <span class="w6"></span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['k'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w16">Orifice Area</span>
+            <span class="w4"><i>A</i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['A']['_val']"/></span>
+            <span class="w6">[[gUL('area')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['A'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w16">Coefficient of Discharge</span>
+            <span class="w4"><i>C<sub>d</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Cd']['_val']"/></span>
+            <span class="w6"></span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['Cd'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tbody >
+        <tr>
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+        <tr class="hideprint" style='border-top:0px;'>
+          <td style='border-left:0px;'></td>
+          <td colspan="8" style="text-align:center" >
+            <span class="w8">
+              <button class="button is-primary" @click="calculate" style="width:100%">Calculate</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="openModal('unitsModalisActive')" style="width:100%">Units</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="saveDoc()" style="width:100%">Save</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="openModal('uploadModalisActive')" style="width:100%">Load</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="pdf_download()" style="width:100%">PDF</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="launch_help" style="width:100%">Help</button>
+            </span>
+          </td>
+          <td style='border-right:0px;'></td>
+        </tr>
+        <tr style='border-top:0px;' class="hideprint">
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td style='border-top:0px;'colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+      </tbody>
+      <tbody v-if="doc['errors'].length > 0">
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger"><b>Errors</b></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger" v-for="err in doc['errors']">[[ err ]]</p>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+
+      <tbody>
+        <tr class="section_title">
+          <td></td>
+          <td colspan="8">
+            <h2 class="title is-6">Results</h2>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span></span>
+            <span class="w16">Flow Velocity</span>
+            <span class="w6"><i>v</i></span>
+            <span class="w6 result">[[ retSilent(doc, ['result', 'v', '_val']) ]]</span>
+            <span class="w4">[[gUL('speed')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="has-text-info"></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span></span>
+            <span class="w16">Flow Rate</span>
+            <span class="w6"><i>Q</i></span>
+            <span class="w6 result">[[ retSilent(doc, ['result', 'Q', '_val']) ]]</span>
+            <span class="w4">[[gUL('flow')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="has-text-info"></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span></span>
+            <span class="w16">Mass Flow Rate</span>
+            <span class="w6"><i>G</i></span>
+            <span class="w6 result">[[ retSilent(doc, ['result', 'G', '_val']) ]]</span>
+            <span class="w4">[[gUL('massflow')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="has-text-info"></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span></span>
+            <span class="w16">Choked Flow</span>
+            <span class="w6"></span>
+            <span class="w6 result">[[ retSilent(doc, ['result', 'isChoked', '_val']) ]]</span>
+            <span class="w4"></span>
+          </td>
+          <td colspan="3">
+            <p class="has-text-info"></p>
+          </td>
+          <td></td>
+        </tr>
+        </tbody>
+    </table>
+  </div>
+
+  <div class="datasheet" style="text-align:left;">
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block contributors %}
+<p>
+  <a href=""></a>
+</p>
+{% endblock contributors %}
+
+{% block script_vueapp %}
+<script type="text/javascript">
+  var app = new Vue({
+    el: '#app',
+    delimiters: ['[[', ']]'],
+    mixins: [app_common, app_doc],
+    data: {
+      doc: {{doc | safe}},
+      fixed: {},
+      help_url:"http://docs.codecalculation.com/mechanical/fluidmech/orifice-leakage.html"
+    },
+
+    computed: {
+      sizing_basis: function() {
+        // var shp = this.doc['input']['sizing_basis']['_val'];
+        // return shp;
+      }
+    },
+    methods: {}
+  });
+</script>
+{% endblock script_vueapp %}

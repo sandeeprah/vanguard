@@ -1,0 +1,394 @@
+{% extends "document.html" %}
+{% block title %}Gas Turbine Deration{% endblock title %}
+
+{% block meta_description %}
+Calculate tentative Gas Turbine Performance (power out) at site conditions on account of variance from standard ISO conditions. Deration is performed based on parameters like ambient temperature, elevation, humidity, inlet and exhaust losses.
+Made By: Sandeep Raheja
+{% endblock meta_description %}
+
+{% block meta_keywords %}Gas Turbine performance derate deration ISO conditions site temperature humidity elevation inlet loss exhaust{% endblock meta_keywords %}
+
+{% block content %}
+<div style="overflow:auto;">
+<div class="datasheet">
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculations/">Calculations</a></li>
+      <li><a href="/calculations/mechanical/">Mechanical</a></li>
+      <li class="is-active"><a href="#">Gas Turbine Deration</a></li>
+    </ul>
+  </nav>
+  <table class="main">
+    <thead>
+        <tr style='border-top:0px;'>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <td colspan="10" style="text-align:right;">
+            <i>Calculation Performed at www.codecalculation.com</i>
+        </td>
+    </tfoot>
+    <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8" class="has-text-centered">
+            <h1 class="title is-5">[[ doc['meta']['docClass_title'] ]]</h1>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Project</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Project No:</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['project_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w8">Project Title:</span>
+          <span class="w36"><input class="inp" v-model="doc['meta']['project_title']"/></span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Document No:</span>
+          <span class="w16"><input class="inp" v-model="doc['meta']['doc_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Revision No:</span>
+          <span class="w4"><input class="inp" v-model="doc['meta']['rev']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Date :</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['date']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Inputs</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">GT ISO Power Rating</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['Piso']['_val']"/></span>
+          <span class="w6">[[ gUL('power') ]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Piso'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Site Ambient Temperature</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['Tsite']['_val']"/></span>
+          <span class="w6">[[ gUL('temperature') ]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Tsite'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Site Elevation</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['Hsite']['_val']"/></span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Hsite'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Site Humidity</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['RHsite']['_val']"/></span>
+          <span class="w6">%</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['RHsite'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Inlet Losses</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['delPinlet']['_val']"/></span>
+          <span class="w6">[[ gUL('length_mili') ]] Hg</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['delPinlet'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Exhaust Losses</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['delPoutlet']['_val']"/></span>
+          <span class="w6">[[ gUL('length_mili') ]] Hg</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['delPoutlet'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Fuel Type</span>
+          <span class="w12">
+            <select class="inp"  v-model="doc['input']['fueltype']['_val']">
+              <option value="naturalgas">Natural Gas</option>
+              <option value="distillate">Distillate</option>
+            </select>
+          </span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['fueltype'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody >
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="hideprint" style='border-top:0px;'>
+        <td style='border-left:0px;'></td>
+        <td colspan="8" style="text-align:center" >
+          <span class="w8">
+            <button class="button is-primary" @click="calculate" style="width:100%">Calculate</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="openModal('unitsModalisActive')" style="width:100%">Units</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="saveDoc()" style="width:100%">Save</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="openModal('uploadModalisActive')" style="width:100%">Load</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="pdf_download()" style="width:100%">PDF</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="launch_help" style="width:100%">Help</button>
+          </span>
+        </td>
+        <td style='border-right:0px;'></td>
+      </tr>
+      <tr style='border-top:0px;' class="hideprint">
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td style='border-top:0px;'colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+    </tbody>
+    <tbody v-if="doc['errors'].length > 0">
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <p class="help is-danger"><b>Errors</b></p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <p class="help is-danger" v-for="err in doc['errors']">[[ err ]]</p>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Results</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w20">Ambient Temperature Correction Factor </span>
+          <span class="w4 result">[[ retSilent(doc, ['result','Ltemperature','_val']) ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w20">Site Humidity Correction Factor </span>
+          <span class="w4 result">[[ retSilent(doc, ['result','Lhumidity','_val']) ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w20">Site Altitude Correction Factor </span>
+          <span class="w4 result">[[ retSilent(doc, ['result','Laltitude','_val']) ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w20">Inlet Loss Correction Factor </span>
+          <span class="w4 result">[[ retSilent(doc, ['result','Linlet','_val']) ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w20">Outlet Loss Correction Factor </span>
+          <span class="w4 result">[[ retSilent(doc, ['result','Loutlet','_val']) ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w20">Fuel Type Correction Factor </span>
+          <span class="w4 result">[[ retSilent(doc, ['result','Lfuel','_val']) ]] </span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w20">Total Correction Factor </span>
+          <span class="w4 result">[[ retSilent(doc, ['result','Ltotal','_val']) ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w20">Site Rated Power</span>
+          <span class="w4 result">[[ retSilent(doc, ['result','Psite','_val']) ]]</span>
+          <span class="w4">[[ gUL('power') ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+{% endblock content %}
+
+
+{% block script_vueapp %}
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        delimiters : ['[[',']]'],
+        mixins: [app_common, app_doc],
+        data: {
+            doc : {{ doc | safe }},
+            fixed:{
+              state_options:["Saturated_T", "Saturated_P", "Superheated_or_Compressed"]
+            }
+        },
+        computed: {
+          viscosity_basis : function(){
+            return this.doc['input']['viscosity_basis']['_val'];
+          },
+          Kd_basis : function(){
+            return this.doc['input']['Kd_basis']['_val'];
+          },
+          Kb_basis : function(){
+            return this.doc['input']['Kb_basis']['_val'];
+          },
+          Kc_basis : function(){
+            return this.doc['input']['Kc_basis']['_val'];
+          },
+          steam_state :function(){
+            return this.doc['input']['steam_state']['_val'];
+          },
+        },
+        methods: {}
+    });
+</script>
+{% endblock script_vueapp %}

@@ -1,0 +1,714 @@
+{% extends "document.html" %}
+
+{% block title %}Ni-Cad Battery Sizing Calculation (IEEE 1115){% endblock title %}
+
+{% block meta_description %}
+Calculate Battery sizing for Ni-Cad stationary application based on IEEE 1115 guidelines.
+{% endblock meta_description %}
+
+
+{% block meta_keywords %}
+Battery Sizing IEEE Std 1115
+{% endblock meta_keywords %}
+
+{% block sharing %}
+<meta property='og:title' content='NiCad Battery Sizing Calculation (IEEE 1115)'/>
+<!--
+<meta property='og:image' content='http://www.codecalculation.com/static/images/thumbnail.png'/>
+-->
+<meta property='og:description' content='Online Calculation for NiCad Battery Sizing as per the guidelines of IEEE 1115 for stationary applications.'/>
+<meta property='og:url' content='https://www.codecalculation.com/calculations/electrical/ups-battery/NiCad-battery-sizing/' />
+{% endblock sharing %}
+
+
+{% block content %}
+<div class="overflowme">
+
+<div class="datasheet">
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculations/">Calculations</a></li>
+      <li><a href="/calculations/electrical/">Electrical</a></li>
+      <li class="is-active"><a href="#">Ni-Cad Battery Sizing</a></li>
+    </ul>
+  </nav>
+  <table class="main">
+    <thead>
+        <tr style='border-top:0px;'>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+        </tr>
+    </thead>
+    <tfoot>
+          <td colspan="10" style="text-align:right;">
+              <i>Calculation Performed at www.codecalculation.com</i>
+          </td>
+    </tfoot>
+    <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8" class="has-text-centered">
+            <h1 class="title is-5">[[ doc['meta']['docClass_title'] ]]</h1>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Project</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Project No:</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['project_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w8">Project Title:</span>
+          <span class="w36"><input class="inp" v-model="doc['meta']['project_title']"/></span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Document No:</span>
+          <span class="w16"><input class="inp" v-model="doc['meta']['doc_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Revision No:</span>
+          <span class="w4"><input class="inp" v-model="doc['meta']['rev']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Date :</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['date']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Inputs</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Minimum System Voltage</span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Vmin']['_val']"/></span>
+          <span class="w6">V</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Vmin'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Maximum System Voltage</span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Vmax']['_val']"/></span>
+          <span class="w6">V</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Vmax'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Nominal System Voltage</span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Vnominal']['_val']"/></span>
+          <span class="w6">V</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Vnominal'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Load Profile</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span><b><i>Known Loads</i></b></span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w8">Load Tag</span>
+          <span class="w8">Load</span>
+          <span class="w8">Unit</span>
+          <span class="w8">Begin(min)</span>
+          <span class="w8">End(min)</span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr v-for="(item, index) in doc['input']['loads_known']" >
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w8">
+            <input class="inp" type="text" v-model="item['load_desc']" @focus = "setActiveIndex(index)">
+            <p class="help is-danger" v-for="err in getErrs(['loads_known',index,'load_desc'])">[[err]]</p>
+          </span>
+
+          <span class="w8">
+            <input class="inp" type="text" v-model="item['load']" @focus = "setActiveIndex(index)">
+            <p class="help is-danger" v-for="err in getErrs(['loads_known',index,'load'])">[[err]]</p>
+          </span>
+          <span class="w8">
+            <select v-model="item['unit']">
+              <option value="A">Amps</option>
+              <option value="W">Watts</option>
+            </select>
+            <p class="help is-danger" v-for="err in getErrs(['loads_known',index,'unit'])">[[err]]</p>
+          </span>
+          <span class="w8">
+            <input class="inp" type="number" v-model="item['begin']" @focus = "setActiveIndex(index)">
+            <p class="help is-danger" v-for="err in getErrs(['loads_known',index,'begin'])">[[err]]</p>
+          </span>
+          <span class="w8">
+            <input class="inp" type="number" v-model="item['end']" @focus = "setActiveIndex(index)">
+            <p class="help is-danger" v-for="err in getErrs(['loads_known',index,'end'])">[[err]]</p>
+          </span>
+          <span class="" v-show="index==activeindex">
+          <span class="w1 hideprint">
+            <a @click="removeItemKnown(index)" style="width:100%;">❌</a>
+          </span>
+        </span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr class="hideprint">
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">
+            <a class="button is-small is-info" style="width:100%" v-on:click="addItemKnown">Add Load</a>
+          </span>
+        </td>
+        <td colspan="4"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span><b><i>Random Loads</i></b></span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w8">Load Tag</span>
+          <span class="w8">Load</span>
+          <span class="w8">Unit</span>
+          <span class="w8">Duration(min)</span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr v-for="(item, index) in doc['input']['loads_random']" >
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w8">
+            <input class="inp" type="text" v-model="item['load_desc']" @focus = "setActiveIndex(index)">
+            <p class="help is-danger" v-for="err in getErrs(['loads_random',index,'load_desc'])">[[err]]</p>
+          </span>
+          <span class="w8">
+            <input class="inp" type="text" v-model="item['load']" @focus = "setActiveIndex(index)">
+            <p class="help is-danger" v-for="err in getErrs(['loads_random',index,'load'])">[[err]]</p>
+          </span>
+          <span class="w8">
+            <select v-model="item['unit']">
+              <option value="A">Amps</option>
+              <option value="W">Watts</option>
+            </select>
+            <p class="help is-danger" v-for="err in getErrs(['loads_random',index,'unit'])">[[err]]</p>
+          </span>
+          <span class="w8">
+            <input class="inp" type="number" v-model="item['duration']" @focus = "setActiveIndex(index)">
+            <p class="help is-danger" v-for="err in getErrs(['loads_random',index,'duration'])">[[err]]</p>
+          </span>
+          <span class="" v-show="index==activeindex">
+          <span class="w1 hideprint">
+            <a @click="removeItemRandom(index)" style="width:100%;">❌</a>
+          </span>
+        </span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr class="hideprint">
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">
+            <a class="button is-small is-info" style="width:100%" v-on:click="addItemRandom">Add Load</a>
+          </span>
+        </td>
+        <td colspan="4"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Maximum Charge Voltage/Cell</span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Vc_max']['_val']"/></span>
+          <span class="w6">V</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Vc_max'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="has-text-info"> For single level charging max chargin voltage is typically 1.43-1.5V/cell. For two level charging typically 1.47 to 1.7V/cell</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Maximum Temperature</span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Tmax']['_val']"/></span>
+          <span class="w6">°C</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Tmax'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Minimum Temperature</span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Tmin']['_val']"/></span>
+          <span class="w6">°C</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Tmin'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Nominal Temperature</span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Tnominal']['_val']"/></span>
+          <span class="w6">°C</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Tnominal'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="has-text-info">Maximum, minimum and nominal temperatures pertain to site ambient/installation conditions.</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Design Margin</span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['design_margin']['_val']"/></span>
+          <span class="w6"></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['design_margin'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Aging Factor</span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['aging_factor']['_val']"/></span>
+          <span class="w6"></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['aging_factor'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w14">Cell Range</span>
+          <span class="w24">
+            <select v-model="doc['input']['cell_range']['_val']">
+              <option value="L">Series L (1hr to 100hr backup periods)</option>
+              <option value="M">Series M (30min to 3hr backup periods)</option>
+              <option value="H">Series H (&lt;30min backup period)</option>
+            </select>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['cell_range'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w14">Cells in Series based on</span>
+          <span class="w24">
+            <select v-model="doc['input']['Ncell_basis']['_val']">
+              <option value="manual">manual input</option>
+              <option value="max_possible">max possible for economic selection</option>
+            </select>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['Ncell_basis'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="Ncell_basis=='manual'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">No of Cells in series</span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Ncell_manual']['_val']"/></span>
+          <span class="w6"></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Ncell_manual'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tbody >
+        <tr>
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+        <tr class="hideprint" style='border-top:0px;'>
+          <td style='border-left:0px;'></td>
+          <td colspan="8" style="text-align:center" >
+            <span class="w8">
+              <button class="button is-primary" @click="calculate" style="width:100%">Calculate</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="openModal('unitsModalisActive')" style="width:100%">Units</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="saveDoc()" style="width:100%">Save</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="openModal('uploadModalisActive')" style="width:100%">Load</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="pdf_download()" style="width:100%">PDF</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="launch_help" style="width:100%">Help</button>
+            </span>
+          </td>
+          <td style='border-right:0px;'></td>
+        </tr>
+        <tr style='border-top:0px;' class="hideprint">
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td style='border-top:0px;'colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+      </tbody>
+      <tbody v-if="doc['errors'].length > 0">
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger"><b>Errors</b></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger" v-for = "err in doc['errors']">[[ err ]]</p>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+
+      <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Results</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w20">Possible No of cells in series </span>
+          <span class="w4 result">[[ retSilent(doc, ['result', 'Ncell_min', '_val']) ]]</span>
+          <span class="w4"> (min)</span>
+          <span class="w2"> to</span>
+          <span class="w4 result">[[ retSilent(doc, ['result', 'Ncell_max', '_val']) ]]</span>
+          <span class="w4"> (max)</span>
+          <span class="w6"> per string</span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w20">No of cells in series selected </span>
+          <span class="w6 result">[[ retSilent(doc, ['result', 'Ncell', '_val']) ]]</span>
+          <span class="w4"></span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w20">Maximum System Voltage</span>
+          <span class="w6 result">[[ retSilent(doc, ['result', 'Vmax_attained', '_val']) ]]</span>
+          <span class="w4">V</span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w20">Minimum System Voltage</span>
+          <span class="w6 result">[[ retSilent(doc, ['result', 'Vmin_attained', '_val']) ]]</span>
+          <span class="w4">V</span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w20">End of Discharge Voltage </span>
+          <span class="w6 result">[[ retSilent(doc, ['result', 'Veod', '_val']) ]]</span>
+          <span class="w4">V</span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w20"><b>Cell Strings/Arrays in parallel</b></span>
+          <span class="w6 result">[[ retSilent(doc, ['result', 'strings', '_val']) ]]</span>
+          <span class="w4"></span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w20">Cell Sizing Data</span>
+          <span class="w6"></span>
+          <span class="w4"></span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w18">Cell Section Size (for Known Loads) </span>
+          <span class="w6 result">[[ retSilent(doc, ['result', 'Fs_max', '_val']) ]]</span>
+          <span class="w4">AH</span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w18">Cell Section Size (for Random Loads)</span>
+          <span class="w6 result">[[ retSilent(doc, ['result', 'Fs_random', '_val']) ]]</span>
+          <span class="w4">AH</span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w18">Cell Section Size (Uncorrected) </span>
+          <span class="w6 result">[[ retSilent(doc, ['result', 'Fs_uncorrected', '_val']) ]]</span>
+          <span class="w4">AH</span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w18">Cell Section Size (Corrected for Design Margin and Aging Factor) </span>
+          <span class="w6 result">[[ retSilent(doc, ['result', 'Fs_corrected', '_val']) ]]</span>
+          <span class="w4">AH</span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w18"><b>Cell Selected</b></span>
+          <span class="w6 result">[[ retSilent(doc, ['result', 'cell_selected', '_val']) ]]</span>
+          <span class="w4"><b>AH</b></span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      </tbody>
+  </table>
+</div>
+</div>
+
+{% endblock content %}
+
+{% block contributors %}
+<p>
+  <a href="//www.linkedin.com/in/prakash-mampattakalam-798997114/">Prakash Mampattakalam</a>
+</p>
+{% endblock contributors %}
+
+{% block script_vueapp %}
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        delimiters : ['[[',']]'],
+        mixins: [app_common, app_doc],
+        data: {
+            doc : {{ doc | safe }},
+            activeindex : '-1',
+            fixed:{}
+        },
+        computed: {
+          ups_load_kVA : function(){
+            var kW = parseFloat(this.doc['input']['ups_load_kW']['_val'])
+            var pf = parseFloat(this.doc['input']['lagging_pf']['_val'])
+            kVA = kW/pf
+            return round(kVA,2);
+          },
+          Ncell_basis : function(){
+            return this.doc['input']['Ncell_basis']['_val']
+          }
+        },
+        methods: {
+          setActiveIndex : function(index){
+            this.activeindex = index;
+          },
+          removeItemKnown: function(index) {
+            this.doc['input']['loads_known'].splice(index,1);
+          },
+          removeItemRandom: function(index) {
+            this.doc['input']['loads_random'].splice(index,1);
+          },
+          addItemKnown: function() {
+            new_item = {
+              "load_desc":"",
+              "load":"",
+              "unit":"A",
+              "begin":"0",
+              "end":""
+            }
+            this.doc['input']['loads_known'].push(new_item);
+          },
+          addItemRandom: function() {
+            new_item = {
+              "load_desc":"",
+              "load":"",
+              "unit":"A",
+              "duration":"0",
+            }
+            this.doc['input']['loads_random'].push(new_item);
+          },
+        }
+    });
+</script>
+{% endblock script_vueapp %}

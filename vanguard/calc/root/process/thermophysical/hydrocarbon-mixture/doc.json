@@ -1,0 +1,72 @@
+{
+  "sub_url": "/calculate/process/thermophysical/hydrocarbon-mixture",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Thermophysical Properties of Hydrocarbon Mixtures",
+    "docInstance_title": "Thermophysical Properties of Hydrocarbon Mixtures",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length": "m",
+    "pressure": "bar",
+    "temperature": "C",
+    "molecularMass" : "kg/mol",
+    "density":"kg/m3",
+    "specificVolume":"m3/kg",
+    "specificEnergy":"J/kg",
+    "specificHeat":"J/kg.K",
+    "specificHeatMolar":"J/mol.K",
+    "dynViscosity":"Pa.s",
+    "thermalConductivity":"W/m.K"
+  },
+
+  "input": {
+    "mixture":[
+      {"fluid" : "Air", "molefraction" :"0"},
+      {"fluid" : "Oxygen", "molefraction" :"0"},
+      {"fluid" : "Nitrogen", "molefraction" :"0"},
+      {"fluid" : "Water", "molefraction" :"0"},
+      {"fluid" : "CarbonMonoxide", "molefraction" :"0"},
+      {"fluid" : "CarbonDioxide", "molefraction" :"0"},
+      {"fluid" : "HydrogenSulfide", "molefraction" :"0"},
+      {"fluid" : "Hydrogen", "molefraction" :"0"},
+      {"fluid" : "Methane", "molefraction" :"0"},
+      {"fluid" : "Ethylene", "molefraction" :"0"},
+      {"fluid" : "Ethane", "molefraction" :"0"},
+      {"fluid" : "Propylene", "molefraction" :"0"},
+      {"fluid" : "n-Propane", "molefraction" :"0"},
+      {"fluid" : "IsoButane", "molefraction" :"0"},
+      {"fluid" : "n-Butane", "molefraction" :"0"},
+      {"fluid" : "Isopentane", "molefraction" :"0"},
+      {"fluid" : "n-Pentane", "molefraction" :"0"},
+      {"fluid" : "n-Hexane", "molefraction" :"0"}
+
+    ],
+    "P": {"_val":"1", "_dim":"pressure"},
+    "T": {"_val":"35", "_dim":"temperature"}
+  },
+
+  "result": {
+    "MW": {"_val":"", "_dim":"molecularMass"},
+    "Pcritical": {"_val":"", "_dim":"pressure"},
+    "Tcritical": {"_val":"", "_dim":"temperature"},
+    "Pr": {"_val":""},
+    "Tr": {"_val":""},
+    "acentric": {"_val":""},
+    "Z_PR": {"_val":""},
+    "Z_LKP": {"_val":""},
+    "Z_NO": {"_val":""},
+    "Cp0mass": {"_val":"", "_dim":"specificHeat"},
+    "Cv0mass": {"_val":"", "_dim":"specificHeat"},
+    "Cp0molar": {"_val":"", "_dim":"specificHeatMolar"},
+    "Cv0molar": {"_val":"", "_dim":"specificHeatMolar"}
+  },
+
+
+  "errors": []
+}

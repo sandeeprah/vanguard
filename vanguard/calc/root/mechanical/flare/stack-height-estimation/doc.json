@@ -1,0 +1,62 @@
+{
+  "sub_url": "/calculate/mechanical/flare/stack-height-estimation",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Flare Stack Height Estimation-Radiation Effect (API 521)",
+    "docInstance_title": "Flare Stack Height Estimation-Radiation Effect (API 521)",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length": "m",
+    "pressure": "kPa",
+    "temperature": "K",
+    "massflow":"kg/hr",
+    "intensity":"kW/m2",
+    "molecularMass":"g/mol",
+    "specificEnergy":"kJ/kg",
+    "speed":"m/s",
+    "power":"kW",
+    "density":"kg/m3",
+    "flow":"m3/s"
+  },
+
+  "input": {
+    "qm" : {"_val": "45360", "_dim": "massflow"},
+    "MW" : {"_val": "46.1", "_dim": "molecularMass"},
+    "T" : {"_val": "422", "_dim":"temperature"},
+    "Z" : {"_val": "1"},
+    "LHV" : {"_val": "50000", "_dim":"specificEnergy"},
+    "p2" : {"_val": "101.3", "_dim":"pressure"},
+    "Uinf" : {"_val": "8.9", "_dim":"speed"},
+    "Ma2" : {"_val": "0.2"},
+    "d_basis" : {"_val": "calculated"},
+    "d_manual" : {"_val": "0.468", "_dim":"length"},
+    "R" : {"_val": "45.7", "_dim":"length"},
+    "tau" : {"_val": "1"},
+    "F" : {"_val": "0.3"},
+    "K" : {"_val": "6.3", "_dim":"intensity"}
+  },
+
+  "result": {
+    "d" : {"_val": "", "_dim":"length"},
+    "Q" : {"_val": "", "_dim":"power"},
+    "L" : {"_val": "","_dim":"length"},
+    "q_vap" : {"_val": "","_dim":"flow"},
+    "Uj" : {"_val": "", "_dim":"speed"},
+    "Uinf_by_Uj" : {"_val": ""},
+    "Sdy_by_L" : {"_val": ""},
+    "Sdx_by_L" : {"_val": ""},
+    "Sdy" : {"_val": "", "_dim":"length"},
+    "Sdx" : {"_val": "", "_dim":"length"},
+    "R_prime" : {"_val": "", "_dim":"length"},
+    "H_prime" : {"_val": "", "_dim":"length"},
+    "H" : {"_val": "", "_dim":"length"}
+  },
+
+  "errors": []
+}

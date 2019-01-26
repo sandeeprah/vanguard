@@ -1,5 +1,5 @@
 from fluids.safety_valve import API526_A, API526_letters
-from vanguard.units import treeUnitConvert, SI_UNITS, unitConvert
+from techlib.units import treeUnitConvert, SI_UNITS, unitConvert
 
 def Reynolds(Q, G, mu, A):
     # convert Q from m3/s to lpm

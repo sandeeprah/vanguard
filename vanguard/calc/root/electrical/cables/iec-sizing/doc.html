@@ -1,0 +1,1065 @@
+{% extends "document.html" %}
+{% block title %}Cable Sizing IEC {% endblock title %}
+
+{% block meta_description %}
+Calculation to perform electrical cable sizing as per IEC 60364-5-52. Cables are sized based on ampacity considerations, voltage drop considerations and short circuit considerations.
+{% endblock meta_description %}
+
+{% block meta_keywords %}
+calculation cable Sizing IEC 60364-5-52
+{% endblock meta_keywords %}
+
+{% block content %}
+<div style="overflow:auto;">
+<div class="datasheet">
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculations/">Calculations</a></li>
+      <li><a href="/calculations/electrical/">Electrical</a></li>
+      <li class="is-active"><a href="#">Cables - IEC Sizing</a></li>
+    </ul>
+  </nav>
+  <table class="main">
+    <thead>
+      <tr style='border-top:0px;'>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <td colspan="10">
+        <i>Calculation Performed at www.codecalculation.com</i>
+      </td>
+    </tfoot>
+    <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8" class="has-text-centered">
+            <h1 class="title is-5">[[ doc['meta']['docClass_title'] ]]</h1>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Project</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Project No:</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['project_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w8">Project Title:</span>
+          <span class="w36"><input class="inp" v-model="doc['meta']['project_title']"/></span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Document No:</span>
+          <span class="w16"><input class="inp" v-model="doc['meta']['doc_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Revision No:</span>
+          <span class="w4"><input class="inp" v-model="doc['meta']['rev']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Date :</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['date']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Inputs</h2>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="w16"><b>Load Information</b></span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Phases</span>
+          <span class="w6">
+            <select v-model="doc['input']['phases']['_val']">
+              <option value="single">Single</option>
+              <option value="three">Three</option>
+            </select>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['phases'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Nominal Load Voltage</span>
+          <span class="w6"><input  type="number" v-model="doc['input']['voltage']['_val']"/></span>
+          <span class="w6">V</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['voltage'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Power Factor (0 to 1)</span>
+          <span class="w6"><input  type="number" v-model="doc['input']['power_factor']['_val']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['power_factor'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Rated Load</span>
+          <span class="w6"><input  type="number" v-model="doc['input']['rated_load']['_val']"/></span>
+          <span class="w6">[[ gUL("power") ]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['rated_load'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Load Efficiency (0 to 1)</span>
+          <span class="w6"><input type="number" v-model="doc['input']['load_efficiency']['_val']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['load_efficiency'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="w16"><b>Cable Data</b></span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w8">Insulation Type</span>
+          <span class="w20">
+            <select v-model="doc['input']['insulation_type']['_val']">
+              <option value="PVC">[[ fixed['description']['PVC'] ]]</option>
+              <option value="XLPE">[[ fixed['description']['XLPE'] ]]</option>
+              <option value="MIN_LT_500">[[ fixed['description']['MIN_LT_500'] ]]</option>
+              <option value="MIN_LT_750">[[ fixed['description']['MIN_LT_750'] ]]</option>
+              <option value="MIN_HT_500">[[ fixed['description']['MIN_HT_500'] ]]</option>
+              <option value="MIN_HT_750">[[ fixed['description']['MIN_HT_750'] ]]</option>
+            </select>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['insulation_type'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Conductor Type</span>
+          <span class="w14">
+            <select v-model="doc['input']['conductor_type']['_val']">
+              <option v-for="item in conductor_options" :value="item">[[ fixed['description'][item] ]]</option>
+            </select>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['conductor_type'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Cable Type</span>
+          <span class="w14">
+            <select v-model="doc['input']['cable_type']['_val']">
+              <option value="single_core">Single Core</option>
+              <option value="multi_core">Multi Core</option>
+            </select>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['cable_type'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="w16"><b>Installation Data</b></span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="7">
+          <span class="w2"></span>
+          <span class="w10">Installation Method</span>
+          <span class="w34">
+            <select v-model="doc['input']['installation_method']['_val']">
+              <option v-for="item in installationMethod_options" :value="item">[[item]] ([[ fixed['description'][item] ]])</option>
+            </select>
+        </td>
+        <td colspan="1">
+          <p class="help is-danger" v-for="err in getErrs(['installation_method'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Ambient Temperature</span>
+          <span class="w6">
+            <select v-model="doc['input']['Tamb']['_val']">
+              <option v-for="item in fixed['Tamb_options']" :value=item>[[ item ]]</option>
+            </select>
+          </span>
+          <span class="w6">°C</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Tamb'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-if="showInstallationType">
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w8">Installation Type</span>
+          <span>
+            <select v-model="doc['input']['installation_type']['_val']">
+              <option v-for="item in installationType_options" :value=item>[[ fixed['description'][item] ]]</option>
+            </select>
+        </td>
+        <td colspan="2">
+          <p class="help is-danger" v-for="err in getErrs(['installation_type'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">No of Circuits/Multicore Cables</span>
+          <span class="w6">
+            <select v-model="doc['input']['no_grpcables']['_val']" >
+              <option v-for="item in groupcables_options" :value=item>[[ item ]]</option>
+            </select>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['no_grpcables'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-if="showLayers">
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">No of Layers</span>
+          <span class="w6">
+            <select v-model="doc['input']['no_layers']['_val']" >
+              <option v-for="item in layers_options" :value=item>[[ item ]]</option>
+            </select>
+          </span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['no_layers'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody v-if="underground">
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Ground Temperature</span>
+          <span class="w6">
+            <select v-model="doc['input']['Tground']['_val']">
+              <option v-for="item in fixed['Tground_options']" :value=item>[[ item ]]</option>
+            </select>
+          </span>
+          <span class="w6">°C</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Tground'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Soil Thermal Resistivity</span>
+          <span class="w6">
+            <select v-model="doc['input']['soil_thermal_resistivity']['_val']">
+              <option v-for="item in fixed['resistivity_options']" :value=item>[[ item ]]</option>
+            </select>
+          </span>
+          <span class="w6">°C.m/W</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['soil_thermal_resistivity'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Underground Spacing</span>
+          <span class="w14">
+            <select v-model="doc['input']['underground_spacing']['_val']">
+              <option v-for="item in underground_spacing_options" :value=item>[[ fixed['description'][item] ]]</option>
+            </select>
+          </span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['underground_spacing'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14"><b>Voltage Drop Calculation</b></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Perform Calculation</span>
+          <span class="w6">
+            <select v-model="doc['input']['voltage_drop_calculation']['_val']">
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['voltage_drop_calculation'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody v-if="voltCalc">
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w2"></span>
+          <span class="w14">Cable Run Length</span>
+          <span class="w6"><input  type="number" v-model="doc['input']['cable_run']['_val']"/></span>
+          <span class="w6">[[ gUL("length") ]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['cable_run'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Allowable Voltage Drop</span>
+          <span class="w6"><input  type="number" v-model="doc['input']['allowable_drop']['_val']"/></span>
+          <span class="w6">%</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['allowable_drop'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Cable Section Selected</span>
+          <span class="w6">
+              <select v-model="doc['input']['cable_section_manual']['_val']">
+                <option v-for="item in fixed['cable_section_options']" :value="item">[[ item ]]</option>
+              </select>
+            </span>
+          <span class="w2">mm²</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['cable_section_manual'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14"><b>Short Circuit Calculation</b></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Perform Calculation</span>
+          <span class="w6">
+              <select v-model="doc['input']['short_circuit_calculation']['_val']">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+          </td>
+          <td colspan="4">
+            <p class="help is-danger" v-for="err in getErrs(['short_circuit_calculation'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tbody v-if="scCalc">
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w2"></span>
+          <span class="w14">Max Short Circuit Current</span>
+          <span class="w6"><input  type="number" v-model="doc['input']['I_sc']['_val']"/></span>
+          <span class="w6">A</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['I_sc'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Fault Duration</span>
+          <span class="w6"><input  type="number" v-model="doc['input']['t_fault']['_val']"/></span>
+          <span class="w6">s</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['t_fault'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Cable Temperatures</span>
+          <span class="w6">
+              <select v-model="doc['input']['Tc_basis']['_val']">
+                <option value="default">Default</option>
+                <option value="custom">Custom</option>
+              </select>
+            </span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Tc_basis'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-if="Tc_basis=='custom'">
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Initial Temperature</span>
+          <span class="w6"><input  type="number" v-model="doc['input']['Tc_init']['_val']"/></span>
+          <span class="w6">°C</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Tc_init'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-if="Tc_basis=='custom'">
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Final Temperature</span>
+          <span class="w6"><input  type="number" v-model="doc['input']['Tc_final']['_val']"/></span>
+          <span class="w6">°C</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Tc_final'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody >
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="hideprint" style='border-top:0px;'>
+        <td style='border-left:0px;'></td>
+        <td colspan="8" style="text-align:center" >
+          <span class="w8">
+            <button class="button is-primary" @click="calculate" style="width:100%">Calculate</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="openModal('unitsModalisActive')" style="width:100%">Units</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="saveDoc()" style="width:100%">Save</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="openModal('uploadModalisActive')" style="width:100%">Load</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="pdf_download()" style="width:100%">PDF</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="launch_help" style="width:100%">Help</button>
+          </span>
+        </td>
+        <td style='border-right:0px;'></td>
+      </tr>
+      <tr style='border-top:0px;' class="hideprint">
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td style='border-top:0px;'colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+    </tbody>
+    <tbody v-if="doc['errors'].length > 0">
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <p class="help is-danger"><b>Errors</b></p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <p class="help is-danger" v-for="err in doc['errors']">[[ err ]]</p>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Results</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w22">Full Load Current</span>
+          <span class="w6 result">[[ retSilent(doc,['result','FLC', '_val']) ]]</span>
+          <span class="w6">A</span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w22"><b>Cable Sizing Ampacity Considerations</b></span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w22">Cable Cross Section Recommended</span>
+          <span class="w6 result">[[ retSilent(doc,['result','cable_section', '_val']) ]]</span>
+          <span class="w6">mm²</span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w22">Selected Cable Base Cable Ampacity</span>
+          <span class="w6 result">[[ retSilent(doc,['result','Ibase', '_val']) ]]</span>
+          <span class="w2">A</span>
+          <span class="w4"><i>[[ retSilent(doc,['result','Ibase_ref', '_val']) ]]</i></span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w22">Selected Cable Derated Cable Ampacity</span>
+          <span class="w6 result">[[ retSilent(doc,['result','Iderated', '_val']) ]]</span>
+          <span class="w6">A</span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w22">Total Derating Factor</span>
+          <span class="w6 result">[[ retSilent(doc,['result','total_deration', '_val']) ]]</span>
+          <span class="w6"></span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w22">Ambient Temperature Derating Factor (k1)</span>
+          <span class="w6 result">[[ retSilent(doc,['result','k1', '_val']) ]]</span>
+          <span class="w2"></span>
+          <span class="w4"><i>[[ retSilent(doc,['result','k1_ref', '_val']) ]]</i></span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w22">Group Derating Factor (k2) </span>
+          <span class="w6 result">[[ retSilent(doc,['result','k2', '_val']) ]]</span>
+          <span class="w2"></span>
+          <span class="w4">[[ retSilent(doc,['result','k2_ref', '_val']) ]]</span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w22">Thermal Resistivity Derating Factor(k3)</span>
+          <span class="w6 result">[[ retSilent(doc,['result','k3', '_val']) ]]</span>
+          <span class="w2"></span>
+          <span class="w6"><i>[[ retSilent(doc,['result','k3_ref', '_val']) ]]</i></span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody v-if="voltCalc">
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w22"><b>Cable Sizing Voltage Drop Considerations</b></span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w22">AC Reactance (Xc)</span>
+          <span class="w6 result">[[ retSilent(doc,['result','Xc', '_val']) ]]</span>
+          <span class="w6"></span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w22">AC Resistance (Rc)</span>
+          <span class="w6 result">[[ retSilent(doc,['result','Rc', '_val']) ]]</span>
+          <span class="w6"></span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w22">Actual Voltage Drop for  Manual Selection</span>
+          <span class="w6 result">[[ retSilent(doc,['result','actual_drop_manual', '_val']) ]]</span>
+          <span class="w6">%</span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w22">Cable Section Recommended</span>
+          <span class="w6 result">[[ retSilent(doc,['result','cable_section_voltage', '_val']) ]]</span>
+          <span class="w6">mm²</span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w22">Voltage Drop for Recommended Section</span>
+          <span class="w6 result">[[ retSilent(doc,['result','Vdrop_voltage', '_val']) ]]</span>
+          <span class="w6">%</span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody v-if="scCalc">
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w22"><b>Cable Sizing Short Circuit Considerations</b></span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w22">Short Circuit Temp Rise Constant</span>
+          <span class="w6 result">[[ retSilent(doc,['result','k_sc', '_val']) ]]</span>
+          <span class="w6"></span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w22">Cable Section Recommended</span>
+          <span class="w6 result">[[ retSilent(doc,['result','cable_section_sc', '_val']) ]]</span>
+          <span class="w6">mm²</span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+{% endblock content %} {% block script_vueapp %}
+<script type="text/javascript">
+  var app = new Vue({
+    el: '#app',
+    delimiters: ['[[', ']]'],
+    mixins: [app_common, app_doc],
+    data: {doc: {{ doc | safe}},
+      fixed: {
+        Tamb_options: [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95],
+        Tground_options: [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95],
+        resistivity_options: [0.5, 0.7, 1, 1.5, 2, 2.5, 3],
+        cable_section_options: [1, 1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300, 400, 500],
+        description: {
+          "PVC": "PVC",
+          "XLPE": "XLPE or EPR",
+          "MIN_LT_500": "Mineral Insulation (<70°C) upto 500V",
+          "MIN_LT_750": "Mineral Insulation (<70°C) upto 750V",
+          "MIN_HT_500": "Mineral Insulation (<105°C) upto 500V",
+          "MIN_HT_750": "Mineral Insulation (<105°C) upto 750V",
+          "Cu": "Copper",
+          "Al": "Aluminium",
+          "A1": "Single Core Cable in conduit, in a thermally insulated wall",
+          "A2": "Multi Core Cable in conduit, in a thermally insulated wall",
+          "B1": "Single Core Cable in conduit, on a  wall",
+          "B2": "Multi Core Cable in conduit, on a  wall",
+          "C": "Single Core or Multi Core Cable on a wooden wall",
+          "D1": "Single Core or Multi Core Cable in conduit, buried in ground",
+          "D2": "Single Core or Multi Core Cable directly buried in ground",
+          "E": "Multi Core Cable in free air",
+          "F": "Single Core Cable in free air",
+          "G": "Single Core Cable, laid flat and spaced in free air",
+          "bunched": "Bunched in air, on a surface, embedded or enclosed",
+          "on_wall": "Single Layer on wall floor or unperforated cable tray system",
+          "under_ceiling": "Single Layer fixed directly under a Wooden Ceiling",
+          "horzperftray_touching": "Horizontal Perforated Cable Tray systems (Touching)",
+          "vertperftray_touching": "Vertical Perforated Cable Tray systems (Touching)",
+          "ladder_touching": "Cable Ladder systems, cleats etc. (Touching)",
+          "unpftray_touching": "Horizontal Unperforated Cable Tray systems (Touching)",
+          "horzperftray_spaced": "Horizontal Perforated Cable Tray systems (Spaced 1D)",
+          "vertperftray_spaced": "Vertical Perforated Cable Tray systems (Spaced 1D)",
+          "ladder_spaced": "Horizontal Perforated Cable Tray systems (Spaced 1D)",
+          "horzperftray_flat": "Horizontal Perforated Cable Tray systems (Flat touching)",
+          "vertperftray_flat": "Vertical Perforated Cable Tray systems (Flat touching)",
+          "ladder_flat": "Cable Ladder systems, cleats etc. (Flat touching)",
+          "horzperftray_trefoil": "Horizontal Perforated Cable Tray systems (Trefoil, spaced>=2D)",
+          "vertperftray_trefoil": "Horizontal Perforated Cable Tray systems (Trefoil, spaced>=2D)",
+          "ladder_trefoil": "Cable Ladder systems (Trefoil, spaced>=2D)",
+          "spaced_horizontal": "Spaced Horizontal",
+          "spaced_vertical": "Spaced Vertical",
+          "CT": "Touching",
+          "CD": "One Cable Dia Clearance",
+          "C125": "125 mm Clearance",
+          "C250": "250 mm Clearance",
+          "C500": "500 mm Clearance",
+          "C1000": "1.0 m Clearance"
+        }
+      }
+    },
+    computed: {
+      installation_method: function() {
+        return this.doc['input']['installation_method']['_val']
+      },
+      conductor_options: function() {
+        avl_options = [];
+        insulation_type = this.doc['input']['insulation_type']['_val'];
+        if (insulation_type == "PVC" || insulation_type == 'XLPE') {
+          avl_options = ["Cu", "Al"]
+        } else {
+          avl_options = ["Cu"]
+        }
+        return avl_options;
+      },
+
+      installationMethod_options: function() {
+        available_options = [];
+        insulation_type = this.doc['input']['insulation_type']['_val'];
+        cable_type = this.doc['input']['cable_type']['_val'];
+        if (insulation_type == "PVC" || insulation_type == "XLPE") {
+          if (cable_type == "single_core") {
+            available_options = ["A1", "B1", "C", "D1", "D2", "F", "G"];
+          }
+
+          if (cable_type == "multi_core") {
+            available_options = ["A2", "B2", "C", "D1", "D2", "E"];
+          }
+        } else {
+          if (cable_type == "single_core") {
+            available_options = ["C", "F", "G"];
+          }
+          if (cable_type == "multi_core") {
+            available_options = ["C", "E"];
+          }
+        }
+        return available_options;
+      },
+
+      installationType_options: function() {
+        installation_method = this.doc['input']['installation_method']['_val'];
+        cable_type = this.doc['input']['cable_type']['_val'];
+        available_options = [];
+        if (["A1", "A2", "B1", "B2"].indexOf(installation_method) > -1) {
+          available_options = []
+        }
+        if (installation_method == "C") {
+          available_options = ["on_wall", "under_ceiling"];
+        }
+        if (installation_method == "D1" || installation_method == "D2") {
+          available_options = []
+        }
+        if (installation_method == "E") {
+          available_options = ["bunched",
+            "horzperftray_touching",
+            "vertperftray_touching",
+            "ladder_touching",
+            "unpftray_touching",
+            "horzperftray_spaced",
+            "vertperftray_spaced",
+            "ladder_spaced"
+          ];
+        }
+        if (installation_method == "F") {
+          available_options = ["bunched",
+            "horzperftray_flat",
+            "vertperftray_flat",
+            "ladder_flat",
+            "horzperftray_trefoil",
+            "vertperftray_trefoil",
+            "ladder_trefoil"
+          ];
+        }
+        if (installation_method == "G") {
+          available_options = ["spaced_horizontal",
+            "spaced_vertical"
+          ];
+        }
+        return available_options;
+      },
+
+      underground_spacing_options: function() {
+        available_options = []
+        installation_method = this.doc['input']['installation_method']['_val']
+        if (installation_method == "D1") {
+          available_options = ["CT", "C250", "C500", "C1000"]
+        }
+        if (installation_method == "D2") {
+          available_options = ["CT", "CD", "C125", "C250", "C500"]
+        }
+        return available_options
+      },
+
+      groupcables_options: function() {
+        available_options = []
+        installation_method = this.doc['input']['installation_method']['_val']
+        if (['A1', 'A2', 'B1', 'B2', 'C', 'D2'].indexOf(installation_method) > -1) {
+          available_options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 16, 20]
+        } else if (["D1", "G"].indexOf(installation_method) > -1) {
+          available_options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        } else if (installation_method == "E") {
+          available_options = [1, 2, 3, 4, 6, 9]
+        } else if (installation_method == "F") {
+          available_options = [1, 2, 3]
+        }
+        return available_options
+      },
+
+      layers_options: function() {
+        available_options = []
+        installation_type = this.doc['input']['installation_type']['_val']
+        if (['bunched', 'on_wall', 'under_ceiling'].indexOf(installation_type) > -1) {
+          available_options = [1]
+        } else if (["horzperftray_touching", "unpftray_touching", "ladder_touching"].indexOf(installation_type) > -1) {
+          available_options = [1, 2, 3, 6]
+        } else if (["horzperftray_spaced", "ladder_spaced"].indexOf(installation_type) > -1) {
+          available_options = [1, 2, 3]
+        } else if (["vertperftray_touching", "vertperftray_spaced"].indexOf(installation_type) > -1) {
+          available_options = [1, 2]
+        } else if (["horzperftray_flat", "ladder_flat", "horzperftray_trefoil"].indexOf(installation_type) > -1) {
+          available_options = [1, 2, 3]
+        } else if (["vertperftray_flat", "vertperftray_trefoil", "ladder_trefoil"].indexOf(installation_type) > -1) {
+          available_options = [1, 2]
+        }
+        return available_options
+      },
+
+      underground: function() {
+        underground = false;
+        installation_method = this.doc['input']['installation_method']['_val'];
+        if (installation_method == "D1" || installation_method == "D2") {
+          underground = true;
+        }
+        return underground;
+      },
+      showInstallationType: function() {
+        showInstallationType = false;
+        installation_method = this.doc['input']['installation_method']['_val'];
+        if (["C", "E", "F", "G"].indexOf(installation_method) > -1) {
+          showInstallationType = true;
+        }
+        return showInstallationType;
+      },
+      showLayers: function() {
+        showLayers = false;
+        installation_method = this.doc['input']['installation_method']['_val'];
+        if (["E", "F"].indexOf(installation_method) > -1) {
+          showLayers = true;
+        }
+        return showLayers;
+      },
+      voltCalc: function() {
+        vc = this.doc['input']['voltage_drop_calculation']['_val']
+        if (vc == 'yes') {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      scCalc: function() {
+        sc = this.doc['input']['short_circuit_calculation']['_val']
+        if (sc == 'yes') {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      Tc_basis: function() {
+        return this.doc['input']['Tc_basis']['_val'];
+      }
+
+    },
+    methods: {}
+  });
+</script>
+{% endblock script_vueapp %}

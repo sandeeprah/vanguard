@@ -1,0 +1,34 @@
+{
+  "sub_url": "/calculate/electrical/lighting/candela2lumens",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Candela-Lumens Conversions",
+    "docInstance_title": "Candela-Lumens Conversions",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+
+  "units": {
+    "length": "m",
+    "area": "m2",
+    "angle" : "degrees"
+  },
+
+  "input": {
+    "convert" : {"_val":"cd2lm"},
+    "candela": {"_val":"200"},
+    "lumens": {"_val":""},
+    "apex_angle": {"_val":"60", "_dim":"angle"}
+  },
+
+  "result": {
+    "candela": {"_val":""},
+    "lumens": {"_val":""}
+  },
+
+  "errors": []
+}

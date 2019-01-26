@@ -4,7 +4,7 @@ import pandas as pd
 import fluids
 from scipy.interpolate import interp1d
 
-from vanguard.units import unitConvert
+from techlib.units import unitConvert
 from techlib.electrical.motor.core import standard_iec_motor
 
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))

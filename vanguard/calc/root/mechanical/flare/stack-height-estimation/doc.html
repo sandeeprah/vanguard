@@ -1,0 +1,665 @@
+{% extends "document.html" %}
+
+{% block title %}Flare Stack Height Estimation-Radiation Effect (API 521){% endblock title %}
+
+{% block meta_description %}
+Calculation for the estimation of flare stack height based on radiation effects.
+The calculation is based on API RP 521 Appendix-C. For location and height aspects also consider gas dispersion. Gas dispersion is not carried out in this calculation and should be separately addressed.
+{% endblock meta_description %}
+
+
+{% block meta_keywords %}
+Flare stack height estimation radiation API RP521
+{% endblock meta_keywords %}
+
+{% block content %}
+<!--
+<div style="overflow:auto;">
+-->
+<div class="overflowme">
+
+<div class="datasheet">
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculations/">Calculations</a></li>
+      <li><a href="/calculations/mechanical/">Mechanical</a></li>
+      <li class="is-active"><a href="#">Flare - Stack Height</a></li>
+    </ul>
+  </nav>
+  <table class="main">
+    <thead>
+        <tr style='border-top:0px;'>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+        </tr>
+    </thead>
+    <tfoot>
+          <td colspan="10" style="text-align:right;">
+              <i>Calculation Performed at www.codecalculation.com</i>
+          </td>
+    </tfoot>
+    <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8" class="has-text-centered">
+            <h1 class="title is-5">[[ doc['meta']['docClass_title'] ]]</h1>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Project</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Project No:</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['project_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w8">Project Title:</span>
+          <span class="w36"><input class="inp" v-model="doc['meta']['project_title']"/></span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Document No:</span>
+          <span class="w16"><input class="inp" v-model="doc['meta']['doc_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Revision No:</span>
+          <span class="w4"><input class="inp" v-model="doc['meta']['rev']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Date :</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['date']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Inputs</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w14">Mass Flow Rate</span>
+          <span class="w8">q<sub>m</sub></span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['qm']['_val']"/></span>
+          <span class="w6">[[ gUL('massflow') ]]</span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['qm'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w14">Molecular Weight</span>
+          <span class="w8">MW</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['MW']['_val']"/></span>
+          <span class="w6">[[ gUL('molecularMass') ]]</span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['MW'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w14">Flowing Temperature</span>
+          <span class="w8">T</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['T']['_val']"/></span>
+          <span class="w6">[[ gUL('temperature') ]]</span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['T'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w14">Compressibility Factor</span>
+          <span class="w8">Z</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['Z']['_val']"/></span>
+          <span class="w6"></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['Z'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w14">Heat of Combustion</span>
+          <span class="w8">LHV</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['LHV']['_val']"/></span>
+          <span class="w6">[[ gUL('specificEnergy') ]]</span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['LHV'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w14">Flare tip absolute pressure</span>
+          <span class="w8">p<sub>2</sub></span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['p2']['_val']"/></span>
+          <span class="w6">[[ gUL('pressure') ]]</span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['p2'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w14">Design Wind Velocity</span>
+          <span class="w8">U<sub>∞</sub></span>
+          <span class="w6"><input class="inp" type="number"  v-model="doc['input']['Uinf']['_val']"/></span>
+          <span class="w6">[[ gUL('speed') ]]</span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['Uinf'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w14">Mach No</span>
+          <span class="w8">Ma<sub>2</sub></span>
+          <span class="w6"><input class="inp" type="number"  v-model="doc['input']['Ma2']['_val']"/></span>
+          <span class="w6"></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['Ma2'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Inside Diameter basis</span>
+          <span class="w14">
+            <select class="inp" v-model="doc['input']['d_basis']['_val']">
+              <option value="calculated">as calculated</option>
+              <option value="manual">manual input</option>
+            </select>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['d_basis'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="d_basis=='manual' ">
+        <td></td>
+        <td colspan="5">
+          <span class="w14">Flare Inside Diameter</span>
+          <span class="w8">d</span>
+          <span class="w6"><input class="inp" type="number"  v-model="doc['input']['d_manual']['_val']"/></span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['d_manual'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w14">Distance from Flare (@grade)</span>
+          <span class="w8">R</span>
+          <span class="w6"><input class="inp" type="number"  v-model="doc['input']['R']['_val']"/></span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['R'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w14">Atmospheric Transmittivity</span>
+          <span class="w8">𝜏</span>
+          <span class="w6"><input class="inp" type="number"  v-model="doc['input']['tau']['_val']"/></span>
+          <span class="w6"></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['tau'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w14">Radiative Heat Fraction</span>
+          <span class="w8">F</span>
+          <span class="w6"><input class="inp" type="number"  v-model="doc['input']['F']['_val']"/></span>
+          <span class="w6"></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['F'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w1"></span>
+          <span class="w29">Refer Table 13 of API RP 521 for Guidance on F values to be used above</span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w14">Maximum Allowable Radiation </span>
+          <span class="w8">K</span>
+          <span class="w6"><input class="inp" type="number"  v-model="doc['input']['K']['_val']"/></span>
+          <span class="w6">[[ gUL('intensity') ]]</span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['K'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w1"></span>
+          <span class="w29">Refer Table 12 of API RP 521 for Guidance on K values to be used above</span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tbody >
+        <tr>
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+        <tr class="hideprint" style='border-top:0px;'>
+          <td style='border-left:0px;'></td>
+          <td colspan="8" style="text-align:center" >
+            <span class="w8">
+              <button class="button is-primary" @click="calculate" style="width:100%">Calculate</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="openModal('unitsModalisActive')" style="width:100%">Units</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="saveDoc()" style="width:100%">Save</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="openModal('uploadModalisActive')" style="width:100%">Load</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="pdf_download()" style="width:100%">PDF</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="launch_help" style="width:100%">Help</button>
+            </span>
+          </td>
+          <td style='border-right:0px;'></td>
+        </tr>
+        <tr style='border-top:0px;' class="hideprint">
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td style='border-top:0px;'colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+      </tbody>
+      <tbody v-if="doc['errors'].length > 0">
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger"><b>Errors</b></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger" v-for = "err in doc['errors']">[[ err ]]</p>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Results</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w14">Flare Diameter</span>
+          <span class="w8">d</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'd', '_val']) ]]</span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w14">Heat Liberated</span>
+          <span class="w8">Q</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'Q', '_val']) ]]</span>
+          <span class="w6">[[ gUL('power') ]]</span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w14">Flame Length</span>
+          <span class="w8">L</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'L', '_val']) ]]</span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w14">Flame Distortion</span>
+          <span class="w8"></span>
+          <span class="w6"></span>
+          <span class="w6"></span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w1"></span>
+          <span class="w13">Vapor Volume Flow Rate</span>
+          <span class="w8">q<sub>vap</sub></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'q_vap', '_val']) ]]</span>
+          <span class="w6">[[ gUL('flow') ]]</span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w1"></span>
+          <span class="w13">Flare Tip Exit Velocity</span>
+          <span class="w8">U<sub>j</sub></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'Uj', '_val']) ]]</span>
+          <span class="w6">[[ gUL('speed') ]]</span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w1"></span>
+          <span class="w13">Parameter</span>
+          <span class="w8">U<sub>∞</sub>/U<sub>j</sub></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'Uinf_by_Uj', '_val']) ]]</span>
+          <span class="w6"></span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w1"></span>
+          <span class="w13">Parameter</span>
+          <span class="w8">Σ(Δy/L)</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'Sdy_by_L', '_val']) ]]</span>
+          <span class="w6"></span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w1"></span>
+          <span class="w13">Parameter</span>
+          <span class="w8">Σ(Δx/L)</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'Sdx_by_L', '_val']) ]]</span>
+          <span class="w6"></span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w22">Distances as per Figure C.1 of API RP 521</span>
+          <span class="w6"></span>
+          <span class="w6"></span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w1"></span>
+          <span class="w13">Distance</span>
+          <span class="w8">ΣΔy</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'Sdy', '_val']) ]]</span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w1"></span>
+          <span class="w13">Distance</span>
+          <span class="w8">ΣΔx</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'Sdx', '_val']) ]]</span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w1"></span>
+          <span class="w13">Distance</span>
+          <span class="w8">D</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'D', '_val']) ]]</span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w1"></span>
+          <span class="w13">Distance</span>
+          <span class="w8">R'</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'R_prime', '_val']) ]]</span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w1"></span>
+          <span class="w13">Distance</span>
+          <span class="w8">H'</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'H_prime', '_val']) ]]</span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w1"></span>
+          <span class="w13"><b>Flare Stack Height</b></span>
+          <span class="w8"><b>H</b></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'H', '_val']) ]]</span>
+          <span class="w6">[[ gUL('length') ]]</span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      </tbody>
+  </table>
+
+  <div style='page-break-after:always;'></div>
+  <table class="main ">
+    <thead>
+        <tr>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+        </tr>
+    </thead>
+    <tfoot>
+          <td colspan="10" style="text-align:right;">
+              <i>Calculation Performed at www.codecalculation.com</i>
+          </td>
+    </tfoot>
+    <tbody>
+      <tr>
+        <td></td>
+        <td colspan="8" text-align="center">
+          <img src={{ url_for('static', filename="images/document/mec/cal/flr/stk/API_RP521_FigureC1.png", _external=True)}} width="640">
+        </td>
+        <td>&nbsp;&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+</div>
+
+</div>
+
+{% endblock content %}
+
+{% block contributors %}
+<p>
+  <a href="//www.linkedin.com/in/aditya-bhushan-sarma-56a53434/">Aditya Bhushan Sharma</a>
+</p>
+{% endblock contributors %}
+
+{% block script_vueapp %}
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        delimiters : ['[[',']]'],
+        mixins: [app_common, app_doc],
+        data: {
+            doc : {{ doc | safe }},
+            fixed:{}
+        },
+        computed: {
+          d_basis : function(){
+            return this.doc['input']['d_basis']['_val'];
+          },
+        },
+        methods: {}
+    });
+</script>
+{% endblock script_vueapp %}

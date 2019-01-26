@@ -1,0 +1,43 @@
+{
+  "sub_url": "/calculate/electrical/lighting/candela2lumens",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Candela-Lumens Conversions",
+    "docInstance_title": "Candela-Lumens Conversions",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+
+  "sub_url": "/calculate/electrical/ups-battery/ups-Sizing",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "UPS Sizing Calculation",
+    "docInstance_title": "UPS Sizing Calculation",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+  },
+
+  "input": {
+    "ups_load_kW" : {"_val": "54.94"},
+    "lagging_pf" : {"_val": "0.8"},
+    "ups_load_kVA" : {"_val": "68.68"},
+    "ups_efficiency" : {"_val": "94"},
+    "design_margin" : {"_val": "25"}
+  },
+
+  "result": {
+    "ups_rating_kVA" : {"_val": ""}
+  },
+
+  "errors": []
+}

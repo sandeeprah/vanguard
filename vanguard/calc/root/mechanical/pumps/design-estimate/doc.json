@@ -1,0 +1,42 @@
+{
+  "sub_url": "/calculate/mechanical/pumps/design-estimate",
+  "meta": {
+    "project_no": "0000",
+    "project_title": "Local",
+    "docClass_code": "aaa",
+    "docClass_title": "Pump Design Estimation",
+    "docInstance_title": "Pump Design Estimation",
+    "doc_no":"0000-MEC-CAL-PMP-EST-01",
+    "rev": "A",
+    "date":""
+  },
+
+  "units": {
+    "mass":"kg",
+    "flow":"m3/hr",
+    "length":"m",
+    "speed":"m/s",
+    "density":"kg/m3",
+    "power": "kW",
+    "dynViscosity":"cP"
+  },
+
+  "input": {
+    "Q" : {"_val":"100", "_dim":"flow"},
+    "H": {"_val":"40", "_dim":"length"},
+    "rho": {"_val":"1000","_dim":"density"},
+    "mu": {"_val":"1","_dim":"dynViscosity"},
+    "design_type": {"_val":"OH"},
+    "poles": {"_val":"2"},
+    "frequency": {"_val":"50"}
+  },
+
+  "result": {
+    "eta": {"_val":""},
+    "d2": {"_val":"", "_dim":"length"},
+    "P": {"_val":"", "_dim":"power"},
+    "Nq":{"_val":""}
+  },
+
+  "errors": []
+}

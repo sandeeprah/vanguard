@@ -1,0 +1,54 @@
+{
+  "sub_url": "/calculate/mechanical/psychrometry/humid-air-props",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Humid Air Properties",
+    "docInstance_title": "Humid Air Properties",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length": "m",
+    "pressure": "bar",
+    "temperature": "C",
+    "molecularMass" : "kg/mol",
+    "density":"kg/m3",
+    "specificVolume":"m3/kg",
+    "specificEnergy":"J/kg",
+    "specificHeat":"J/kg.K",
+    "specificHeatMolar":"J/mol.K",
+    "dynViscosity":"Pa.s",
+    "thermalConductivity":"W/m.K"
+  },
+
+  "input": {
+    "calculation_option" : {"_val":"Tdb_RH_P"},
+    "Tdb": {"_val":"15", "_dim":"temperature"},
+    "P": {"_val":"1", "_dim":"pressure"},
+    "W": {"_val":"0.6"},
+    "RH": {"_val":"0"},
+    "Twb": {"_val":"", "_dim":"temperature"},
+    "Tdp": {"_val":"", "_dim":"temperature"},
+    "h": {"_val":"", "_dim":"specificEnergy"}
+  },
+
+  "result": {
+    "RH": {"_val":""},
+    "Twb": {"_val":"", "_dim":"temperature"},
+    "Tdp": {"_val":"", "_dim":"temperature"},
+    "W": {"_val":""},
+    "rho": {"_val":"", "_dim":"density"},
+    "v": {"_val":"", "_dim":"specificVolume"},
+    "h": {"_val":"", "_dim":"specificEnergy"},
+    "u": {"_val":"", "_dim":"specificEnergy"},
+    "s": {"_val":"", "_dim":"specificHeat"},
+    "Cp": {"_val":"", "_dim":"specificHeat"},
+    "Cp_ha": {"_val":"", "_dim":"specificHeat"}
+
+  },
+  "errors": []
+}

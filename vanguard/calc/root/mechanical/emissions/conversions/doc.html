@@ -1,0 +1,593 @@
+{% extends "document.html" %}
+
+{% block title %}Emission Measurement Conversions & Corrections{% endblock title %}
+
+{% block meta_description %}
+Convert emissions from ppm units to mg/m3 units, from wet basis to dry basis and perform corrections to reference Oxygen levels from measured Oxygen levels.
+{% endblock meta_description %}
+
+
+{% block meta_keywords %}
+emissions convert ppmv mg/Nm3 mg/Sm3 oxygen wet dry basis reference
+{% endblock meta_keywords %}
+
+{% block sharing %}
+<meta property='og:title' content='Emission Measurement Conversions & Corrections'/>
+<!--
+<meta property='og:image' content='http://www.codecalculation.com/static/images/thumbnail.png'/>
+-->
+<meta property='og:description' content='Online Calculation for NOx/SOx emission conversions and corrections'/>
+<meta property='og:url' content='https://www.codecalculation.com/calculations/mechanical/emissions/conversions/' />
+{% endblock sharing %}
+
+
+{% block content %}
+<div class="overflowme">
+
+<div class="datasheet">
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculations/">Calculations</a></li>
+      <li><a href="/calculations/mechanical/">Mechanical</a></li>
+      <li class="is-active"><a href="#">Emissions-Conversions</a></li>
+    </ul>
+  </nav>
+  <table class="main">
+    <thead>
+        <tr style='border-top:0px;'>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+        </tr>
+    </thead>
+    <tfoot>
+          <td colspan="10" style="text-align:right;">
+              <i>Calculation Performed at www.codecalculation.com</i>
+          </td>
+    </tfoot>
+    <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8" class="has-text-centered">
+            <h1 class="title is-5">[[ doc['meta']['docClass_title'] ]]</h1>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Project</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Project No:</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['project_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w8">Project Title:</span>
+          <span class="w36"><input class="inp" v-model="doc['meta']['project_title']"/></span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Document No:</span>
+          <span class="w16"><input class="inp" v-model="doc['meta']['doc_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Revision No:</span>
+          <span class="w4"><input class="inp" v-model="doc['meta']['rev']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Date :</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['date']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Inputs</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w14">Specie</span>
+          <span class="w14">
+            <select class="inp" v-model="doc['input']['specie']['_val']">
+              <option value="NOx">NOx(as NO2)</option>
+              <option value="SOx">SOx(as SO2)</option>
+              <option value="CO">CO</option>
+              <option value="Other">Other</option>
+            </select>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['specie'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="specie=='Other'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">MW of polluting specie</span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['MW']['_val']"/></span>
+          <span class="w6">[[gUL('molecularMass')]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['molecularMass'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Concentration</span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['concentration_measured']['_val']"/></span>
+          <span class="w6">
+            <select class="inp" v-model="doc['input']['from_units']['_val']">
+              <option value="ppmv">ppmv</option>
+              <option value="mg/Nm3">mg/Nm3</option>
+              <option value="mg/Sm3">mg/Sm3</option>
+            </select>
+          </span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['concentration_measured'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Sampling Basis</span>
+          <span class="w8">
+            <select class="inp" v-model="doc['input']['sampling_basis']['_val']">
+              <option value="wet">Wet</option>
+              <option value="dry">Dry</option>
+            </select>
+          </span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['sampl_basis'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="sampling_basis=='wet'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">H<sub>2</sub>O measured</span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['H2O_measured']['_val']"/></span>
+          <span class="w6">%</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['H2O_measured'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Apply oxygen correction</span>
+          <span class="w8">
+            <select class="inp" v-model="doc['input']['oxygen_correction']['_val']">
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['oxygen_correction'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="oxygen_correction=='yes'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">O<sub>2</sub> measured</span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['O2_measured']['_val']"/></span>
+          <span class="w6">%</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['O2_measured'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="oxygen_correction=='yes'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">O<sub>2</sub> reference</span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['O2_reference']['_val']"/></span>
+          <span class="w6">%</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['O2_reference'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="oxygen_correction=='yes'">
+        <td></td>
+        <td colspan="8">
+          <span class="has-text-info">O<sub>2</sub> reference levels are typically 3% for gaseous & liquid fuels, 6% for solid and 11% for waste incinerators. <b>Check statutory regulations.</b></span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Convert to </span>
+          <span class="w6">
+            <select class="inp" v-model="doc['input']['to_units']['_val']">
+              <option value="ppmv">ppmv</option>
+              <option value="mg/Nm3">mg/Nm3</option>
+              <option value="mg/Sm3">mg/Sm3</option>
+            </select>
+          </span>
+          <span class="w6"></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['to_units'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="get_Std">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Temperature @ stand.condns</span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Ts']['_val']"/></span>
+          <span class="w6">[[gUL('temperature')]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Ts'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="get_Std">
+        <td></td>
+        <td colspan="8">
+          <span class="w2"></span>
+          <span class="has-text-info">Reference condition of temperature for <i>mg/Sm3</i> units. Check as per statutory regulations</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="get_Std">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Pressure @ stand.condns</span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Ps']['_val']"/></span>
+          <span class="w6">[[gUL('pressure')]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Ps'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="get_Std">
+        <td></td>
+        <td colspan="8">
+          <span class="w2"></span>
+          <span class="has-text-info">Reference condition of pressure for <i>mg/Sm3</i> units. Check as per statutory regulations</span>
+        </td>
+        <td></td>
+      </tr>
+
+      </tbody>
+      <tbody >
+        <tr>
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+        <tr class="hideprint" style='border-top:0px;'>
+          <td style='border-left:0px;'></td>
+          <td colspan="8" style="text-align:center" >
+            <span class="w8">
+              <button class="button is-primary" @click="calculate" style="width:100%">Calculate</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="openModal('unitsModalisActive')" style="width:100%">Units</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="saveDoc()" style="width:100%">Save</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="openModal('uploadModalisActive')" style="width:100%">Load</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="pdf_download()" style="width:100%">PDF</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="launch_help" style="width:100%">Help</button>
+            </span>
+          </td>
+          <td style='border-right:0px;'></td>
+        </tr>
+        <tr style='border-top:0px;' class="hideprint">
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td style='border-top:0px;'colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+      </tbody>
+      <tbody v-if="doc['errors'].length > 0">
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger"><b>Errors</b></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger" v-for = "err in doc['errors']">[[ err ]]</p>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+
+      <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Results</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w20">Concentration Wet</span>
+          <span class="w8">C<sub>wet</sub></span>
+          <span class="w4 result">[[ retSilent(doc, ['result', 'concentration_wet', '_val']) ]]</span>
+          <span class="w4"> [[ retSilent(doc, ['result', 'units', '_val']) ]] </span>
+        </td>
+        <td colspan="3">
+          <p class="has-text-info">Refer Note-1</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w20">Moisture Correction Factor</span>
+          <span class="w8">F<sub>m</sub></span>
+          <span class="w4 result">[[ retSilent(doc, ['result', 'Fm', '_val']) ]]</span>
+          <span class="w4"></span>
+        </td>
+        <td colspan="3">
+          <p class="has-text-info">Refer Note-2</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w20">Concentration Dry</span>
+          <span class="w8">C<sub>dry</sub></span>
+          <span class="w4 result">[[ retSilent(doc, ['result', 'concentration_dry', '_val']) ]]</span>
+          <span class="w4"> [[ retSilent(doc, ['result', 'units', '_val']) ]] </span>
+        </td>
+        <td colspan="3">
+          <p class="has-text-info">Refer Note-3</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="oxygen_correction=='yes'">
+        <td></td>
+        <td colspan="5">
+          <span class="w20">O2 measured Dry</span>
+          <span class="w8">O<sub>2_dry</sub></span>
+          <span class="w4 result">[[ retSilent(doc, ['result', 'O2_measured_dry', '_val']) ]]</span>
+          <span class="w4"> [[ retSilent(doc, ['result', 'units', '_val']) ]] </span>
+        </td>
+        <td colspan="3">
+          <p class="has-text-info">Refer Note-4</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w20">Oxygen Correction Factor</span>
+          <span class="w8">F<sub>o</sub></span>
+          <span class="w4 result">[[ retSilent(doc, ['result', 'Fo', '_val']) ]]</span>
+          <span class="w4"></span>
+        </td>
+        <td colspan="3">
+          <p class="has-text-info">Refer Note-5</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w20"><b>Concentration Dry & O2 Corrected</b></span>
+          <span class="w8"><b>C<sub>dry_O2corr</sub></b></span>
+          <span class="w4 result">[[ retSilent(doc, ['result', 'concentration_dry_corrected', '_val']) ]]</span>
+          <span class="w4"> [[ retSilent(doc, ['result', 'units', '_val']) ]] </span>
+        </td>
+        <td colspan="3">
+          <p class="has-text-info">Refer Note-6</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span>Notes:</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span>The following equations have been used in conversions</span>
+          <span class="has-text-info">(Refer Air Monitoring Guide - Note2 by US EPA)</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span>&nbsp;&nbsp;1) Concentration(mg/Nm3) = Concentration(ppmv)*MW/MolarVolume, where MW is in gm/mol and MolarVolume is 22.41 litres @ NTP</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MW for NOx (as NO<sub>2</sub>) is 46.0, SOx (as SO<sub>2</sub>) is 64.1, CO is 28.01</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Concentration(mg/Sm3) = Concentration(mg/Nm3)*(273.15/Tstandard)*(Pstandard/101.325)</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>mg/Nm3</b> is defined at T=273.15K, P = 101.325kPa. <b>mg/Sm3</b> is defined at Tstandard(K) and Pstandard(kPa) as per regulations.</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span>&nbsp;&nbsp;2) Moisture Correction Factor (F<sub>m</sub>) = 100/(100 - H<sub>2</sub>O measured%)</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span>&nbsp;&nbsp;3) Concentration Dry (C<sub>dry</sub>) = Concentration Wet(C<sub>wet</sub>)*F<sub>m</sub></span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span>&nbsp;&nbsp;4) O2 measured Dry (O<sub>2_dry</sub>) = O2 measured(O<sub>2</sub>)*F<sub>m</sub></span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span>&nbsp;&nbsp;5) Oxygen Correction Factor (F<sub>o</sub>) = (20.9 - O<sub>2</sub> reference%)/(20.9 - O<sub>2</sub> measured Dry%)</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span>&nbsp;&nbsp;6) Concentration Dry and Corrected (C<sub>dry_O2corr</sub>) = Concentration Dry(C<sub>dry</sub>)*F<sub>o</sub></span>
+        </td>
+        <td></td>
+      </tr>
+      </tbody>
+  </table>
+</div>
+</div>
+
+{% endblock content %}
+
+{% block contributors %}
+<p>
+  <a href=""></a>
+</p>
+{% endblock contributors %}
+
+{% block script_vueapp %}
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        delimiters : ['[[',']]'],
+        mixins: [app_common, app_doc],
+        data: {
+            doc : {{ doc | safe }},
+            fixed:{}
+        },
+        computed: {
+          specie : function(){
+            var sp = this.doc['input']['specie']['_val'];
+            return sp;
+          },
+          sampling_basis : function(){
+            var sb = this.doc['input']['sampling_basis']['_val'];
+            return sb;
+          },
+          oxygen_correction : function(){
+            var oc = this.doc['input']['oxygen_correction']['_val'];
+            return oc;
+          },
+          get_Std : function(){
+            frm = this.doc['input']['from_units']['_val'];
+            to = this.doc['input']['to_units']['_val'];
+            Std_reqd = false;
+            if (frm=='mg/Sm3'){
+              Std_reqd = true;
+            }
+            if (to=='mg/Sm3'){
+              Std_reqd = true;
+            }
+            if ((frm=='mg/Sm3') && (to=='mg/Sm3')){
+              Std_reqd = false;
+            }
+            return Std_reqd
+          }
+
+        },
+        methods: {}
+    });
+</script>
+{% endblock script_vueapp %}

@@ -1,0 +1,1774 @@
+{% extends "document.html" %}
+{% block title %}Pressure Vessel Thickness/MAWP/Weight Estimation (Internal Pressure)
+{% endblock title %}
+{% block meta_description %}
+Online calculation to obtain thickness, MAWP and estimated weight of pressure vessel under internal design pressure in accordance with ASME Section VIII Div-1. The calculation supports cylindrical and spherical shapes for the shell and ellipsoidal, torispherical, hemispherical, conical and toriconical heads.
+{% endblock meta_description %}
+{% block meta_keywords %} pressure vessel shell thickness UG-27 ASME Section-VIII Div-1
+{% endblock meta_keywords %}
+{% block sharing %}
+<meta property='og:title' content='Pressure Vessel Thickness/MAWP/Weight Estimation (Internal Pressure)' />
+<meta property='og:image' content='http://docs.codecalculation.com/_images/vessel.jpg'/>
+<meta property='og:description' content='Online calculation to obtain thickness, MAWP and estimated weight of pressure vessel under internal design pressure in accordance with ASME Section VIII Div-1. The calculation supports cylindrical and spherical shapes for the shell and ellipsoidal, torispherical, hemispherical, conical and toriconical heads.'/>
+<meta property='og:url' content='https://www.codecalculation.com/calculations/mechanical/pressure-vessel/thickness-calculation-pressure/' />
+{% endblock sharing %}
+{% block content %}
+<div class="overflowme">
+  <div class="datasheet">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/calculations/">Calculations</a></li>
+        <li><a href="/calculations/mechanical/">Mechanical</a></li>
+        <li class="is-active"><a href="#">Vessel-Thickness</a></li>
+      </ul>
+    </nav>
+    <table class="main">
+      <thead>
+      <tr style='border-top:0px;'>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <td colspan="10" style="text-align:right;">
+          <i>Calculation Performed at www.codecalculation.com</i>
+        </td>
+      </tfoot>
+      <tbody>
+        <tr class="section_title">
+          <td></td>
+          <td colspan="8" class="has-text-centered">
+            <h1 class="title is-5">[[ doc['meta']['docClass_title'] ]]</h1>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+        <tr class="section_title">
+          <td></td>
+          <td colspan="8">
+            <h2 class="title is-6">Project</h2>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w8">Project No:</span>
+            <span class="w8"><input class="inp" v-model="doc['meta']['project_no']"/></span>
+          </td>
+          <td colspan="4">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="6">
+            <span class="w8">Project Title:</span>
+            <span class="w36"><input class="inp" v-model="doc['meta']['project_title']"/></span>
+          </td>
+          <td colspan="2">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w8">Document No:</span>
+            <span class="w16"><input class="inp" v-model="doc['meta']['doc_no']"/></span>
+          </td>
+          <td colspan="4">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w8">Revision No:</span>
+            <span class="w4"><input class="inp" v-model="doc['meta']['rev']"/></span>
+          </td>
+          <td colspan="4">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w8">Date :</span>
+            <span class="w8"><input class="inp" v-model="doc['meta']['date']"/></span>
+          </td>
+          <td colspan="4">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+        <tr class="section_title">
+          <td></td>
+          <td colspan="8">
+            <h2 class="title is-6">Inputs</h2>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w14">Vessel Shape</span>
+            <span></span>
+            <span class="w12">
+            <select class="inp" v-model="doc['input']['Shape']['_val']">
+              <option value="cylindrical">Cylindrical</option>
+              <option value="spherical">Spherical</option>
+            </select>
+          </span>
+            <span class="w6"></span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['Shape'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="Shape=='cylindrical'">
+          <td></td>
+          <td colspan="5">
+            <span class="w14">Vessel Orientation</span>
+            <span></span>
+            <span class="w12">
+            <select class="inp" v-model="doc['input']['Orientation']['_val']">
+              <option value="horizontal">Horizontal</option>
+              <option value="vertical">Vertical</option>
+            </select>
+          </span>
+            <span class="w6"></span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['Orientation'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w14">Shell Diameter given as </span>
+            <span></span>
+            <span class="w12">
+            <select class="inp" v-model="doc['input']['D_basis']['_val']">
+              <option value="inner">Inner Diameter</option>
+              <option value="outer">Outer Diameter</option>
+            </select>
+          </span>
+            <span class="w6"></span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['D_basis'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="D_basis=='inner'">
+          <td></td>
+          <td colspan="5">
+            <span class="w14">Shell Inner Diameter</span>
+            <span class="w4"><i>D</i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['D']['_val']"/></span>
+            <span class="w6">[[gUL('length')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['D'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="D_basis=='outer'">
+          <td></td>
+          <td colspan="5">
+            <span class="w14">Shell Outer Diameter</span>
+            <span class="w4"><i>D<sub>o</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Do']['_val']"/></span>
+            <span class="w6">[[gUL('length')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['Do'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="Shape=='cylindrical'">
+          <td></td>
+          <td colspan="5">
+            <span class="w14">Shell Length (TL to TL)</span>
+            <span class="w4"><i>Z</i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Z']['_val']"/></span>
+            <span class="w6">[[gUL('length')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['Z'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w14">Internal Design Pressure </span>
+            <span class="w4"><i>P<sub>i</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Pi']['_val']"/></span>
+            <span class="w6">[[gUL('pressure')]]g</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['Pi'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w14">Internal Design Temperature </span>
+            <span class="w4"><i>T<sub>i</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Ti']['_val']"/></span>
+            <span class="w6">[[gUL('temperature')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['Ti'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w14">Hydrostatic Test Temperature </span>
+            <span class="w4"><i>T<sub>t</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Tt']['_val']"/></span>
+            <span class="w6">[[gUL('temperature')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['Tt'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+
+        <!--
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w14">Design for Full Vacuum</span>
+            <span></span>
+            <span class="w12">
+            <select class="inp" v-model="doc['input']['full_vacuum']['_val']">
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </span>
+            <span class="w6"></span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['full_vacuum'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+      -->
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w14">Corrosion Allowance</span>
+            <span class="w4"><i>ca</i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['ca']['_val']"/></span>
+            <span class="w6">[[gUL('length')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['ca'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="Shape=='spherical'">
+          <td></td>
+          <td colspan="5">
+            <span class="w14">Joint Efficiency</span>
+            <span class="w4"><i>E</i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['E']['_val']"/></span>
+            <span class="w6"></span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['E'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="Shape=='cylindrical'">
+          <td></td>
+          <td colspan="5">
+            <span class="w14">Circumferential Joint Efficiency</span>
+            <span class="w4"><i>E<sub>c</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Ec']['_val']"/></span>
+            <span class="w6"></span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['Ec'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="Shape=='cylindrical'">
+          <td></td>
+          <td colspan="5">
+            <span class="w14">Longitudinal Joint Efficiency</span>
+            <span class="w4"><i>E<sub>l</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['El']['_val']"/></span>
+            <span class="w6"></span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['El'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w14">Material of Construction</span>
+            <span></span>
+            <span class="w12" style="vertical-align:top">
+            <select class="inp" v-model="doc['input']['MOC']['_val']">
+              <option value="SA285-GrC">SA-285 Grade C</option>
+              <option value="SA516-Gr55">SA-516 Grade 55</option>
+              <option value="SA516-Gr60">SA-516 Grade 60</option>
+              <option value="SA516-Gr70">SA-516 Grade 70</option>
+              <option value="SA240-Tp304L">SA-240 Type 304L</option>
+              <option value="SA240-Tp316L">SA-240 Type 316L</option>
+              <option value="Other">Other</option>
+            </select>
+          </span>
+            <span class="w6"></span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['MOC'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="MOC=='Other'">
+          <td></td>
+          <td colspan="5">
+            <span class="w14">Max Allowable Stress @ T<sub>i</sub></span>
+            <span class="w4"><i>S</i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['S']['_val']"/></span>
+            <span class="w6">[[gUL('pressure')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['S'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="MOC=='Other'">
+          <td></td>
+          <td colspan="5">
+            <span class="w14">Max Allowable Stress @ T<sub>t</sub></span>
+            <span class="w4"><i>S<sub>t</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['St']['_val']"/></span>
+            <span class="w6">[[gUL('pressure')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['St'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w14">Shell Thickness Provided</span>
+            <span class="w4"><i>t<sub>n</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['tn']['_val']"/></span>
+            <span class="w6">[[gUL('length')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['tn'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tbody v-show="Shape=='cylindrical'">
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w14">Head -<span v-show="Orientation=='horizontal'">Side 1</span><span v-show="Orientation=='vertical'">Top</span></span>
+            <span></span>
+            <span class="w12">
+            <select class="inp" v-model="doc['input']['Head1']['_val']">
+              <option value="ellipsoidal">Ellipsoidal</option>
+              <option value="torispherical">Torispherical</option>
+              <option value="hemispherical">Hemispherical</option>
+              <option value="conical">Conical</option>
+              <option value="toriconical">Toriconical</option>
+            </select>
+          </span>
+            <span class="w6"></span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['Head1'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="text-align:right"></td>
+          <td colspan="8">
+            <img src="http://docs.codecalculation.com/_images/ellipsoidal.png" style="height:200px;" v-show="Head1=='ellipsoidal'"></img>
+            <img src="http://docs.codecalculation.com/_images/torispherical.png" style="height:200px;" v-show="Head1=='torispherical'"></img>
+            <img src="http://docs.codecalculation.com/_images/hemispherical.png" style="height:200px;" v-show="Head1=='hemispherical'"></img>
+            <img src="http://docs.codecalculation.com/_images/conical.png" style="height:200px;" v-show="Head1=='conical'"></img>
+            <img src="http://docs.codecalculation.com/_images/toriconical.png" style="height:200px;" v-show="Head1=='toriconical'"></img>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="Head1=='ellipsoidal'">
+          <td style="text-align:right">a)</td>
+          <td colspan="5">
+            <span class="w2"></span>
+            <span class="w12">Aspect Ratio (β)</span>
+            <span class="w4"><i>D<sub>1</sub>/2h<sub>1</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['beta1']['_val']"/></span>
+            <span class="w6"></span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['beta1'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="Head1=='torispherical'">
+          <td style="text-align:right">b)</td>
+          <td colspan="5">
+            <span class="w2"></span>
+            <span class="w12">Inner Crown Radius</span>
+            <span class="w4"><i>L<sub>1</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['L1']['_val']"/></span>
+            <span class="w6">[[gUL('length')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['L1'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="Head1=='torispherical'||Head1=='toriconical'">
+          <td style="text-align:right">c)</td>
+          <td colspan="5">
+            <span class="w2"></span>
+            <span class="w12">Knuckle Radius</span>
+            <span class="w4"><i>r<sub>1</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['r1']['_val']"/></span>
+            <span class="w6">[[gUL('length')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['r1'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="Head1=='conical'||Head1=='toriconical'">
+          <td style="text-align:right">d)</td>
+          <td colspan="5">
+            <span class="w2"></span>
+            <span class="w12">Half apex angle</span>
+            <span class="w4"><i>α<sub>1</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['alpha1']['_val']"/></span>
+            <span class="w6">[[gUL('angle')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['alpha1'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="text-align:right">e)</td>
+          <td colspan="5">
+            <span class="w2"></span>
+            <span class="w12">Thickness Provided</span>
+            <span class="w4"><i>t<sub>n1</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['tn1']['_val']"/></span>
+            <span class="w6">[[gUL('length')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['tn1'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w14">Head -<span v-show="Orientation=='horizontal'">Side 2</span><span v-show="Orientation=='vertical'">Bottom</span></span>
+            <span></span>
+            <span class="w12">
+            <select class="inp" v-model="doc['input']['Head2']['_val']">
+              <option value="ellipsoidal">Ellipsoidal</option>
+              <option value="torispherical">Torispherical</option>
+              <option value="hemispherical">Hemispherical</option>
+              <option value="conical">Conical</option>
+              <option value="toriconical">Toriconical</option>
+            </select>
+          </span>
+            <span class="w6"></span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['Head2'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="text-align:right"></td>
+          <td colspan="8">
+            <img src="http://docs.codecalculation.com/_images/ellipsoidal.png" style="height:200px;" v-show="Head2=='ellipsoidal'"></img>
+            <img src="http://docs.codecalculation.com/_images/torispherical.png" style="height:200px;" v-show="Head2=='torispherical'"></img>
+            <img src="http://docs.codecalculation.com/_images/hemispherical.png" style="height:200px;" v-show="Head2=='hemispherical'"></img>
+            <img src="http://docs.codecalculation.com/_images/conical.png" style="height:200px;" v-show="Head2=='conical'"></img>
+            <img src="http://docs.codecalculation.com/_images/toriconical.png" style="height:200px;" v-show="Head2=='toriconical'"></img>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="Head2=='ellipsoidal'">
+          <td style="text-align:right">a)</td>
+          <td colspan="5">
+            <span class="w2"></span>
+            <span class="w12">Aspect Ratio (β)</span>
+            <span class="w4"><i>D<sub>2</sub>/2h<sub>2</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['beta2']['_val']"/></span>
+            <span class="w6"></span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['beta2'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="Head2=='torispherical'">
+          <td style="text-align:right">b)</td>
+          <td colspan="5">
+            <span class="w2"></span>
+            <span class="w12">Inner Crown Radius</span>
+            <span class="w4"><i>L<sub>2</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['L2']['_val']"/></span>
+            <span class="w6">[[gUL('length')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['L2'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="Head2=='torispherical'||Head2=='toriconical'">
+          <td style="text-align:right">c)</td>
+          <td colspan="5">
+            <span class="w2"></span>
+            <span class="w12">Knuckle Radius</span>
+            <span class="w4"><i>r<sub>2</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['r2']['_val']"/></span>
+            <span class="w6">[[gUL('length')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['r2'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="Head2=='conical'||Head2=='toriconical'">
+          <td style="text-align:right">d)</td>
+          <td colspan="5">
+            <span class="w2"></span>
+            <span class="w12">Half apex angle</span>
+            <span class="w4"><i>α<sub>2</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['alpha2']['_val']"/></span>
+            <span class="w6">[[gUL('angle')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['alpha2'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="text-align:right">e)</td>
+          <td colspan="5">
+            <span class="w2"></span>
+            <span class="w12">Thickness Provided</span>
+            <span class="w4"><i>t<sub>n2</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['tn2']['_val']"/></span>
+            <span class="w6">[[gUL('length')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['tn2'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr>
+          <td></td>
+          <td colspan="6">
+            <span></span>
+            <span class="w24">Markup Weight(Nozzle/Support/Insulation etc)</span>
+            <span class="w4"><i>ζ</i></span>
+            <span class="w6">
+              <input class="inp" type="number" type="number" v-model="doc['input']['zeta']['_val']"/></span>
+            <span class="w6">%</span>
+          </td>
+          <td colspan="2">
+            <p class="help is-danger" v-for="err in getErrs(['zeta'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tbody >
+        <tr>
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+        <tr class="hideprint" style='border-top:0px;'>
+          <td style='border-left:0px;'></td>
+          <td colspan="8" style="text-align:center" >
+            <span class="w8">
+              <button class="button is-primary" @click="calculate" style="width:100%">Calculate</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="openModal('unitsModalisActive')" style="width:100%">Units</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="saveDoc()" style="width:100%">Save</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="openModal('uploadModalisActive')" style="width:100%">Load</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="pdf_download()" style="width:100%">PDF</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="launch_help" style="width:100%">Help</button>
+            </span>
+          </td>
+          <td style='border-right:0px;'></td>
+        </tr>
+        <tr style='border-top:0px;' class="hideprint">
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td style='border-top:0px;'colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+      </tbody>
+
+      <tbody v-if="doc['errors'].length > 0">
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger"><b>Errors</b></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger" v-for="err in doc['errors']">[[ err ]]</p>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr class="section_title">
+          <td></td>
+          <td colspan="8">
+            <h2 class="title is-6">Results</h2>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <span class="w20"><strong>General</strong></span>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="6">
+            <span></span>
+            <span class="w20">Maximum Allowable Stress @ T<sub>i</sub></span>
+            <span class="w10"><i>S</i></span>
+            <span class="w6 result">[[ retSilent(doc, ['result', 'S', '_val']) ]]</span>
+            <span class="w4">[[gUL('pressure')]]</span>
+          </td>
+          <td colspan="2">
+            <p class="has-text-info"></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="6">
+            <span></span>
+            <span class="w20">Maximum Allowable Stress @ T<sub>t</sub></span>
+            <span class="w10"><i>S<sub>t</sub></i></span>
+            <span class="w6 result">[[ retSilent(doc, ['result', 'St', '_val']) ]]</span>
+            <span class="w4">[[gUL('pressure')]]</span>
+          </td>
+          <td colspan="2">
+            <p class="has-text-info"></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="6">
+            <span></span>
+            <span class="w20">Min required thickness as per UG-16</span>
+            <span class="w10">t<sub>u</sub></span>
+            <span class="w6 result">[[ retSilent(doc, ['result', 'tu', '_val']) ]]</span>
+            <span class="w4">[[gUL('length')]]</span>
+          </td>
+          <td colspan="2">
+            <p class="has-text-info"></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <span class="w20"><strong>Shell Evaluation (Internal Pressure)</strong></span>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="6">
+            <span></span>
+            <span class="w20">Inner Diameter</span>
+            <span class="w10">
+              <span v-show="D_basis=='inner'">
+                <i>D</i>
+              </span>
+              <span v-show="D_basis=='outer'">
+                <i>D=D<sub>o</sub>-2t<sub>n</sub></i>
+              </span>
+            </span>
+            <span class="w6 result">[[ retSilent(doc, ['result', 'D', '_val']) ]]</span>
+            <span class="w4">[[gUL('length')]]</span>
+          </td>
+          <td colspan="2">
+            <p class="has-text-info"></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="6">
+            <span></span>
+            <span class="w20">Outer Diameter</span>
+            <span class="w10">
+              <span v-show="D_basis=='inner'">
+                <i>D<sub>o</sub>= D+2t<sub>n</sub></i>
+              </span>
+              <span v-show="D_basis=='outer'">
+                <i>D<sub>o</sub></i>
+              </span>
+            </span>
+            <span class="w6 result">[[ retSilent(doc, ['result', 'Do', '_val']) ]]</span>
+            <span class="w4">[[gUL('length')]]</span>
+          </td>
+          <td colspan="2">
+            <p class="has-text-info"></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="6">
+            <span></span>
+            <span class="w20">Inner Radius (Corroded)</span>
+            <span class="w10">
+              <i>R<sub>cor</sub> = D/2 - ca</i>
+            </span>
+            <span class="w6 result">[[ retSilent(doc, ['result', 'Rcor', '_val']) ]]</span>
+            <span class="w4">[[gUL('length')]]</span>
+          </td>
+          <td colspan="2">
+            <p class="has-text-info"></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="6">
+            <span></span>
+            <span class="w20">Thickness Available (Corroded)</span>
+            <span class="w10">t<sub>cor</sub> = t<sub>n</sub> - ca</span>
+            <span class="w6 result">[[ retSilent(doc, ['result', 'tcor', '_val']) ]]</span>
+            <span class="w4">[[gUL('length')]]</span>
+          </td>
+          <td colspan="2">
+            <p class="has-text-info"></p>
+          </td>
+          <td></td>
+        </tr>
+        <tbody v-show="Shape=='cylindrical'">
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w30"><em>Cylindrical Shell Circumferential Stress Evaluation</em></span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Pressure Condition</span>
+              <span class="w10"><i>P<0.385SE</i></sub></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'condn_Pc', '_val']) ]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Thickness (Circumferential Stress)</span>
+              <span class="w10"><i>t<sub>c</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'tc', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info">[[ retSilent(doc, ['result', 'eqn_ref_tc', '_val']) ]]</p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Thickness Condition</span>
+              <span class="w10">t<sub>cor</sub>< R<sub>cor</sub>/2</span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'condn_tc', '_val']) ]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">MAWP (Circumferential Stress)</span>
+              <span class="w10"><i>MAWP<sub>c</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'MAWPc', '_val']) ]]</span>
+              <span class="w6">[[gUL('pressure')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info">[[ retSilent(doc, ['result', 'eqn_ref_pc', '_val']) ]]</p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w30"><em>Cylindrical Shell Longitudinal Stress Evaluation</em></span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Pressure Condition</span>
+              <span class="w10"><i>P<1.25SE</i></sub></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'condn_Pl', '_val']) ]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Thickness (Longitudinal Stress)</span>
+              <span class="w10"><i>t<sub>l</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'tl', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info">[[ retSilent(doc, ['result', 'eqn_ref_tl', '_val']) ]]</p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Thickness Condition</span>
+              <span class="w10">t<sub>cor</sub>< R<sub>cor</sub>/2</span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'condn_tl', '_val']) ]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">MAWP (Longitudinal Stress)</span>
+              <span class="w10"><i>MAWP<sub>l</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'MAWPl', '_val']) ]]</span>
+              <span class="w6">[[gUL('pressure')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info">[[ retSilent(doc, ['result', 'eqn_ref_pl', '_val']) ]]</p>
+            </td>
+            <td></td>
+          </tr>
+        </tbody>
+        <tbody v-show="Shape=='spherical'">
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w30"><em>Spherical Shell Stress Evaluation</em></span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Pressure Condition</span>
+              <span class="w10"><i>P<0.665SE</i></sub></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'condn_Ps', '_val']) ]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Thickness</span>
+              <span class="w10"><i>t<sub>s</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'ts', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info">[[ retSilent(doc, ['result', 'eqn_ref_ts', '_val']) ]]</p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Thickness Condition</span>
+              <span class="w10">t<sub>cor</sub>< 0.356R<sub>cor</sub></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'condn_ts', '_val']) ]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">MAWP</span>
+              <span class="w10"><i>MAWP<sub>s</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'MAWPs', '_val']) ]]</span>
+              <span class="w6">[[gUL('pressure')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info">[[ retSilent(doc, ['result', 'eqn_ref_ps', '_val']) ]]</p>
+            </td>
+            <td></td>
+          </tr>
+        </tbody>
+        <tr>
+          <td></td>
+          <td colspan="6">
+            <span></span>
+            <span class="w20">Required Thickness excl. CA</span>
+            <span class="w10"><i>t</i></span>
+            <span class="w6 result">[[ retSilent(doc, ['result', 't', '_val']) ]]</span>
+            <span class="w6">[[gUL('length')]]</span>
+          </td>
+          <td colspan="2">
+            <p class="has-text-info" v-show="Shape=='cylindrical'">max of <i>t<sub>c</sub></i>,<i>t<sub>l</sub></i> & <i>t<sub>u</sub></i> </p>
+            <p class="has-text-info" v-show="Shape=='spherical'">max of <i>t<sub>s</sub></i> & <i>t<sub>u</sub></i> </p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="6">
+            <span></span>
+            <span class="w20">Required Thickness</span>
+            <span class="w10"><i>t<sub>r</sub>=t+ca</i></span>
+            <span class="w6 result">[[ retSilent(doc, ['result', 'tr', '_val']) ]]</span>
+            <span class="w6">[[gUL('length')]]</span>
+          </td>
+          <td colspan="2">
+            <p class="has-text-info"></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="6">
+            <span></span>
+            <span class="w20">Thickness Adequacy Check</span>
+            <span class="w10">t<sub>n</sub> >= t<sub>r</sub></span>
+            <span class="w6 result">[[ retSilent(doc, ['result', 'tn_adequate', '_val']) ]]</span>
+          </td>
+          <td colspan="2">
+            <p class="has-text-info"></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="Shape=='cylindrical'">
+          <td></td>
+          <td colspan="6">
+            <span></span>
+            <span class="w20">MAWP of Shell</span>
+            <span class="w10"><i>MAWP<sub>sh</sub></i></span>
+            <span class="w6 result">[[ retSilent(doc, ['result', 'MAWPsh', '_val']) ]]</span>
+            <span class="w6">[[gUL('pressure')]]</span>
+          </td>
+          <td colspan="2">
+            <p class="has-text-info">min of <i>MAWP<sub>c</sub></i> & <i>MAWP<sub>l</sub></i></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="6">
+            <span></span>
+            <span class="w20">Shell Fabrication Weight</span>
+            <span class="w10"><i>W<sub>sh</sub></i></span>
+            <span class="w6 result">[[ retSilent(doc, ['result', 'shell_weight', '_val']) ]]</span>
+            <span class="w6">[[gUL('mass')]]</span>
+          </td>
+          <td colspan="2">
+            <p class="has-text-info"></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="6">
+            <span></span>
+            <span class="w20">Shell Volume</span>
+            <span class="w10"><i>V<sub>sh</sub></i></span>
+            <span class="w6 result">[[ retSilent(doc, ['result', 'shell_volume', '_val']) ]]</span>
+            <span class="w6"></span>
+          </td>
+          <td colspan="2">
+            <p class="has-text-info"></p>
+          </td>
+          <td></td>
+        </tr>
+        </tbody>
+        <tbody v-show="Shape=='cylindrical'">
+          <tr>
+            <td></td>
+            <td colspan="8">
+              <span class="w20"><strong>Head Evaluation (Internal Pressure)</strong></span>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w30"><em>Head - <span v-show="Orientation=='horizontal'">Side 1</span><span v-show="Orientation=='vertical'">Top</span></em></span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Inner Diameter</span>
+              <span class="w10"><i>D<sub>1</sub>=D</i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'D1', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Outer Diameter</span>
+              <span class="w10"><i>D<sub>o1</sub>=D<sub>1</sub>+2t<sub>n1</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'Do1', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Thickness Available(corroded)</span>
+              <span class="w10"><i>t<sub>cor1</sub>=t<sub>n1</sub> - ca</i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'tcor1', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr v-show="Head1=='ellipsoidal'">
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">K Factor</span>
+              <span class="w10"><i>K<sub>cor1</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'Kcor1', '_val']) ]]</span>
+              <span class="w6"></span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr v-show="Head1=='toriconical'">
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Inner Dia (Cone) </span>
+              <span class="w10"><i>D<sub>i1</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'Di1', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr v-show="Head1=='toriconical'">
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Inner Crown Radius </span>
+              <span class="w10"><i>L<sub>1</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'L1', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr v-show="Head1=='torispherical' || Head1=='toriconical' ">
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">M Factor</span>
+              <span class="w10"><i>M<sub>cor1</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'Mcor1', '_val']) ]]</span>
+              <span class="w6"></span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr v-show="Head1=='hemispherical'">
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Pressure Condition</span>
+              <span class="w10"><i>P<sub>i</sub><=0.665SE</i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'condn_P1', '_val']) ]]</span>
+              <span class="w6"></span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr v-show="Head1=='toriconical'">
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Thickness Conical Part excl. CA</span>
+              <span class="w10"><i>t<sub>1</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'tcone1', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info">[[ retSilent(doc, ['result', 'eqn_ref_conet1', '_val']) ]]</p>
+            </td>
+            <td></td>
+          </tr>
+          <tr v-show="Head1=='toriconical'">
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Thickness Knuckle Part excl. CA</span>
+              <span class="w10"><i>t<sub>1</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'tknuckle1', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info">[[ retSilent(doc, ['result', 'eqn_ref_knucklet1', '_val']) ]]</p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Thickness calculated</span>
+              <span class="w10"><i>t<sub>h1</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'th1', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info">[[ retSilent(doc, ['result', 'eqn_ref_t1', '_val']) ]]</p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Reqd. Thickness excl. CA</span>
+              <span class="w10"><i>t<sub>1</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 't1', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info">max of t<sub>h1</sub> & t<sub>u</sub> </p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Reqd. Thickness incl. CA</span>
+              <span class="w10"><i>t<sub>r1</sub>=t<sub>1</sub>+ca</i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'tr1', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Thickness Adequacy Check</span>
+              <span class="w10"><i>t<sub>n1</sub> >= t<sub>r1</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'tn1_adequate', '_val']) ]]</span>
+              <span class="w6"></span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr v-show="Head1=='hemispherical'">
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Thickness Condition</span>
+              <span class="w10"><i>t<sub>cor1</sub><=0.356R<sub>cor1</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'condn_P1', '_val']) ]]</span>
+              <span class="w6"></span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">MAWP</span>
+              <span class="w10"><i>MAWP<sub>1</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'MAWP1', '_val']) ]]</span>
+              <span class="w6">[[gUL('pressure')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info">[[ retSilent(doc, ['result', 'eqn_ref_p1', '_val']) ]]</p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Head Weight</span>
+              <span class="w10"><i>W<sub>1</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'head1_weight', '_val']) ]]</span>
+              <span class="w6">[[gUL('mass')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Head Volume</span>
+              <span class="w10"><i>V<sub>1</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'V1', '_val']) ]]</span>
+              <span class="w6"></span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w30"><em>Head - <span v-show="Orientation=='horizontal'">Side 2</span><span v-show="Orientation=='vertical'">Top</span></em></span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Inner Diameter</span>
+              <span class="w10"><i>D<sub>2</sub>=D</i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'D2', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Outer Diameter</span>
+              <span class="w10"><i>D<sub>o2</sub>=D<sub>2</sub>+2t<sub>n2</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'Do2', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Thickness Available(corroded)</span>
+              <span class="w10"><i>t<sub>cor2</sub>=t<sub>n2</sub> - ca</i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'tcor2', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr v-show="Head1=='ellipsoidal'">
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">K Factor</span>
+              <span class="w10"><i>K<sub>cor2</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'Kcor2', '_val']) ]]</span>
+              <span class="w6"></span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr v-show="Head1=='toriconical'">
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Inner Dia (Cone) </span>
+              <span class="w10"><i>D<sub>i2</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'Di2', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr v-show="Head1=='toriconical'">
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Inner Crown Radius </span>
+              <span class="w10"><i>L<sub>2</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'L2', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr v-show="Head1=='torispherical' || Head1=='toriconical' ">
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">M Factor</span>
+              <span class="w10"><i>M<sub>cor2</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'Mcor2', '_val']) ]]</span>
+              <span class="w6"></span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr v-show="Head1=='hemispherical'">
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Pressure Condition</span>
+              <span class="w10"><i>P<sub>i</sub><=0.665SE</i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'condn_P2', '_val']) ]]</span>
+              <span class="w6"></span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr v-show="Head1=='toriconical'">
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Thickness Conical Part excl. CA</span>
+              <span class="w10"><i>t<sub>2</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'tcone2', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info">[[ retSilent(doc, ['result', 'eqn_ref_conet2', '_val']) ]]</p>
+            </td>
+            <td></td>
+          </tr>
+          <tr v-show="Head1=='toriconical'">
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Thickness Knuckle Part excl. CA</span>
+              <span class="w10"><i>t<sub>2</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'tknuckle2', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info">[[ retSilent(doc, ['result', 'eqn_ref_knucklet2', '_val']) ]]</p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Thickness calculated</span>
+              <span class="w10"><i>t<sub>h2</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'th2', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info">[[ retSilent(doc, ['result', 'eqn_ref_t2', '_val']) ]]</p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Reqd. Thickness excl. CA</span>
+              <span class="w10"><i>t<sub>2</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 't2', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info">max of t<sub>h2</sub> & t<sub>u</sub></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Reqd. Thickness incl. CA</span>
+              <span class="w10"><i>t<sub>r2</sub>=t<sub>2</sub>+ca</i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'tr2', '_val']) ]]</span>
+              <span class="w6">[[gUL('length')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Thickness Adequacy Check</span>
+              <span class="w10"><i>t<sub>n2</sub> >= t<sub>r2</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'tn2_adequate', '_val']) ]]</span>
+              <span class="w6"></span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr v-show="Head1=='hemispherical'">
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Thickness Condition</span>
+              <span class="w10"><i>t<sub>cor2</sub><=0.356R<sub>cor2</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'condn_P2', '_val']) ]]</span>
+              <span class="w6"></span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">MAWP</span>
+              <span class="w10"><i>MAWP<sub>2</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'MAWP2', '_val']) ]]</span>
+              <span class="w6">[[gUL('pressure')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info">[[ retSilent(doc, ['result', 'eqn_ref_p2', '_val']) ]]</p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Head Weight</span>
+              <span class="w10"><i>W<sub>2</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'head2_weight', '_val']) ]]</span>
+              <span class="w6">[[gUL('mass')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span class="w2"></span>
+              <span class="w18">Head Volume</span>
+              <span class="w10"><i>V<sub>2</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'V2', '_val']) ]]</span>
+              <span class="w6">[[gUL('volume')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <td></td>
+            <td colspan="8">
+              <span class="w20"><strong>Vessel Overall</strong></span>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span></span>
+              <span class="w20">MAWP</span>
+              <span class="w10"><i>MAWP</i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'MAWP', '_val']) ]]</span>
+              <span class="w6">[[gUL('pressure')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span></span>
+              <span class="w20">Hydrotest Pressure</span>
+              <span class="w10"><i>P<sub>t</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'Pt', '_val']) ]]</span>
+              <span class="w6">[[gUL('pressure')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info">UG-99(b)</p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span></span>
+              <span class="w20">Vessel Volume</span>
+              <span class="w10"><i>V</i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'vessel_volume', '_val']) ]]</span>
+              <span class="w6">[[gUL('volume')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span></span>
+              <span class="w20">Shell plus Heads Weight</span>
+              <span class="w10"><i>W<sub>sh</sub>+W<sub>1</sub>+W<sub>2</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'vslhd_weight', '_val']) ]]</span>
+              <span class="w6">[[gUL('mass')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span></span>
+              <span class="w20">Vessel Fabricated Weight</span>
+              <span class="w10"><i>W</i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'vessel_weight', '_val']) ]]</span>
+              <span class="w6">[[gUL('mass')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info">includes nozzle/support etc.</p>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <span></span>
+              <span class="w20">Vessel Hydrotest Weight</span>
+              <span class="w10"><i>W<sub>t</sub></i></span>
+              <span class="w6 result">[[ retSilent(doc, ['result', 'vessel_weight_hydrotest', '_val']) ]]</span>
+              <span class="w6">[[gUL('mass')]]</span>
+            </td>
+            <td colspan="2">
+              <p class="has-text-info"></p>
+            </td>
+            <td></td>
+          </tr>
+        </tbody>
+    </table>
+  </div>
+
+  <div class="datasheet" style="text-align:left;">
+  </div>
+
+
+</div>
+
+{% endblock content %}
+
+{% block contributors %}
+<p>
+  <a href="https://www.linkedin.com/in/rakesh-wani-61a55120/">Rakesh Wani</a>
+</p>
+{% endblock contributors %}
+
+{% block script_vueapp %}
+<script type="text/javascript">
+  var app = new Vue({
+    el: '#app',
+    delimiters: ['[[', ']]'],
+    mixins: [app_common, app_doc],
+    data: {
+      doc: {{doc | safe}},
+      fixed: {},
+      help_url:"http://docs.codecalculation.com/mechanical/pressure-vessel/thickness-calculation.html"
+    },
+    computed: {
+      Shape: function() {
+        var shp = this.doc['input']['Shape']['_val'];
+        return shp;
+      },
+      Orientation: function() {
+        var ortn = this.doc['input']['Orientation']['_val'];
+        return ortn;
+      },
+      D_basis: function() {
+        var dbs = this.doc['input']['D_basis']['_val'];
+        return dbs;
+      },
+      MOC: function() {
+        var matl = this.doc['input']['MOC']['_val'];
+        return matl;
+      },
+      Head1: function() {
+        var hd_a = this.doc['input']['Head1']['_val'];
+        return hd_a;
+      },
+      Head2: function() {
+        var hd_b = this.doc['input']['Head2']['_val'];
+        return hd_b;
+      }
+
+
+    },
+    methods: {}
+  });
+</script>
+{% endblock script_vueapp %}

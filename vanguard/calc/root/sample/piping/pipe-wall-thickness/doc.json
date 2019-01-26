@@ -1,0 +1,44 @@
+{
+  "sub_url": "/calculate/mechanical/piping/pipe-wall-thickness",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Pipe Wall Thickness Calculation (ASME B31.3)",
+    "docInstance_title": "Pipe Wall Thickness Calculation (ASME B31.3)",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length": "mm",
+    "pressure": "bar",
+    "temperature": "C"
+  },
+
+  "input": {
+    "calculation_option" : {"_val": "NPS"},
+    "NPS" : {"_val": "1"},
+    "d" : {"_val": "", "_dim":"length"},
+    "D" : {"_val": "", "_dim":"length"},
+    "Schedule" : {"_val":"XXS"},
+    "P" : {"_val": "230.98", "_dim":"pressure"},
+    "Tdesign" : {"_val": "83", "_dim":"temperature"},
+    "materialSpec":{"_val":"A106-B"},
+    "weldType" : {"_val" : "W0"},
+    "W" : {"_val" : "1"},
+    "ca" : {"_val" : "3", "_dim":"length"},
+    "h" : {"_val" : "0", "_dim":"length"},
+    "ut" : {"_val" : "12.5"}
+  },
+
+  "result": {
+    "NPS" : {"_val": ""},
+    "Di" : {"_val": "","_dim":"length"},
+    "Do" : {"_val": "","_dim":"length"},
+    "t" : {"_val":"","_dim":"length"}
+  },
+
+  "errors": []
+}

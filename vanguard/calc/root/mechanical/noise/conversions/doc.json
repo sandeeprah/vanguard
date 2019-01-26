@@ -1,0 +1,34 @@
+{
+  "sub_url": "/calculate/mechanical/noise/conversions",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Common Noise Conversions",
+    "docInstance_title": "Common Noise Conversions",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+
+  "units": {
+    "length": "m"
+  },
+
+  "input": {
+    "calculation_option" : {"_val":"calcSPL"},
+    "PWL" : {"_val": ""},
+    "SPL" : {"_val": ""},
+    "distance" : {"_val": "", "_dim":"length"},
+    "Q" : {"_val": "1"}
+  },
+
+  "result": {
+    "PWL" : {"_val": ""},
+    "SPL" : {"_val": ""},
+    "distance" : {"_val": "1", "_dim":"length"}
+  },
+
+  "errors": []
+}

@@ -3,7 +3,6 @@ from flask import request, render_template, jsonify, abort, make_response
 from vanguard import app
 from vanguard.calc import views
 
-
 @app.route('/')
 @app.route('/index/')
 def index():

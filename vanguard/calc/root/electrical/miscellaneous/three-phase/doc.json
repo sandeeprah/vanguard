@@ -1,0 +1,35 @@
+{
+  "sub_url": "/calculate/electrical/miscellaneous/three-phase",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Three Phase Parameter Calculation",
+    "docInstance_title": "Three Phase Parameter Calculation",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+  },
+
+  "input": {
+    "solve_using" : {"_val":"reactive_power"},
+    "VLL": {"_val":"400"},
+    "pf": {"_val":"0.8"},
+    "I": {"_val":"200"},
+    "kW": {"_val":"100"},
+    "kVA": {"_val":"100"},
+    "kVAr": {"_val":"100"}
+  },
+
+  "result": {
+    "I": {"_val":""},
+    "kW": {"_val":""},
+    "kVA": {"_val":""},
+    "kVAr": {"_val":""}
+  },
+
+  "errors": []
+}

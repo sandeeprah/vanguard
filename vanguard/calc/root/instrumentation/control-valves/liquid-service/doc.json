@@ -1,0 +1,50 @@
+{
+  "sub_url": "/calculate/instrumentation/control-valves/liquid-service",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Cv Calculation Control Valve - Liquid (IEC 60534)",
+    "docInstance_title": "Cv Calculation Control Valve - Liquid (IEC 60534)",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length_mili": "m",
+    "length": "m",
+    "pressure": "Pa",
+    "temperature": "C",
+    "flow": "m3/s",
+    "molecularMass" : "kg/mol",
+    "density":"kg/m3",
+    "specificVolume":"m3/kg",
+    "specificEnergy":"J/kg",
+    "specificHeat":"J/kg.K",
+    "specificHeatMolar":"J/mol.K",
+    "dynViscosity":"Pa.s",
+    "thermalConductivity":"W/m.K"
+  },
+
+  "input": {
+    "rho": {"_val":"965.4", "_dim":"density"},
+    "Psat": {"_val":"70.1e3", "_dim":"pressure"},
+    "Pc": {"_val":"22120e3", "_dim":"pressure"},
+    "mu": {"_val":"3.1472e-4", "_dim":"dynViscosity"},
+    "P1": {"_val":"680e3", "_dim":"pressure"},
+    "P2": {"_val":"220e3", "_dim":"pressure"},
+    "Q": {"_val":"0.1", "_dim":"flow"},
+    "D1": {"_val":"0.15", "_dim":"length_mili"},
+    "D2": {"_val":"0.15", "_dim":"length_mili"},
+    "d": {"_val":"0.15", "_dim":"length_mili"},
+    "FL": {"_val":"0.9"},
+    "Fd": {"_val":"0.46"}
+  },
+
+  "result": {
+    "Cmetric": {"_val":""}
+  },
+
+  "errors": []
+}

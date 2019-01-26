@@ -1,0 +1,310 @@
+{% extends "document.html" %}
+{% block title %}Viscosity Conversion{% endblock title %}
+
+{% block meta_description %}
+Calculation based on Hydraulic Institute Standard, ANSI/HI 9.6.7 Appendix A.
+Conversions of viscosity units between kinematic viscosity, dynamic viscosity and SSU viscosity units.
+{% endblock meta_description %}
+
+{% block meta_keywords %}
+viscosity conversion kinematic dynamic SSU density ANSI Hydraulic Institute HI 9.6.7 Appendix-A
+control valves sizing calculation gas service IEC 60534
+{% endblock meta_keywords %}
+
+{% block content %}
+<div style="overflow:auto;">
+<div class="datasheet">
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculations/">Calculations</a></li>
+      <li><a href="/calculations/mechanical/">Mechanical</a></li>
+      <li class="is-active"><a href="#">Viscosity Conversions</a></li>
+    </ul>
+  </nav>
+  <table class="main">
+    <thead>
+      <tr style='border-top:0px;'>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <td colspan="10" style="text-align:right;">
+        <i>Calculation Performed at www.codecalculation.com</i>
+      </td>
+    </tfoot>
+    <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8" class="has-text-centered">
+            <h1 class="title is-5">[[ doc['meta']['docClass_title'] ]]</h1>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Project</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Project No:</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['project_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w8">Project Title:</span>
+          <span class="w36"><input class="inp" v-model="doc['meta']['project_title']"/></span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Document No:</span>
+          <span class="w16"><input class="inp" v-model="doc['meta']['doc_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Revision No:</span>
+          <span class="w4"><input class="inp" v-model="doc['meta']['rev']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Date :</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['date']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Inputs</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w6">Convert</span>
+          <span class="w18">
+            <select   v-model="doc['input']['convert']['_val']">
+              <option value="nu2mu">Kinematic to Dynamic</option>
+              <option value="mu2nu">Dynamic to Kinematic</option>
+              <option value="nu2ssu">Kinematic to Kinematic (SSU)</option>
+              <option value="ssu2nu">Kinematic(SSU) to Kinematic</option>
+              <option value="mu2ssu">Dynamic to Kinematic(SSU)</option>
+              <option value="ssu2mu">Kinematic(SSU) to Dynamic</option>
+            </select>
+          </span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['convert'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="convert=='nu2mu' || convert=='nu2ssu'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Kinematic Viscosity</span>
+          <span class="w6"><input  type="number" v-model="doc['input']['nu']['_val']"/></span>
+          <span class="w6">[[ gUL('kinViscosity') ]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['nu'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr  v-show="convert=='mu2nu' || convert=='mu2ssu'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Dynamic Viscosity</span>
+          <span class="w6"><input  type="number" v-model="doc['input']['mu']['_val']"/></span>
+          <span class="w6">[[ gUL('dynViscosity') ]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['mu'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="convert=='ssu2nu' || convert=='ssu2mu'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Kinematic Viscosity (SSU)</span>
+          <span class="w6"><input  type="number" v-model="doc['input']['ssu']['_val']"/></span>
+          <span class="w6">SSU</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['ssu'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="convert=='nu2mu' || convert=='mu2nu' || convert=='ssu2mu'|| convert=='mu2ssu'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Density (Liquid)</span>
+          <span class="w6"><input  type="number" v-model="doc['input']['rho']['_val']"/></span>
+          <span class="w6">[[ gUL('density') ]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['rho'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody >
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="hideprint" style='border-top:0px;'>
+        <td style='border-left:0px;'></td>
+        <td colspan="8" style="text-align:center" >
+          <span class="w8">
+            <button class="button is-primary" @click="calculate" style="width:100%">Calculate</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="openModal('unitsModalisActive')" style="width:100%">Units</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="saveDoc()" style="width:100%">Save</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="openModal('uploadModalisActive')" style="width:100%">Load</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="pdf_download()" style="width:100%">PDF</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="launch_help" style="width:100%">Help</button>
+          </span>
+        </td>
+        <td style='border-right:0px;'></td>
+      </tr>
+      <tr style='border-top:0px;' class="hideprint">
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td style='border-top:0px;'colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+    </tbody>
+    <tbody v-if="doc['errors'].length > 0">
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <p class="help is-danger"><b>Errors</b></p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <p class="help is-danger" v-for="err in doc['errors']">[[ err ]]</p>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Results</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="convert=='ssu2nu' || convert=='mu2nu'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Kinematic Viscosity</span>
+          <span class="w4 result">[[ retSilent(doc, ['result','nu','_val']) ]]</span>
+          <span class="w4">[[ gUL('kinViscosity') ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="convert=='ssu2mu' || convert=='nu2mu'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Dynamic Viscosity</span>
+          <span class="w4 result">[[ retSilent(doc, ['result','mu','_val']) ]]</span>
+          <span class="w4">[[ gUL('dynViscosity') ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="convert=='nu2ssu' || convert=='mu2ssu'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Kinematic Viscosity (SSU)</span>
+          <span class="w4 result">[[ retSilent(doc, ['result','ssu','_val']) ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+{% endblock content %}
+{% block script_vueapp %}
+<script type="text/javascript">
+  var app = new Vue({
+    el: '#app',
+    delimiters: ['[[', ']]'],
+    mixins: [app_common, app_doc],
+    data: {
+      doc: {{doc | safe }},
+    },
+    computed: {
+      convert: function() {
+        return this.doc['input']['convert']['_val'];
+      }
+    },
+    methods: {}
+  });
+</script>
+{% endblock script_vueapp %}

@@ -1,0 +1,34 @@
+{
+  "sub_url": "/calculate/mechanical/piping/pipe-dimensions",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Nearest Pipe Dimensions to ANSI/ASME B36.10/19",
+    "docInstance_title": "Nearest Pipe Dimensions to ANSI/ASME B36.10/19",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length": "mm"
+  },
+
+  "input": {
+    "calculation_option" : {"_val": "NPS"},
+    "NPS" : {"_val": "1"},
+    "Di" : {"_val": "", "_dim":"length"},
+    "Do" : {"_val": "", "_dim":"length"},
+    "Schedule" : {"_val":"40"}
+  },
+
+  "result": {
+    "NPS" : {"_val": ""},
+    "Di" : {"_val": "","_dim":"length"},
+    "Do" : {"_val": "","_dim":"length"},
+    "t" : {"_val":"","_dim":"length"}
+  },
+
+  "errors": []
+}

@@ -1,0 +1,38 @@
+{
+  "sub_url": "/calculate/mechanical/compressors/fad-calculate",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Free Air Delivery (FAD) requirement for Air Compressor",
+    "docInstance_title": "Free Air Delivery (FAD) requirement for Air Compressor",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length": "m",
+    "pressure": "bar",
+    "temperature": "C",
+    "flow": "m3/hr",
+    "power": "kW",
+    "massflow": "kg/hr",
+    "molecularMass" : "kg/mol",
+    "density":"kg/m3"
+  },
+
+  "input": {
+    "Flow": {"_val":"1000", "_dim":"flow"},
+    "Pambient": {"_val":"1.013", "_dim":"pressure"},
+    "Tambient": {"_val":"45", "_dim":"temperature"},
+    "RHambient": {"_val":"90"}
+    },
+
+  "result": {
+    "FAD" : {"_val":"", "_dim":"flow"}
+  },
+
+
+  "errors": []
+}

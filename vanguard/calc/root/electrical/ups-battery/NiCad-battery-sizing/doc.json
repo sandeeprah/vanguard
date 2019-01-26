@@ -1,0 +1,52 @@
+{
+  "sub_url": "/calculate/electrical/ups-battery/NiCad-battery-sizing",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Ni-Cad Battery Sizing Calculation(IEEE 1115)",
+    "docInstance_title": "Ni-Cad Battery Sizing Calculation(IEEE 1115)",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+  },
+
+  "input": {
+    "Vmin" : {"_val": "105"},
+    "Vmax" : {"_val": "140"},
+    "Vnominal" : {"_val": "120"},
+    "loads_known" : [
+      {"load_desc":"L1", "load":"40",  "unit" : "A",  "begin":"0",     "end":"180"},
+      {"load_desc":"L2", "load":"280", "unit" : "A",  "begin":"0",     "end":"0.083"},
+      {"load_desc":"L3", "load":"60",  "unit" : "A",  "begin":"0.083", "end":"120"},
+      {"load_desc":"L4", "load":"100", "unit" : "A",  "begin":"30",    "end":"120"},
+      {"load_desc":"L5", "load":"80",  "unit" : "A",  "begin":"30",    "end":"60"},
+      {"load_desc":"L6", "load":"80",  "unit" : "A",  "begin":"179.41","end":"180"}
+      ],
+    "loads_random" : [
+      {"load_desc":"L7", "load":"100",  "unit" : "A",  "duration":"1"}
+      ],
+
+    "Vc_max" : {"_val": "1.47"},
+    "Tmax" : {"_val": "40"},
+    "Tmin" : {"_val": "0"},
+    "Tnominal" : {"_val": "25"},
+    "design_margin" : {"_val": "1.1"},
+    "aging_factor" : {"_val": "1.25"},
+    "cell_range" : {"_val": "M"},
+    "Ncell_basis" : {"_val": "max_possible"},
+    "Ncell_manual" : {"_val": ""}
+  },
+
+  "result": {
+    "AH_uncorrected" : {"_val": ""},
+    "AH_corrected" : {"_val": ""},
+    "Cell_selected" : {"_val": ""},
+    "AH_selected" : {"_val": ""}
+  },
+
+  "errors": []
+}

@@ -1,0 +1,83 @@
+{
+  "sub_url": "/calculate/mechanical/heater/efficiency-measurements",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Fired Heater - Measurement of Efficiency (API 560)",
+    "docInstance_title": "Fired Heater - Measurement of Efficiency (API 560)",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length": "m",
+    "mass": "kg",
+    "pressure": "bar",
+    "temperature": "C",
+    "massflow":"kg/hr",
+    "intensity":"kW/m2",
+    "molecularMass":"g/mol",
+    "energy":"kJ",
+    "specificEnergy":"kJ/kg",
+    "specificHeat":"kJ/kg.K",
+    "speed":"m/s",
+    "power":"kW",
+    "density":"kg/m3",
+    "flow":"m3/s"
+  },
+
+  "input": {
+    "Ta" : {"_val": "-2.2", "_dim":"temperature"},
+    "RH" : {"_val": "50"},
+    "flue_O2" : {"_val": "3.5"},
+    "sampling_basis" : {"_val": "wet"},
+    "loss_radiation" : {"_val": "2.5"},
+    "Texit" : {"_val": "148.9", "_dim":"temperature"},
+    "composition_type" : {"_val": "mole_percent"},
+    "gasfuel":[
+      {"fluid" : "Carbon", "percent" :"0"},
+      {"fluid" : "Hydrogen", "percent" :"3.82"},
+      {"fluid" : "Oxygen", "percent" :"0"},
+      {"fluid" : "Nitrogen", "percent" :"9.96"},
+      {"fluid" : "CarbonMonoxide", "percent" :"0"},
+      {"fluid" : "CarbonDioxide", "percent" :"0"},
+      {"fluid" : "Methane", "percent" :"75.41"},
+      {"fluid" : "Ethane", "percent" :"2.33"},
+      {"fluid" : "Ethylene", "percent" :"5.08"},
+      {"fluid" : "Acetylene", "percent" :"0"},
+      {"fluid" : "Propane", "percent" :"1.54"},
+      {"fluid" : "Propylene", "percent" :"1.86"},
+      {"fluid" : "Butane", "percent" :"0"},
+      {"fluid" : "Butylene", "percent" :"0"},
+      {"fluid" : "Pentane", "percent" :"0"},
+      {"fluid" : "Hexane", "percent" :"0"},
+      {"fluid" : "Benzene", "percent" :"0"},
+      {"fluid" : "Methanol", "percent" :"0"},
+      {"fluid" : "Ammonia", "percent" :"0"},
+      {"fluid" : "Sulphur", "percent" :"0"},
+      {"fluid" : "HydrogenSulphide", "percent" :"0"},
+      {"fluid" : "Water", "percent" :"0"}
+    ],
+    "Tf" : {"_val": "37.8", "_dim":"temperature"}
+  },
+
+  "result": {
+    "d" : {"_val": "", "_dim":"length"},
+    "Q" : {"_val": "", "_dim":"power"},
+    "L" : {"_val": "","_dim":"length"},
+    "q_vap" : {"_val": "","_dim":"flow"},
+    "Uj" : {"_val": "", "_dim":"speed"},
+    "Uinf_by_Uj" : {"_val": ""},
+    "Sdy_by_L" : {"_val": ""},
+    "Sdx_by_L" : {"_val": ""},
+    "Sdy" : {"_val": "", "_dim":"length"},
+    "Sdx" : {"_val": "", "_dim":"length"},
+    "R_prime" : {"_val": "", "_dim":"length"},
+    "H_prime" : {"_val": "", "_dim":"length"},
+    "H" : {"_val": "", "_dim":"length"}
+  },
+
+  "errors": []
+}

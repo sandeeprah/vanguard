@@ -1,0 +1,65 @@
+{
+  "sub_url": "/calculate/process/thermophysical/chemical-fluid",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Thermophysical Properties of Fluid",
+    "docInstance_title": "Thermophysical Properties of Fluid",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+
+  "units": {
+    "length": "m",
+    "pressure": "bar",
+    "temperature": "C",
+    "molecularMass" : "kg/mol",
+    "density":"kg/m3",
+    "specificVolume":"m3/kg",
+    "specificEnergy":"kJ/kg",
+    "specificHeat":"kJ/kg.K",
+    "specificHeatMolar":"kJ/kmol.K",
+    "dynViscosity":"Pa.s",
+    "thermalConductivity":"W/m.K"
+  },
+
+  "input": {
+    "fluid" : {"_val":"Air"},
+    "P": {"_val":"1", "_dim":"pressure"},
+    "T": {"_val":"25", "_dim":"temperature"}
+  },
+
+  "result": {
+    "MW": {"_val":"", "_dim":"molecularMass"},
+    "Pcritical": {"_val":"", "_dim":"pressure"},
+    "Tcritical": {"_val":"", "_dim":"temperature"},
+    "Ptriple": {"_val":"", "_dim":"pressure"},
+    "Ttriple": {"_val":"", "_dim":"temperature"},
+    "acentric": {"_val":""},
+    "phase": {"_val":""},
+    "Z": {"_val":""},
+    "rho": {"_val":"", "_dim":"density"},
+    "v": {"_val":"", "_dim":"specificVolume"},
+    "h": {"_val":"", "_dim":"specificEnergy"},
+    "u": {"_val":"", "_dim":"specificEnergy"},
+    "s": {"_val":"", "_dim":"specificHeat"},
+    "gibbs": {"_val":"", "_dim":"specificEnergy"},
+    "helmholtz": {"_val":"", "_dim":"specificEnergy"},
+    "Cp": {"_val":"", "_dim":"specificHeat"},
+    "Cv": {"_val":"", "_dim":"specificHeat"},
+    "Cp_molar": {"_val":"", "_dim":"specificHeatMolar"},
+    "Cv_molar": {"_val":"", "_dim":"specificHeatMolar"},
+    "Cp0": {"_val":"", "_dim":"specificEnergy"},
+    "Prandtl": {"_val":""},
+    "dynViscosity": {"_val":"", "_dim":"dynViscosity"},
+    "conductivity": {"_val":"", "_dim":"thermalConductivity"},
+    "HH": {"_val":""},
+    "PH": {"_val":""},
+    "GWP": {"_val":""},
+    "ODP": {"_val":""}
+  },
+  "errors": []
+}

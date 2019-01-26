@@ -1,0 +1,33 @@
+{
+  "sub_url": "/calculate/electrical/motors/starting-time",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Motor Starting Time Estimation",
+    "docInstance_title": "Motor Starting Time Estimation",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+  },
+
+  "input": {
+    "Nr": {"_val":"1500"},
+    "Cs": {"_val":"1500"},
+    "Cm": {"_val":"1600"},
+    "Jm": {"_val":"1.4"},
+
+    "load_type": {"_val":"lift"},
+    "Cl": {"_val":"600"},
+    "Jl":{"_val":"30"}
+  },
+
+  "result": {
+    "Tacc": {"_val":""}
+  },
+
+  "errors": []
+}

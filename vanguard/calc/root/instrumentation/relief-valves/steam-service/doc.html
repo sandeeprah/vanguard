@@ -1,0 +1,599 @@
+{% extends "document.html" %}
+{% block title %}Relief Valve Sizing - Steam Service{% endblock title %}
+
+{% block meta_description %}
+Relief valve sizing for steam service as per API 520
+{% endblock meta_description %}
+
+{% block meta_keywords %}
+relief valves sizing calculation steam service API 520
+{% endblock meta_keywords %}
+
+{% block content %}
+<div style="overflow:auto;">
+<div class="datasheet">
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculations/">Calculations</a></li>
+      <li><a href="/calculations/instrumentation/">Instrumentation</a></li>
+      <li class="is-active"><a href="#">Relief Valves - Steam Service</a></li>
+    </ul>
+  </nav>
+  <table class="main">
+    <thead>
+        <tr style='border-top:0px;'>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <td colspan="10" style="text-align:right;">
+            <i>Calculation Performed at www.codecalculation.com</i>
+        </td>
+    </tfoot>
+    <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8" class="has-text-centered">
+            <h1 class="title is-5">[[ doc['meta']['docClass_title'] ]]</h1>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Project</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Project No:</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['project_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w8">Project Title:</span>
+          <span class="w36"><input class="inp" v-model="doc['meta']['project_title']"/></span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Document No:</span>
+          <span class="w16"><input class="inp" v-model="doc['meta']['doc_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Revision No:</span>
+          <span class="w4"><input class="inp" v-model="doc['meta']['rev']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Date :</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['date']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Inputs</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="w16"><i>PSV Relieving Condition</i></span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Set Pressure (Pset)</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['Pset']['_val']"/></span>
+          <span class="w6">[[ gUL('pressure') ]], gauge</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Pset'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w20">Maximum Allowable Over Pressure (%)</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['Pover']['_val']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Pover'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Superimposed Back Pressure </span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['Psuper']['_val']"/></span>
+          <span class="w6">[[ gUL('pressure') ]], gauge</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Psuper'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w20">Superimposed Back Pressure is Constant</span>
+          <span class="w6">
+            <select class="inp"  v-model="doc['input']['Psuper_is_const']['_val']">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Psuper_is_const'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Built Back Pressure </span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['Pbuiltup']['_val']"/></span>
+          <span class="w6">[[ gUL('pressure') ]], gauge</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Pbuiltup'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Releiving Temperature </span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['T']['_val']"/></span>
+          <span class="w6">[[ gUL('temperature') ]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['T'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="w16"><i>Fluid Data</i></span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Steam State</span>
+          <span class="w12">
+            <select class="inp" v-model="doc['input']['steam_state']['_val']">
+              <option value="saturated">Saturated</option>
+              <option value="superheated">Superheated</option>
+            </select>
+          </span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['steam_state'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="steam_state=='superheated'">
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Releiving Temperature </span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['T']['_val']"/></span>
+          <span class="w6">[[ gUL('temperature') ]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['T'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Mass Flow Rate (m)</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['m']['_val']"/></span>
+          <span class="w6">[[ gUL('massflow') ]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['m'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="w16"><i>PSV Design Data</i></span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Valve Design</span>
+          <span class="w12">
+            <select class="inp" v-model="doc['input']['valve_design']['_val']">
+              <option value="Conventional">Conventional</option>
+              <option value="Balanced">Balanced</option>
+              <option value="Pilot-Operated">Pilot-Operated</option>
+            </select>
+          </span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['valve_design'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w20">Combination Rupture Disc Installed</span>
+          <span class="w6">
+            <select class="inp"  v-model="doc['input']['rupture_disc']['_val']">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['rupture_disc'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w20">Coefficient of Discharge (Kd) as per</span>
+          <span class="w10">
+            <select class="inp"  v-model="doc['input']['Kd_basis']['_val']">
+              <option value="Default">API 520 Default</option>
+              <option value="Manual">Manual Input</option>
+            </select>
+          </span>
+        </td>
+        <td colspan="2">
+          <p class="help is-danger" v-for="err in getErrs(['Kd_basis'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-if="Kd_basis=='Manual'">
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Kd</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['Kd_manual']['_val']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Kd_manual'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w20">Backpressure Correction (Kb) as per</span>
+          <span class="w10">
+            <select class="inp"  v-model="doc['input']['Kb_basis']['_val']">
+              <option value="Default">API 520 Default</option>
+              <option value="Manual">Manual Input</option>
+            </select>
+          </span>
+        </td>
+        <td colspan="2">
+          <p class="help is-danger" v-for="err in getErrs(['Kb_basis'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-if="Kb_basis=='Manual'">
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Kb</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['Kb_manual']['_val']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Kb_manual'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w20">Correction Factor, Rupture Disc(Kc) as per</span>
+          <span class="w10">
+            <select class="inp"  v-model="doc['input']['Kc_basis']['_val']">
+              <option value="Default">API 520 Default</option>
+              <option value="Manual">Manual Input</option>
+            </select>
+          </span>
+        </td>
+        <td colspan="2">
+          <p class="help is-danger" v-for="err in getErrs(['Kc_basis'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-if="Kc_basis=='Manual'">
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Kc</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['Kc_manual']['_val']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Kc_manual'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+
+          <tbody >
+            <tr>
+              <td style='border-left:0px;'>&nbsp;</td>
+              <td colspan="8">&nbsp;</td>
+              <td style='border-right:0px;'>&nbsp;</td>
+            </tr>
+            <tr class="hideprint" style='border-top:0px;'>
+              <td style='border-left:0px;'></td>
+              <td colspan="8" style="text-align:center" >
+                <span class="w8">
+                  <button class="button is-primary" @click="calculate" style="width:100%">Calculate</button>
+                </span>
+                <span class="w8">
+                  <button class="button is-primary" @click="openModal('unitsModalisActive')" style="width:100%">Units</button>
+                </span>
+                <span class="w8">
+                  <button class="button is-primary" @click="saveDoc()" style="width:100%">Save</button>
+                </span>
+                <span class="w8">
+                  <button class="button is-primary" @click="openModal('uploadModalisActive')" style="width:100%">Load</button>
+                </span>
+                <span class="w8">
+                  <button class="button is-primary" @click="pdf_download()" style="width:100%">PDF</button>
+                </span>
+                <span class="w8">
+                  <button class="button is-primary" @click="launch_help" style="width:100%">Help</button>
+                </span>
+              </td>
+              <td style='border-right:0px;'></td>
+            </tr>
+            <tr style='border-top:0px;' class="hideprint">
+              <td style='border-left:0px;'>&nbsp;</td>
+              <td style='border-top:0px;'colspan="8">&nbsp;</td>
+              <td style='border-right:0px;'>&nbsp;</td>
+            </tr>
+          </tbody>
+      <tbody v-if="doc['errors'].length > 0">
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger"><b>Errors</b></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger" v-for = "err in doc['errors']">[[ err ]]</p>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+
+      <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Results</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="2">
+          <span class="w2"></span>
+          <span class="w12">Valve Design Remark</span>
+        </td>
+        <td colspan="6">
+          <p>
+            [[ retSilent(doc, ['result','valve_design_remark','_val']) ]]
+          </p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+
+          <span class="w20">Rated Coefficient of Discharge(Kd)</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','Kd','_val']) ]] </span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+
+          <span class="w20">Backpressure Correction (Kb)</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','Kb','_val']) ]] </span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+
+          <span class="w20"> Rupture Disc Correction Factor(Kc)</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','Kc','_val']) ]] </span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w20">Correction Factor(Kn) for Steam Pressure</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','Kn','_val']) ]] </span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w20">Correction Factor for Steam Superheat (Ksh)</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','Ksh','_val']) ]] </span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w20">Required Effective Discharge Area(A)</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','A','_val']) ]] </span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w20">Orifice Designation (API 526)</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','A_letter','_val']) ]] </span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w20">Selected Orifice Discharge Area (A_sel)</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','A_sel','_val']) ]] </span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+{% endblock content %}
+
+
+{% block script_vueapp %}
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        delimiters : ['[[',']]'],
+        mixins: [app_common, app_doc],
+        data: {
+            doc : {{ doc | safe }},
+            fixed:{
+              state_options:["Saturated_T", "Saturated_P", "Superheated_or_Compressed"]
+            }
+        },
+        computed: {
+          viscosity_basis : function(){
+            return this.doc['input']['viscosity_basis']['_val'];
+          },
+          Kd_basis : function(){
+            return this.doc['input']['Kd_basis']['_val'];
+          },
+          Kb_basis : function(){
+            return this.doc['input']['Kb_basis']['_val'];
+          },
+          Kc_basis : function(){
+            return this.doc['input']['Kc_basis']['_val'];
+          },
+          steam_state :function(){
+            return this.doc['input']['steam_state']['_val'];
+          },
+        },
+        methods: {}
+    });
+</script>
+{% endblock script_vueapp %}

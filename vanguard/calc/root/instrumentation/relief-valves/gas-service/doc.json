@@ -1,0 +1,61 @@
+{
+  "sub_url": "/calculate/instrumentation/relief-valves/gas-service",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Pressure Relief Valve Sizing (API 520)- Gas Relief",
+    "docInstance_title": "Pressure Relief Valve Sizing (API 520)- Gas Relief",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length_mili": "m",
+    "length": "m",
+    "area": "mm2",
+    "pressure": "kPa",
+    "temperature": "K",
+    "flow": "lpm",
+    "massflow": "kg/hr",
+    "molecularMass" : "kg/mol",
+    "density":"kg/m3"
+  },
+
+  "input": {
+    "Pset": {"_val":"517", "_dim":"pressure"},
+    "Pover": {"_val":"10"},
+    "Psuper" : {"_val" : "300", "_dim":"pressure"},
+    "Psuper_is_const" : {"_val":"No"},
+    "Pbuiltup" : {"_val":"10", "_dim":"pressure"},
+    "T": {"_val":"348", "_dim":"temperature"},
+    "m": {"_val":"24260", "_dim":"massflow"},
+    "MW": {"_val":"0.065", "_dim":"molecularMass"},
+    "Z": {"_val":"0.84"},
+    "k": {"_val":"1.09"},
+    "valve_design" : {"_val":"Pilot-Operated"},
+    "rupture_disc" : {"_val":"No"},
+    "Kd_basis": {"_val":"Default"},
+    "Kd_manual": {"_val":""},
+    "Kb_basis": {"_val":"Default"},
+    "Kb_manual": {"_val":""},
+    "Kc_basis": {"_val":"Default"},
+    "Kc_manual": {"_val":""}
+  },
+
+  "result": {
+    "valve_design_remark":{"_val":""},
+    "Q_std": {"_val":"", "_dim":"flow"},
+    "Pcf": {"_val":"", "_dim":"pressure"},
+    "C": {"_val":""},
+    "F2": {"_val":""},
+    "A": {"_val":"", "_dim":"area"},
+    "A_letter": {"_val":""},
+    "A_sel": {"_val":"","_dim":"area"},
+    "Qrated": {"_val":"", "_dim":"flow"},
+    "Ratio_Q": {"_val":""}
+  },
+
+  "errors": []
+}

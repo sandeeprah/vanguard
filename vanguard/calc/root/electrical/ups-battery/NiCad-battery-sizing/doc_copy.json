@@ -1,0 +1,60 @@
+{
+  "_id": "",
+  "meta": {
+    "projectID": "0000",
+    "project_title": "Local",
+    "discipline" : "mec",
+    "docCategory": "cal",
+    "docSubCategory": "nos",
+    "docClass": "map",
+    "docClass_title": "Noise Map",
+    "docInstance": "1",
+    "docInstance_title": "Noise Map",
+    "doc_no":"0000-MEC-CAL-NOS-MAP-01",
+    "rev": "A",
+    "date":"",
+    "status": "",
+    "performer": "",
+    "reviewer": "",
+    "approver": ""
+  },
+
+  "units": {
+    "length": "m"
+  },
+
+  "input": {
+    "emissionPoints": {
+      "_coldim":{
+        "x":"length",
+        "y":"length"
+      },
+      "_list":[
+        {"tag" : "", "pwl":"90","Q":"2","x":"1","y":"3"}
+      ]
+    },
+
+
+    "mapArea":{
+      "x1" : {"_val":"0","_dim":"length"},
+      "y1" : {"_val":"0","_dim":"length"},
+      "x2" : {"_val":"4","_dim":"length"},
+      "y2" : {"_val":"4","_dim":"length"},
+      "x_step" : {"_val":"1","_dim":"length"},
+      "y_step" : {"_val":"1","_dim":"length"}
+    }
+
+  },
+
+  "result": {
+    "noiseField" : {
+      "_coldim":{
+        "x":"length",
+        "y":"length"
+      },
+      "_list" : []
+    }
+  },
+
+  "errors": []
+}

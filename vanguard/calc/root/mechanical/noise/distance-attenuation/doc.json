@@ -1,0 +1,33 @@
+{
+  "sub_url": "/calculate/mechanical/noise/distance-attenuation",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Noise Attenuation with Distance",
+    "docInstance_title": "Noise Attenuation with Distance",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length": "m"
+  },
+
+  "input": {
+    "source_option" : {"_val": "point"},
+    "SPL1" : {"_val": ""},
+    "R1" : {"_val": "", "_dim":"length"},
+    "R2" : {"_val": "", "_dim":"length"},
+    "width" : {"_val": "", "_dim":"length"},
+    "height" : {"_val": "", "_dim":"length"}
+
+  },
+
+  "result": {
+    "SPL2" : {"_val": ""}
+  },
+
+  "errors": []
+}

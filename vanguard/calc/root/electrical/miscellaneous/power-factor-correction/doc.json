@@ -1,0 +1,28 @@
+{
+  "sub_url": "/calculate/electrical/miscellaneous/power-factor-correction",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Power Factor Correction",
+    "docInstance_title": "Power Factor Correction",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+  },
+
+  "input": {
+    "P": {"_val":"400"},
+    "pf_actual": {"_val":"0.6"},
+    "pf_desired": {"_val":"0.9"}
+  },
+
+  "result": {
+    "kVAr_comp": {"_val":""}
+  },
+
+  "errors": []
+}

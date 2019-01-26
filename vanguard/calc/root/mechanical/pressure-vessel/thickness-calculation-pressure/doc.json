@@ -1,0 +1,88 @@
+{
+  "sub_url": "/calculate/mechanical/pressure-vessel/thickness-calculation-pressure",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Pressure Vessel Thickness/MAWP/Weight Estimation",
+    "docInstance_title": "Pressure Vessel Thickness/MAWP/Weight Estimation",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "mass" : "kg",
+    "length" : "mm",
+    "volume" : "m3",
+    "temperature" : "C",
+    "pressure" : "bar",
+    "angle" : "degrees"
+  },
+
+
+  "input": {
+    "Shape" : {"_val": "cylindrical"},
+    "Orientation" : {"_val": "horizontal"},
+    "D_basis" : {"_val": "inner"},
+    "D" : {"_val": "1200", "_dim":"length"},
+    "Do" : {"_val": "1200", "_dim":"length"},
+    "Z" : {"_val": "3000", "_dim":"length"},
+    "Pi" : {"_val": "4", "_dim":"pressure"},
+    "Ti" : {"_val": "200", "_dim":"temperature"},
+    "Tt" : {"_val": "35", "_dim":"temperature"},
+    "full_vacuum" : {"_val": "yes"},
+    "ca" : {"_val": "3", "_dim":"length"},
+    "E" : {"_val": "1.0"},
+    "Ec" : {"_val": "1.0"},
+    "El" : {"_val": "1.0"},
+    "MOC" : {"_val": "SA516-Gr60"},
+    "S" : {"_val": "1380", "_dim":"pressure"},
+    "St" : {"_val": "1380", "_dim":"pressure"},
+    "tn" : {"_val": "6", "_dim":"length"},
+
+    "Head1" : {"_val": "ellipsoidal"},
+    "beta1" : {"_val": "2"},
+    "L1" : {"_val": "1200", "_dim":"length"},
+    "r1" : {"_val": "100", "_dim":"length"},
+    "alpha1" : {"_val": "30", "_dim":"angle"},
+    "tn1" : {"_val": "6", "_dim":"length"},
+
+    "Head2" : {"_val": "ellipsoidal"},
+    "beta2" : {"_val": "2"},
+    "L2" : {"_val": "1200", "_dim":"length"},
+    "r2" : {"_val": "100", "_dim":"length"},
+    "alpha2" : {"_val": "30", "_dim":"angle"},
+    "tn2" : {"_val": "6", "_dim":"length"},
+
+    "zeta" : {"_val": "10"}
+
+  },
+
+  "result": {
+    "R_calc" : {"_val": "", "_dim":"length"},
+    "Ro_calc" : {"_val": "", "_dim":"length"},
+
+    "ta" : {"_val": "", "_dim":"length"},
+
+    "condn_Pc" : {"_val": ""},
+    "tc" : {"_val": "", "_dim":"length"},
+    "condn_tc" : {"_val": ""},
+    "MAWPc" : {"_val": "", "_dim":"pressure"},
+
+    "condn_Pl" : {"_val": ""},
+    "tl" : {"_val": "", "_dim":"length"},
+    "condn_tl" : {"_val": ""},
+    "MAWPl" : {"_val": "", "_dim":"pressure"},
+
+    "tu" : {"_val": "", "_dim":"length"},
+    "t" : {"_val": "", "_dim":"length"},
+    "tr" : {"_val": "", "_dim":"length"},
+    "MAWP" : {"_val": "", "_dim":"pressure"},
+    "tn_adequate" : {"_val": ""}
+
+
+  },
+
+  "errors": []
+}

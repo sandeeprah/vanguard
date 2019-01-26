@@ -1,0 +1,653 @@
+{% extends "document.html" %}
+{% block title %}Thermophysical properties - Hydrocarbon Mixtures{% endblock title %}
+
+{% block meta_description %}
+Get thermophysical properties of hydrocarbon mixtures. The inputs include state variables of pressure and temperature. Typical composition list of API 617 gas compressors is used. The input include state variables of pressure and temperature. The outputs include crtiical pressure, temperature, compressibility
+factor (Z), ideal gas specific heat etc. The compressibility factor is determined using Nelson-Obert, LeeKesler and PengRobinson equation of state.
+{% endblock meta_description %}
+
+{% block meta_keywords %}
+thermophysical properties hydrocarbon mixture
+{% endblock meta_keywords %}
+
+{% block content %}
+<div style="overflow:auto;">
+<div class="datasheet">
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculations/">Calculations</a></li>
+      <li><a href="/calculations/process/">Process</a></li>
+      <li class="is-active"><a href="#">Thermophysical-Hydrocarbons Mixture</a></li>
+    </ul>
+  </nav>
+  <table class="main">
+    <thead>
+        <tr style='border-top:0px;'>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <td colspan="10" style="text-align:right;">
+            <i>Calculation Performed at www.codecalculation.com</i>
+        </td>
+    </tfoot>
+    <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8" class="has-text-centered">
+            <h1 class="title is-5">[[ doc['meta']['docClass_title'] ]]</h1>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Project</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Project No:</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['project_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w8">Project Title:</span>
+          <span class="w36"><input class="inp" v-model="doc['meta']['project_title']"/></span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Document No:</span>
+          <span class="w16"><input class="inp" v-model="doc['meta']['doc_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Revision No:</span>
+          <span class="w4"><input class="inp" v-model="doc['meta']['rev']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Date :</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['date']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Inputs</h2>
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Pressure</span>
+          <span class="w6"><input class="inp" type="text" v-model="doc['input']['P']['_val']"/></span>
+          <span class="w6">[[ gUL('pressure') ]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['P'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Temperature</span>
+          <span class="w6"><input class="inp" type="text" v-model="doc['input']['T']['_val']"/></span>
+          <span class="w6">[[ gUL('temperature') ]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['T'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Mixture</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['schema_mixture'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">Component</span>
+          <span class="w6">Formula</span>
+          <span class="w6">Mol.Wt.</span>
+          <span class="w6">Mol.Fraction</span>
+        </td>
+        <td colspan="4"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">Air</span>
+          <span class="w6">--</span>
+          <span class="w6">28.966</span>
+          <span class="w6"><input class="inp" v-model="doc['input']['mixture'][0]['molefraction']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['mixture',0,'molefraction'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">Oxygen</span>
+          <span class="w6">O2</span>
+          <span class="w6">32.000</span>
+          <span class="w6"><input class="inp" v-model="doc['input']['mixture'][1]['molefraction']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['mixture',1,'molefraction'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">Nitrogen</span>
+          <span class="w6">N2</span>
+          <span class="w6">28.016</span>
+          <span class="w6"><input class="inp" v-model="doc['input']['mixture'][2]['molefraction']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['mixture',2,'molefraction'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">Water Vapor</span>
+          <span class="w6">H2O</span>
+          <span class="w6">18.016</span>
+          <span class="w6"><input class="inp" v-model="doc['input']['mixture'][3]['molefraction']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['mixture',3,'molefraction'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">Carbon Monoxide</span>
+          <span class="w6">CO</span>
+          <span class="w6">28.010</span>
+          <span class="w6"><input class="inp" v-model="doc['input']['mixture'][4]['molefraction']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['mixture',4,'molefraction'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">Carbon Dioxide</span>
+          <span class="w6">CO2</span>
+          <span class="w6">44.010</span>
+          <span class="w6"><input class="inp" v-model="doc['input']['mixture'][5]['molefraction']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['mixture',5,'molefraction'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">Hydrogen Sulfide</span>
+          <span class="w6">H2S</span>
+          <span class="w6">34.076</span>
+          <span class="w6"><input class="inp" v-model="doc['input']['mixture'][6]['molefraction']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['mixture',6,'molefraction'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">Hydrogen</span>
+          <span class="w6">H2</span>
+          <span class="w6">2.016</span>
+          <span class="w6"><input class="inp" v-model="doc['input']['mixture'][7]['molefraction']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['mixture',7,'molefraction'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">Methane</span>
+          <span class="w6">CH4</span>
+          <span class="w6">16.042</span>
+          <span class="w6"><input class="inp" v-model="doc['input']['mixture'][8]['molefraction']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['mixture',8,'molefraction'])">[[err]]</p>
+
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">Ethene</span>
+          <span class="w6">C2H4</span>
+          <span class="w6">28.052</span>
+          <span class="w6"><input class="inp" v-model="doc['input']['mixture'][9]['molefraction']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['mixture',9,'molefraction'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">Ethane</span>
+          <span class="w6">C2H6</span>
+          <span class="w6">30.068</span>
+          <span class="w6"><input class="inp" v-model="doc['input']['mixture'][10]['molefraction']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['mixture',10,'molefraction'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">Propene</span>
+          <span class="w6">C3H6</span>
+          <span class="w6">42.078</span>
+          <span class="w6"><input class="inp" v-model="doc['input']['mixture'][11]['molefraction']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['mixture',11,'molefraction'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">n-Propane</span>
+          <span class="w6">C3H8</span>
+          <span class="w6">44.094</span>
+          <span class="w6"><input class="inp" v-model="doc['input']['mixture'][12]['molefraction']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['mixture',12,'molefraction'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">i-Butane</span>
+          <span class="w6">C4H10</span>
+          <span class="w6">58.120</span>
+          <span class="w6"><input class="inp" v-model="doc['input']['mixture'][13]['molefraction']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['mixture',13,'molefraction'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">n-Butane</span>
+          <span class="w6">C4H10</span>
+          <span class="w6">58.120</span>
+          <span class="w6"><input class="inp" v-model="doc['input']['mixture'][14]['molefraction']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['mixture',14,'molefraction'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">i-Pentane</span>
+          <span class="w6">C5H12</span>
+          <span class="w6">72.146</span>
+          <span class="w6"><input class="inp" v-model="doc['input']['mixture'][15]['molefraction']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['mixture',15,'molefraction'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">n-Pentane</span>
+          <span class="w6">C5H12</span>
+          <span class="w6">72.146</span>
+          <span class="w6"><input class="inp" v-model="doc['input']['mixture'][16]['molefraction']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['mixture',16,'molefraction'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">Hexane+</span>
+          <span class="w6">C6H14</span>
+          <span class="w6">86.000</span>
+          <span class="w6"><input class="inp" v-model="doc['input']['mixture'][17]['molefraction']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['mixture',17,'molefraction'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+
+          <tbody >
+            <tr>
+              <td style='border-left:0px;'>&nbsp;</td>
+              <td colspan="8">&nbsp;</td>
+              <td style='border-right:0px;'>&nbsp;</td>
+            </tr>
+            <tr class="hideprint" style='border-top:0px;'>
+              <td style='border-left:0px;'></td>
+              <td colspan="8" style="text-align:center" >
+                <span class="w8">
+                  <button class="button is-primary" @click="calculate" style="width:100%">Calculate</button>
+                </span>
+                <span class="w8">
+                  <button class="button is-primary" @click="openModal('unitsModalisActive')" style="width:100%">Units</button>
+                </span>
+                <span class="w8">
+                  <button class="button is-primary" @click="saveDoc()" style="width:100%">Save</button>
+                </span>
+                <span class="w8">
+                  <button class="button is-primary" @click="openModal('uploadModalisActive')" style="width:100%">Load</button>
+                </span>
+                <span class="w8">
+                  <button class="button is-primary" @click="pdf_download()" style="width:100%">PDF</button>
+                </span>
+                <span class="w8">
+                  <button class="button is-primary" @click="launch_help" style="width:100%">Help</button>
+                </span>
+              </td>
+              <td style='border-right:0px;'></td>
+            </tr>
+            <tr style='border-top:0px;' class="hideprint">
+              <td style='border-left:0px;'>&nbsp;</td>
+              <td style='border-top:0px;'colspan="8">&nbsp;</td>
+              <td style='border-right:0px;'>&nbsp;</td>
+            </tr>
+          </tbody>
+
+      <tbody v-if="doc['errors'].length > 0">
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger"><b>Errors</b></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger" v-for="err in doc['errors']">[[ err ]]</p>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+
+      <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Results</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">MW</span>
+          <span class="w6 result">[[ retSilent(doc, ['result', 'MW', '_val']) ]]</span>
+          <span class="w6">[[ gUL('molecularMass') ]]</span>
+        </td>
+        <td colspan="4"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Critical Pressure</span>
+          <span class="w6 result">[[ retSilent(doc, ['result', 'Pcritical', '_val']) ]]</span>
+          <span class="w6">[[ gUL('pressure') ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Critical Temperature</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'Tcritical', '_val']) ]]</span>
+          <span class="w6">[[ gUL('temperature') ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Reduced Pressure</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'Pr', '_val']) ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Reduced Temperature</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'Tr', '_val']) ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Acentric Factor</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'acentric', '_val']) ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Z (Peng-Robinson)</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'Z_PR', '_val']) ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Z (Lee-Kesler)</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'Z_LKP', '_val']) ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Z (Nelson Obert)</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'Z_NO', '_val']) ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Cp0</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'Cp0mass', '_val']) ]]</span>
+          <span class="w6">[[ gUL('specificHeat') ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Cv0</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'Cv0mass', '_val']) ]]</span>
+          <span class="w6">[[ gUL('specificHeat') ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Cp0 Molar</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'Cp0molar', '_val']) ]]</span>
+          <span class="w6">[[ gUL('specificHeatMolar') ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Cv0 Molar</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'Cv0molar', '_val']) ]]</span>
+          <span class="w6">[[ gUL('specificHeatMolar') ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+{% endblock content %}
+
+
+{% block script_vueapp %}
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        delimiters : ['[[',']]'],
+        mixins: [app_common, app_doc],
+        data: {
+            doc : {{ doc | safe }},
+            fixed:{
+              state_options:["Saturated_T", "Saturated_P", "Superheated_or_Compressed"]
+            }
+        },
+        computed: {
+          state : function(){
+            return this.doc['input']['state']['_val'];
+          }
+        },
+        methods: {}
+    });
+</script>
+{% endblock script_vueapp %}

@@ -1,0 +1,690 @@
+{% extends "document.html" %}
+{% block title %}Steam Turbine Performance Calculation{% endblock title %}
+
+{% block meta_description %}
+Calculate steam turbine performance estimates. The calculator can calculate turbine isentropic efficiency if the steam inlet and outlet conditions or calculate outlet conditions for known values of isentropic efficiency.
+Option available to use either mass flow or power output as input.Option also available to define steam inlet and outlet conditions using Pressure-Temperature, Pressure-Entropy, Pressure-Enthalphy and Pressure-Quality
+
+Made By: Sandeep Raheja
+{% endblock meta_description %}
+
+{% block meta_keywords %}Steam turbine calculation performance isentropic efficiency inlet outlet conditions power mass flow rate{% endblock meta_keywords %}
+
+{% block content %}
+<div style="overflow:auto;">
+<div class="datasheet">
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculations/">Calculations</a></li>
+      <li><a href="/calculations/mechanical/">Mechanical</a></li>
+      <li class="is-active"><a href="#">Steam Turbine Performance</a></li>
+    </ul>
+  </nav>
+  <table class="main">
+    <thead>
+      <tr style='border-top:0px;'>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+        <th style="border:0px;">&nbsp;</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <td colspan="10" style="text-align:right;">
+        <i>Calculation Performed at www.codecalculation.com</i>
+      </td>
+    </tfoot>
+    <tbody>
+    <tr class="section_title">
+      <td></td>
+      <td colspan="8" class="has-text-centered">
+          <h1 class="title is-5">[[ doc['meta']['docClass_title'] ]]</h1>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td style='border-left:0px;'>&nbsp;</td>
+      <td colspan="8">&nbsp;</td>
+      <td style='border-right:0px;'>&nbsp;</td>
+    </tr>
+    <tr class="section_title">
+      <td></td>
+      <td colspan="8">
+        <h2 class="title is-6">Project</h2>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan="4">
+        <span class="w8">Project No:</span>
+        <span class="w8"><input class="inp" v-model="doc['meta']['project_no']"/></span>
+      </td>
+      <td colspan="4">
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan="6">
+        <span class="w8">Project Title:</span>
+        <span class="w36"><input class="inp" v-model="doc['meta']['project_title']"/></span>
+      </td>
+      <td colspan="2">
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan="4">
+        <span class="w8">Document No:</span>
+        <span class="w16"><input class="inp" v-model="doc['meta']['doc_no']"/></span>
+      </td>
+      <td colspan="4">
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan="4">
+        <span class="w8">Revision No:</span>
+        <span class="w4"><input class="inp" v-model="doc['meta']['rev']"/></span>
+      </td>
+      <td colspan="4">
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan="4">
+        <span class="w8">Date :</span>
+        <span class="w8"><input class="inp" v-model="doc['meta']['date']"/></span>
+      </td>
+      <td colspan="4">
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td style='border-left:0px;'>&nbsp;</td>
+      <td colspan="8">&nbsp;</td>
+      <td style='border-right:0px;'>&nbsp;</td>
+    </tr>
+    <tr class="section_title">
+      <td></td>
+      <td colspan="8">
+        <h2 class="title is-6">Inputs</h2>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan="4">
+        <span class="w14">Solve For</span>
+        <span class="w12">
+          <select class="inp"  v-model="doc['input']['solve_for']['_val']">
+            <option value="outlet_properties">Outlet Properties</option>
+            <option value="isentropic_efficiency">Isentropic Efficiency</option>
+          </select>
+        </span>
+      </td>
+      <td colspan="4">
+        <p class="help is-danger" v-for="err in getErrs(['solve_for'])">[[err]]</p>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan="8">
+        <span class="w16"><i>Inlet Steam</i></span>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan="4">
+        <span class="w2"></span>
+        <span class="w14">Inlet Conditions Defined As</span>
+        <span class="w14">
+          <select class="inp"  v-model="doc['input']['inlet_definition']['_val']">
+            <option value="P-T">Pressure-Temperature</option>
+            <option value="P-h">Pressure-Enthalphy</option>
+            <option value="P-s">Pressure-Entropy</option>
+            <option value="P-Q">Pressure-Quality</option>
+          </select>
+        </span>
+      </td>
+      <td colspan="4">
+        <p class="help is-danger" v-for="err in getErrs(['inlet_definition'])">[[err]]</p>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan="4">
+        <span class="w2"></span>
+        <span class="w14">Inlet Pressure</span>
+        <span class="w6"><input class="inp" type="number" v-model="doc['input']['P_inlet']['_val']"/></span>
+        <span class="w6">[[ gUL('pressure') ]]</span>
+      </td>
+      <td colspan="4">
+        <p class="help is-danger" v-for="err in getErrs(['P_inlet'])">[[err]]</p>
+      </td>
+      <td></td>
+    </tr>
+    <tr v-show="inlet_definition=='P-T'">
+      <td></td>
+      <td colspan="4">
+        <span class="w2"></span>
+        <span class="w14">Inlet Temperature</span>
+        <span class="w6"><input class="inp" type="number" v-model="doc['input']['T_inlet']['_val']"/></span>
+        <span class="w6">[[ gUL('temperature') ]]</span>
+      </td>
+      <td colspan="4">
+        <p class="help is-danger" v-for="err in getErrs(['T_inlet'])">[[err]]</p>
+      </td>
+      <td></td>
+    </tr>
+    <tr v-show="inlet_definition=='P-h'">
+      <td></td>
+      <td colspan="4">
+        <span class="w2"></span>
+        <span class="w14">Inlet Enthalphy</span>
+        <span class="w6"><input class="inp" type="number" v-model="doc['input']['h_inlet']['_val']"/></span>
+        <span class="w6">[[ gUL('specificEnergy') ]]</span>
+      </td>
+      <td colspan="4">
+        <p class="help is-danger" v-for="err in getErrs(['h_inlet'])">[[err]]</p>
+      </td>
+      <td></td>
+    </tr>
+    <tr v-show="inlet_definition=='P-s'">
+      <td></td>
+      <td colspan="4">
+        <span class="w2"></span>
+        <span class="w14">Inlet Entropy</span>
+        <span class="w6"><input class="inp" type="number" v-model="doc['input']['s_inlet']['_val']"/></span>
+        <span class="w6">[[ gUL('specificHeat') ]]</span>
+      </td>
+      <td colspan="4">
+        <p class="help is-danger" v-for="err in getErrs(['s_inlet'])">[[err]]</p>
+      </td>
+      <td></td>
+    </tr>
+    <tr v-show="inlet_definition=='P-Q'">
+      <td></td>
+      <td colspan="4">
+        <span class="w2"></span>
+        <span class="w14">Inlet Quality</span>
+        <span class="w6"><input class="inp" type="number" v-model="doc['input']['Q_inlet']['_val']"/></span>
+      </td>
+      <td colspan="4">
+        <p class="help is-danger" v-for="err in getErrs(['Q_inlet'])">[[err]]</p>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan="8">
+        <span class="w16"><i>Turbine Parameters</i></span>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan="4">
+        <span class="w2"></span>
+        <span class="w14">Turbine Property Defined</span>
+        <span class="w14">
+          <select class="inp"  v-model="doc['input']['turbine_definition']['_val']">
+            <option value="power_output">Power Output</option>
+            <option value="mass_flow">Mass Flow</option>
+          </select>
+        </span>
+      </td>
+      <td colspan="4">
+        <p class="help is-danger" v-for="err in getErrs(['turbine_definition'])">[[err]]</p>
+      </td>
+      <td></td>
+    </tr>
+    <tr v-show="turbine_definition=='power_output'">
+      <td></td>
+      <td colspan="4">
+        <span class="w2"></span>
+        <span class="w14">Power Output</span>
+        <span class="w6"><input class="inp" type="number" v-model="doc['input']['power_output']['_val']"/></span>
+        <span class="w6">[[ gUL('power') ]]</span>
+      </td>
+      <td colspan="4">
+        <p class="help is-danger" v-for="err in getErrs(['power_output'])">[[err]]</p>
+      </td>
+      <td></td>
+    </tr>
+    <tr v-show="turbine_definition=='mass_flow'">
+      <td></td>
+      <td colspan="4">
+        <span class="w2"></span>
+        <span class="w14">Mass Flow</span>
+        <span class="w6"><input class="inp" type="number" v-model="doc['input']['mass_flow']['_val']"/></span>
+        <span class="w6">[[ gUL('massflow') ]]</span>
+      </td>
+      <td colspan="4">
+        <p class="help is-danger" v-for="err in getErrs(['mass_flow'])">[[err]]</p>
+      </td>
+      <td></td>
+    </tr>
+    <tr v-show="solve_for=='outlet_properties'">
+      <td></td>
+      <td colspan="4">
+        <span class="w2"></span>
+        <span class="w14">Isentropic Effiiency</span>
+        <span class="w6"><input class="inp" type="number" v-model="doc['input']['isentropic_efficiency']['_val']"/></span>
+      </td>
+      <td colspan="4">
+        <p class="help is-danger" v-for="err in getErrs(['isentropic_efficiency'])">[[err]]</p>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan="4">
+        <span class="w2"></span>
+        <span class="w14">Generator Effiiency</span>
+        <span class="w6"><input class="inp" type="number" v-model="doc['input']['generator_efficiency']['_val']"/></span>
+      </td>
+      <td colspan="4">
+        <p class="help is-danger" v-for="err in getErrs(['generator_efficiency'])">[[err]]</p>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan="8">
+        <span class="w16"><i>Outlet Steam</i></span>
+      </td>
+      <td></td>
+    </tr>
+    <tr v-show="solve_for=='isentropic_efficiency'">
+      <td></td>
+      <td colspan="4">
+        <span class="w2"></span>
+        <span class="w14">Outlet Conditions Defined As</span>
+        <span class="w14">
+          <select class="inp"  v-model="doc['input']['outlet_definition']['_val']">
+            <option value="P-T">Pressure-Temperature</option>
+            <option value="P-h">Pressure-Enthalphy</option>
+            <option value="P-s">Pressure-Entropy</option>
+            <option value="P-Q">Pressure-Quality</option>
+          </select>
+        </span>
+      </td>
+      <td colspan="4">
+        <p class="help is-danger" v-for="err in getErrs(['outlet_definition'])">[[err]]</p>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan="4">
+        <span class="w2"></span>
+        <span class="w14">Outlet Pressure</span>
+        <span class="w6"><input class="inp" type="number" v-model="doc['input']['P_outlet']['_val']"/></span>
+        <span class="w6">[[ gUL('pressure') ]]</span>
+      </td>
+      <td colspan="4">
+        <p class="help is-danger" v-for="err in getErrs(['P_outlet'])">[[err]]</p>
+      </td>
+      <td></td>
+    </tr>
+  </tbody>
+
+    <tbody v-show="solve_for=='isentropic_efficiency'">
+      <tr v-show="outlet_definition=='P-T'">
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Outlet Temperature</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['T_outlet']['_val']"/></span>
+          <span class="w6">[[ gUL('temperature') ]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['T_outlet'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="outlet_definition=='P-h'">
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Outlet Enthalphy</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['h_outlet']['_val']"/></span>
+          <span class="w6">[[ gUL('specificEnergy') ]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['h_outlet'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="outlet_definition=='P-s'">
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Outlet Entropy</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['s_outlet']['_val']"/></span>
+          <span class="w6">[[ gUL('specificHeat') ]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['s_outlet'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="outlet_definition=='P-Q'">
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Outlet Quality</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['Q_outlet']['_val']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Q_outlet'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody >
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="hideprint" style='border-top:0px;'>
+        <td style='border-left:0px;'></td>
+        <td colspan="8" style="text-align:center" >
+          <span class="w8">
+            <button class="button is-primary" @click="calculate" style="width:100%">Calculate</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="openModal('unitsModalisActive')" style="width:100%">Units</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="saveDoc()" style="width:100%">Save</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="openModal('uploadModalisActive')" style="width:100%">Load</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="pdf_download()" style="width:100%">PDF</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="launch_help" style="width:100%">Help</button>
+          </span>
+        </td>
+        <td style='border-right:0px;'></td>
+      </tr>
+      <tr style='border-top:0px;' class="hideprint">
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td style='border-top:0px;'colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+    </tbody>
+    <tbody v-if="doc['errors'].length > 0">
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <p class="help is-danger"><b>Errors</b></p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <p class="help is-danger" v-for="err in doc['errors']">[[ err ]]</p>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Results</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="w16"><i>Inlet Steam</i></span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Inlet Pressure</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','P_inlet','_val']) ]]</span>
+          <span class="w6">[[ gUL('pressure') ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Inlet Temperature</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','T_inlet','_val']) ]]</span>
+          <span class="w6">[[ gUL('temperature') ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Inlet Enthalphy</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','h_inlet','_val']) ]]</span>
+          <span class="w6">[[ gUL('specificEnergy') ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Inlet Entropy</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','s_inlet','_val']) ]]</span>
+          <span class="w6">[[ gUL('specificHeat') ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Inlet Phase</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','phase_inlet','_val']) ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="w16"><i>Turbine Parameters</i></span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Mass Flow</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','mass_flow','_val']) ]]</span>
+          <span class="w6">[[ gUL('massflow') ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Energy Output</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','energy_output','_val']) ]]</span>
+          <span class="w6">[[ gUL('power') ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Power Output</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','power_output','_val']) ]]</span>
+          <span class="w6">[[ gUL('power') ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Isentropic Efficiency</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','isentropic_efficiency','_val']) ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Generator Efficiency</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','generator_efficiency','_val']) ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="w16"><i>Outlet Steam</i></span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Outlet  Pressure</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','P_outlet','_val']) ]]</span>
+          <span class="w6">[[ gUL('pressure') ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Outlet  Temperature</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','T_outlet','_val']) ]]</span>
+          <span class="w6">[[ gUL('temperature') ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Outlet  Enthalphy</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','h_outlet','_val']) ]]</span>
+          <span class="w6">[[ gUL('specificEnergy') ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Outlet  Entropy</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','s_outlet','_val']) ]]</span>
+          <span class="w6">[[ gUL('specificHeat') ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Outlet  Phase</span>
+          <span class="w6 result">[[ retSilent(doc, ['result','phase_outlet','_val']) ]]</span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+{% endblock content %} {% block script_vueapp %}
+<script type="text/javascript">
+  var app = new Vue({
+    el: '#app',
+    delimiters: ['[[', ']]'],
+    mixins: [app_common, app_doc],
+    data: {
+      doc: {{doc | safe}},
+      fixed: {
+        state_options: ["Saturated_T", "Saturated_P", "Superheated_or_Compressed"]
+      }
+    },
+    computed: {
+      solve_for: function() {
+        return this.doc['input']['solve_for']['_val'];
+      },
+      inlet_definition: function() {
+        return this.doc['input']['inlet_definition']['_val'];
+      },
+      turbine_definition: function() {
+        return this.doc['input']['turbine_definition']['_val'];
+      },
+      outlet_definition: function() {
+        return this.doc['input']['outlet_definition']['_val'];
+      },
+    },
+    methods: {}
+  });
+</script>
+{% endblock script_vueapp %}

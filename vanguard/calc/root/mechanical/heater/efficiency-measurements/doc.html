@@ -1,0 +1,1214 @@
+{% extends "document.html" %}
+
+{% block title %}Fired Heater - Measurement of Efficiency (API 560){% endblock title %}
+
+{% block meta_description %}
+Calculate lflue gas composition, stack losses, net thermal efficiency, gross thermal efficiency and fuel efficiency of Gas fueled Fired Heater in accordance with API 560, Appendix-G.
+{% endblock meta_description %}
+
+
+{% block meta_keywords %}
+Gaseous fuel combustion fired heater API 560
+{% endblock meta_keywords %}
+
+{% block sharing %}
+<meta property='og:title' content='Fired Heater - Measurement of Efficiency (API 560)'/>
+<!--
+<meta property='og:image' content='http://www.codecalculation.com/static/images/thumbnail.png'/>
+-->
+<meta property='og:description' content='Online Calculation for thermal efficiencies, flue gas composition, stack losses in accordance with API 560, Appendix-G.'/>
+<meta property='og:url' content='https://www.codecalculation.com/calculations/mechanical/heater/efficiency-measurements/' />
+{% endblock sharing %}
+
+
+{% block content %}
+<!--
+<div style="overflow:auto;">
+-->
+<div class="overflowme">
+
+<div class="datasheet">
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculations/">Calculations</a></li>
+      <li><a href="/calculations/mechanical/">Mechanical</a></li>
+      <li class="is-active"><a href="#">Heater-Efficiency Measurement</a></li>
+    </ul>
+  </nav>
+  <table class="main">
+    <thead>
+        <tr style='border-top:0px;'>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+        </tr>
+    </thead>
+    <tfoot>
+          <td colspan="10" style="text-align:right;">
+              <i>Calculation Performed at www.codecalculation.com</i>
+          </td>
+    </tfoot>
+    <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8" class="has-text-centered">
+            <h1 class="title is-5">[[ doc['meta']['docClass_title'] ]]</h1>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Project</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Project No:</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['project_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w8">Project Title:</span>
+          <span class="w36"><input class="inp" v-model="doc['meta']['project_title']"/></span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Document No:</span>
+          <span class="w16"><input class="inp" v-model="doc['meta']['doc_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Revision No:</span>
+          <span class="w4"><input class="inp" v-model="doc['meta']['rev']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Date :</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['date']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Inputs</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="w20">Ambient Conditions</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">Ambient Temperature</span>
+          <span class="w8">T<sub>a</sub></span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Ta']['_val']"/></span>
+          <span class="w6">[[ gUL('temperature') ]]</span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['Ta'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">Relative Humidity</span>
+          <span class="w8">RH</span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['RH']['_val']"/></span>
+          <span class="w6">%</span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['RH'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="w20">Heater Losses</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">Radiation Loss</span>
+          <span class="w8">Loss<sub>radiation</sub></span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['loss_radiation']['_val']"/></span>
+          <span class="w6">%</span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['loss_radiation'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="w2"></span>
+          <span class="has-text-info">Note: Typical Heat loss is 1.5% for Natural draft heater  and 2.5% for Balanced draft heaters.</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="w20">Flue Gas</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">Flue gas exit temperature</span>
+          <span class="w8">T<sub>e</sub></span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Texit']['_val']"/></span>
+          <span class="w6">[[ gUL('temperature') ]]</span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['Texit'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">Oxygen in Flue Gas</span>
+          <span class="w8">O<sub>2</sub></span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['flue_O2']['_val']"/></span>
+          <span class="w6">%</span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['flue_O2'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">Oxygen sampling basis</span>
+          <span class="w14">
+            <select class="inp" v-model="doc['input']['sampling_basis']['_val']">
+              <option value="wet">wet basis</option>
+              <option value="dry">dry basis</option>
+            </select>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['sampling_basis'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="w2"></span>
+          <span class="has-text-info">Note: For healthy combustion with gas fuels, 3% Oxygen in flue gas on dry basis is targeted.</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="w20">Fuel Gas</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">Fuel gas Specified as</span>
+          <span class="w14">
+            <select class="inp" v-model="doc['input']['composition_type']['_val']">
+              <option value="mole_percent">mole percent</option>
+              <option value="mass_percent">mass percent</option>
+            </select>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['composition_type'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w14">Fuel Gas Composition</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['schema_mixture'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Component</span>
+          <span class="w6">Formula</span>
+          <span class="w6">Mol.Wt.</span>
+          <span class="w6"> [[composition_label]] %</span>
+        </td>
+        <td colspan="3"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Carbon</span>
+          <span class="w6">C</span>
+          <span class="w6">12.0</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][0]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',0,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Hydrogen</span>
+          <span class="w6">H<sub>2</sub></span>
+          <span class="w6">2.016</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][1]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',1,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Oxygen</span>
+          <span class="w6">O<sub>2</sub></span>
+          <span class="w6">32.0</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][2]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',2,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Nitrogen</span>
+          <span class="w6">N<sub>2</sub></span>
+          <span class="w6">28.0</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][3]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',3,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Carbon Monoxide</span>
+          <span class="w6">CO</span>
+          <span class="w6">28.0</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][4]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',4,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Carbon Dioxide</span>
+          <span class="w6">CO<sub>2</sub></span>
+          <span class="w6">44.0</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][5]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',5,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Methane</span>
+          <span class="w6">CH4</span>
+          <span class="w6">16.0</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][6]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',6,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Ethane</span>
+          <span class="w6">C2H6</span>
+          <span class="w6">30.1</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][7]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',7,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Ethylene</span>
+          <span class="w6">C2H4</span>
+          <span class="w6">28.1</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][8]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',8,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Acetylene</span>
+          <span class="w6">C2H2</span>
+          <span class="w6">26.0</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][9]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',9,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Propane</span>
+          <span class="w6">C3H8</span>
+          <span class="w6">44.1</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][10]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',10,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Propylene</span>
+          <span class="w6">C3H6</span>
+          <span class="w6">42.1</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][11]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',11,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Butane</span>
+          <span class="w6">C4H10</span>
+          <span class="w6">58.1</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][12]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',12,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Butylene</span>
+          <span class="w6">C4H8</span>
+          <span class="w6">56.1</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][13]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',13,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Pentane</span>
+          <span class="w6">C<sub>5</sub>H<sub>12</sub></span>
+          <span class="w6">72.1</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][14]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',14,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Hexane</span>
+          <span class="w6">C<sub>6</sub>H<sub>14</sub></span>
+          <span class="w6">86.2</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][15]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',15,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Benzene</span>
+          <span class="w6">C<sub>6</sub>H<sub>6</sub></span>
+          <span class="w6">78.1</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][16]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',16,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Methanol</span>
+          <span class="w6">CH<sub>3</sub>OH</span>
+          <span class="w6">32.0</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][17]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',17,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Ammonia</span>
+          <span class="w6">NH<sub>3</sub></span>
+          <span class="w6">17.0</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][18]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',18,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Sulfur</span>
+          <span class="w6">S</span>
+          <span class="w6">32.1</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][19]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',19,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Hydrogen Sulphide</span>
+          <span class="w6">H<sub>2</sub>S</span>
+          <span class="w6">34.1</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][20]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',20,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w4"></span>
+          <span class="w10">Water Vapor</span>
+          <span class="w6">H2O</span>
+          <span class="w6">18.016</span>
+          <span class="w6"><input class="inp" type="number" v-model="doc['input']['gasfuel'][21]['percent']"/></span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['gasfuel',21,'percent'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5"  v-bind:class="{'has-text-success': percent_total_OK,'has-text-danger': !percent_total_OK, }">
+          <span class="w4"></span>
+          <span class="w10">Total</span>
+          <span class="w6"></span>
+          <span class="w6"></span>
+          <span class="w6" style="font-weight:bold;">[[ percent_total ]]</span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['schema_gasfuel'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w14">Fuel gas temperature</span>
+          <span class="w8">T<sub>f</sub></span>
+          <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Tf']['_val']"/></span>
+          <span class="w6">[[ gUL('temperature') ]]</span>
+        </td>
+        <td colspan="3">
+          <p class="help is-danger" v-for="err in getErrs(['Texit'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tbody >
+        <tr>
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+        <tr class="hideprint" style='border-top:0px;'>
+          <td style='border-left:0px;'></td>
+          <td colspan="8" style="text-align:center" >
+            <span class="w8">
+              <button class="button is-primary" @click="calculate" style="width:100%">Calculate</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="openModal('unitsModalisActive')" style="width:100%">Units</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="saveDoc()" style="width:100%">Save</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="openModal('uploadModalisActive')" style="width:100%">Load</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="pdf_download()" style="width:100%">PDF</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="launch_help" style="width:100%">Help</button>
+            </span>
+          </td>
+          <td style='border-right:0px;'></td>
+        </tr>
+        <tr style='border-top:0px;' class="hideprint">
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td style='border-top:0px;'colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+      </tbody>
+      <tbody v-if="doc['errors'].length > 0">
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger"><b>Errors</b></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger" v-for = "err in doc['errors']">[[ err ]]</p>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+
+      <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Results</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="has-text-info">All references are to API 560, Annex-G and included worksheets</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span>Combustion Worksheet Results</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">Molecular Weight</span>
+          <span class="w8">MW</span>
+          <span class="w6 result"> [[ MW_rounded ]]</span>
+          <span class="w6">[[ gUL('molecularMass') ]]</span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">Lower Heating Value</span>
+          <span class="w8">h<sub>L</sub></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'h_L', '_val']) ]]</span>
+          <span class="w6">[[ gUL('specificEnergy') ]]</span>
+        </td>
+        <td colspan="3">
+          <span class="has-text-info">Refer Row 'Total per kg of fuel,  Column 5</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">Air Required (per [[gUL('mass')]] of fuel)</span>
+          <span class="w8"></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'air_reqd', '_val']) ]]</span>
+          <span class="w6">[[gUL('mass')]]/[[gUL('mass')]] of fuel</span>
+        </td>
+        <td colspan="3">
+          <span class="has-text-info">Refer Row 'Total per kg of fuel,  Column 7</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">CO2 formed (per [[gUL('mass')]] of fuel)</span>
+          <span class="w8"></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'CO2_formed', '_val']) ]]</span>
+          <span class="w6">[[gUL('mass')]]/[[gUL('mass')]] of fuel</span>
+        </td>
+        <td colspan="3">
+          <span class="has-text-info">Refer Row 'Total per kg of fuel,  Column 9</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">H2O formed (per [[gUL('mass')]] of fuel)</span>
+          <span class="w8"></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'H2O_formed', '_val']) ]]</span>
+          <span class="w6">[[gUL('mass')]]/[[gUL('mass')]] of fuel</span>
+        </td>
+        <td colspan="3">
+          <span class="has-text-info">Refer Row 'Total per kg of fuel,  Column 11</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">N2 formed (per [[gUL('mass')]] of fuel)</span>
+          <span class="w8"></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'N2_formed', '_val']) ]]</span>
+          <span class="w6">[[gUL('mass')]]/[[gUL('mass')]] of fuel</span>
+        </td>
+        <td colspan="3">
+          <span class="has-text-info">Refer Row 'Total per kg of fuel,  Column 13</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="w30">Excess Air And Relative Humidity Worksheet</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w14">Moisture (per [[gUL('mass')]] of wet air)</span>
+          <span class="w8"></span>
+          <span class="w6 result">[[ retSilent(doc, ['result', 'X_wet', '_val']) ]]</span>
+          <span class="w8">[[gUL('mass')]]/[[gUL('mass')]] of wet air</span>
+        </td>
+        <td colspan="2">
+          <span class="has-text-info">Refer line (a)</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w14">Wet air reqd (per [[gUL('mass')]] of fuel)</span>
+          <span class="w8"></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'air_reqd_RHcorrected', '_val']) ]]</span>
+          <span class="w6">[[gUL('mass')]]/[[gUL('mass')]] of fuel</span>
+        </td>
+        <td colspan="2">
+          <span class="has-text-info">Refer line (b)</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w14">Moisture (per [[gUL('mass')]] of fuel)</span>
+          <span class="w8"></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'moisture', '_val']) ]]</span>
+          <span class="w8">[[gUL('mass')]]/[[gUL('mass')]] of fuel</span>
+        </td>
+        <td colspan="2">
+          <span class="has-text-info">Refer line (c)</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w14">H2O formed (per [[gUL('mass')]] of fuel)</span>
+          <span class="w8"></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'H2O_formed_RHcorrected', '_val']) ]]</span>
+          <span class="w8">[[gUL('mass')]]/[[gUL('mass')]] of fuel</span>
+        </td>
+        <td colspan="2">
+          <span class="has-text-info">Refer line (d)</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w14">Excess Air (per [[gUL('mass')]] of fuel)</span>
+          <span class="w8"></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'excess_Air', '_val']) ]]</span>
+          <span class="w8">[[gUL('mass')]]/[[gUL('mass')]] of fuel</span>
+        </td>
+        <td colspan="2">
+          <span class="has-text-info">Refer line (e)</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w14">Excess Air / Air required</span>
+          <span class="w8"></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'excess_Air_pc', '_val']) ]]</span>
+          <span class="w8">%</span>
+        </td>
+        <td colspan="2">
+          <span class="has-text-info">Refer line (f)</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w14">Total Air Intake</span>
+          <span class="w8">m<sub>a</sub>/m<sub>f</sub></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'total_air', '_val']) ]]</span>
+          <span class="w8">[[gUL('mass')]]/[[gUL('mass')]] of fuel</span>
+        </td>
+        <td colspan="2">
+          <span class="has-text-info">Sum of line (b) and (e)</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w14">H2O formed (per [[gUL('mass')]] of fuel)</span>
+          <span class="w8"></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'H2O_formed_EAcorrected', '_val']) ]]</span>
+          <span class="w8">[[gUL('mass')]]/[[gUL('mass')]] of fuel</span>
+        </td>
+        <td colspan="2">
+          <span class="has-text-info">Refer line (g)</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="w30">Stack Loss Work Sheet</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w10"><b>Component</b></span>
+          <span class="w10"><b>Qty. Formed</b></span>
+          <span class="w10"><b>Enthalphy @ T</b></span>
+          <span class="w10"><b>Massic heat content</b></span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w10"><b></b></span>
+          <span class="w10">[[gUL('mass')]]/[[gUL('mass')]] of fuel</span>
+          <span class="w10">[[gUL('specificEnergy')]] formed</span>
+          <span class="w10">[[gUL('specificEnergy')]] of fuel</span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w10">Carbon Dioxide</span>
+          <span class="w10 result">[[ retSilent(doc, ['result', 'CO2_formed', '_val']) ]]</span>
+          <span class="w10 result">[[ retSilent(doc, ['result', 'h_CO2', '_val']) ]]</span>
+          <span class="w10 result">[[ retSilent(doc, ['result', 'H_CO2', '_val']) ]]</span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w10">Water Vapor</span>
+          <span class="w10 result">[[retSilent(doc, ['result', 'H2O_formed_EAcorrected', '_val'])]]</span>
+          <span class="w10 result">[[retSilent(doc, ['result', 'h_H2O', '_val'])]]</span>
+          <span class="w10 result">[[retSilent(doc, ['result', 'H_H2O', '_val'])]]</span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w10">Nitrogen</span>
+          <span class="w10 result">[[retSilent(doc, ['result', 'N2_formed', '_val'])]]</span>
+          <span class="w10 result">[[retSilent(doc, ['result', 'h_N2', '_val'])]]</span>
+          <span class="w10 result">[[retSilent(doc, ['result', 'H_N2', '_val'])]]</span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w10">Excess Air</span>
+          <span class="w10 result"> [[ retSilent(doc, ['result', 'excess_Air', '_val']) ]]</span>
+          <span class="w10 result">[[retSilent(doc, ['result', 'h_EA', '_val'])]]</span>
+          <span class="w10 result">[[retSilent(doc, ['result', 'H_EA', '_val'])]]</span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w10"><b><i>Total</i> </b> </span>
+          <span class="w10"></span>
+          <span class="w10"></span>
+          <span class="w10 result">[[retSilent(doc, ['result', 'h_s', '_val'])]]</span>
+        </td>
+        <td colspan="2">
+          <span class="has-text-info">Refer Row 'Total', Column 3</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="w30">Efficiency calculation</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">Lower Heating Value-fuel</span>
+          <span class="w6">h<sub>L</sub></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'h_L', '_val']) ]]</span>
+          <span class="w6">[[gUL('specificEnergy')]] </span>
+        </td>
+        <td colspan="3">
+          <span class="has-text-info">Combn. Wksht., Row 'Total per kg of fuel,  Column 5</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">Higher Heating Value-fuel</span>
+          <span class="w6">h<sub>H</sub></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'h_H', '_val']) ]]</span>
+          <span class="w6">[[gUL('specificEnergy')]] </span>
+        </td>
+        <td colspan="3">
+          <span class="has-text-info">Annex. G, Equation G.3</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">Radiation massic heat loss</span>
+          <span class="w6">h<sub>r</sub></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'h_r', '_val']) ]]</span>
+          <span class="w6">[[gUL('specificEnergy')]] </span>
+        </td>
+        <td colspan="3">
+          <span class="has-text-info">Loss<sub>radiation</sub>*h<sub>L</sub>/100</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">Stack massic heat loss</span>
+          <span class="w6">h<sub>s</sub></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'h_s', '_val']) ]]</span>
+          <span class="w6">[[gUL('specificEnergy')]] </span>
+        </td>
+        <td colspan="3">
+          <span class="has-text-info">Stack Loss Wksht, Row 'Total', Column 3</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">Sensible heat corrn. - air</span>
+          <span class="w6">Δh<sub>a</sub></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'delh_a', '_val']) ]]</span>
+          <span class="w6">[[gUL('specificEnergy')]] </span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">Sensible heat corrn. - fuel</span>
+          <span class="w6">Δh<sub>f</sub></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'delh_f', '_val']) ]]</span>
+          <span class="w6">[[gUL('specificEnergy')]] </span>
+        </td>
+        <td colspan="3">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">Net thermal efficiency</span>
+          <span class="w6">e</span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'e', '_val']) ]]</span>
+          <span class="w6">%</span>
+        </td>
+        <td colspan="3">
+          <span class="has-text-info">Annex. G, Equation G.1</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">Gross efficiency</span>
+          <span class="w6">e<sub>g</sub></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'e_g', '_val']) ]]</span>
+          <span class="w6">%</span>
+        </td>
+        <td colspan="3">
+          <span class="has-text-info">Annex. G, Equation G.5</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <span class="w2"></span>
+          <span class="w14">Fuel efficiency</span>
+          <span class="w6">e<sub>f</sub></span>
+          <span class="w6 result"> [[ retSilent(doc, ['result', 'e_f', '_val']) ]]</span>
+          <span class="w6">%</span>
+        </td>
+        <td colspan="3">
+          <span class="has-text-info">Annex. G, Equation G.6</span>
+        </td>
+        <td></td>
+      </tr>
+      </tbody>
+  </table>
+</div>
+</div>
+
+{% endblock content %}
+
+{% block contributors %}
+<p>
+  <a href="//www.linkedin.com/in/sultan-ahamad-69401514/">Sultan Ahmed</a>
+</p>
+{% endblock contributors %}
+
+{% block script_vueapp %}
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        delimiters : ['[[',']]'],
+        mixins: [app_common, app_doc],
+        data: {
+            doc : {{ doc | safe }},
+            fixed:{}
+        },
+        computed: {
+          composition_label : function(){
+            var comp_type =  this.doc['input']['composition_type']['_val']
+            if (comp_type =='mole_percent'){
+              return "Mole";
+            }
+            else{
+              return "Mass";
+            }
+          },
+          percent_total : function(){
+            var gasFuel = this.doc['input']['gasfuel'];
+            var arrayLength = gasFuel.length;
+            total = 0
+              for (var i = 0; i < arrayLength; i++) {
+                total = total + parseFloat(gasFuel[i]['percent']);
+              }
+              total = roundit(total, 0.001, 6)
+            return total;
+          },
+          percent_total_OK : function(){
+            if (this.percent_total ==100){
+              return true;
+            }
+            else{
+              return false;
+            }
+          },
+          MW_rounded: function(){
+            MW = this.retSilent(this.doc, ['result', 'MW', '_val']);
+            MWr = parseFloat(Math.round(MW * 100) / 100).toFixed(2);
+            return MWr
+          }
+        },
+        methods: {}
+    });
+</script>
+{% endblock script_vueapp %}

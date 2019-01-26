@@ -1,0 +1,56 @@
+{
+  "sub_url": "/calculate/instrumentation/relief-valves/steam-service",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Pressure Relief Valve Sizing (API 520)- Steam Relief",
+    "docInstance_title": "Pressure Relief Valve Sizing (API 520)- Steam Relief",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length_mili": "m",
+    "length": "m",
+    "area": "mm2",
+    "pressure": "kPa",
+    "temperature": "K",
+    "flow": "lpm",
+    "massflow": "kg/hr",
+    "molecularMass" : "kg/mol",
+    "density":"kg/m3"
+  },
+
+  "input": {
+    "Pset": {"_val":"11032", "_dim":"pressure"},
+    "Pover": {"_val":"10"},
+    "Psuper" : {"_val" : "0", "_dim":"pressure"},
+    "Psuper_is_const" : {"_val":"No"},
+    "Pbuiltup" : {"_val":"0", "_dim":"pressure"},
+    "steam_state": {"_val":"saturated"},
+    "T": {"_val":"348", "_dim":"temperature"},
+    "m": {"_val":"69615", "_dim":"massflow"},
+    "valve_design" : {"_val":"Pilot-Operated"},
+    "rupture_disc" : {"_val":"No"},
+    "Kd_basis": {"_val":"Default"},
+    "Kd_manual": {"_val":""},
+    "Kb_basis": {"_val":"Default"},
+    "Kb_manual": {"_val":""},
+    "Kc_basis": {"_val":"Default"},
+    "Kc_manual": {"_val":""}
+  },
+
+  "result": {
+    "valve_design_remark":{"_val":""},
+    "Kn": {"_val":""},
+    "A": {"_val":"", "_dim":"area"},
+    "A_letter": {"_val":""},
+    "A_sel": {"_val":"","_dim":"area"},
+    "Qrated": {"_val":"", "_dim":"flow"},
+    "Ratio_Q": {"_val":""}
+  },
+
+  "errors": []
+}

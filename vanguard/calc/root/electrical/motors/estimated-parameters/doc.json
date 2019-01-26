@@ -1,0 +1,29 @@
+{
+  "sub_url": "/calculate/electrical/motors/estimated-parameters",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "LV Motor Estimated Parameters",
+    "docInstance_title": "LV Motor Estimated Parameters",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "power":"kW"
+  },
+
+  "input": {
+    "motor_power": {"_val":"14.5","_dim":"power"},
+    "poles": {"_val":"2"}
+  },
+
+  "result": {
+    "motor_rating": {"_val":""}
+
+  },
+
+  "errors": []
+}

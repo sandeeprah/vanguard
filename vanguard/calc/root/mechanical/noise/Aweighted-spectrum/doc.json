@@ -1,0 +1,50 @@
+{
+  "sub_url": "/calculate/mechanical/noise/Aweighted-spectrum",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "A-weighting of Noise Spectrum",
+    "docInstance_title": "A-weighting of Noise Spectrum",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length": "m"
+  },
+
+  "input": {
+
+    "unfilteredSpectrum":{
+            "f63":"0",
+            "f125":"0",
+            "f250":"0",
+            "f500":"0",
+            "f1000":"0",
+            "f2000":"0",
+            "f4000":"0",
+            "f8000":"0"
+        }
+  },
+
+  "result": {
+
+    "filteredSpectrum" : {
+        "f63":"0",
+        "f125":"0",
+        "f250":"0",
+        "f500":"0",
+        "f1000":"0",
+        "f2000":"0",
+        "f4000":"0",
+        "f8000":"0"
+    },
+    "totalAudibleNoise" : {"_val":"0"}
+
+
+  },
+
+  "errors": []
+}

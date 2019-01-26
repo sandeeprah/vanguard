@@ -1,0 +1,69 @@
+{
+  "sub_url": "/calculate/electrical/cables/iec-sizing",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "IEC Cable Sizing Calculations",
+    "docInstance_title": "IEC Cable Sizing Calculations",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length": "m",
+    "temperature": "C",
+    "power" : "kW"
+  },
+
+  "input": {
+    "phases" : {"_val":"three"},
+    "voltage": {"_val":"400"},
+    "power_factor": {"_val":"0.8"},
+    "rated_load": {"_val":"3", "_dim":"power"},
+    "load_efficiency":{"_val":"0.9"},
+    "insulation_type":{"_val":"XLPE"},
+    "conductor_type":{"_val":"Cu"},
+    "cable_type":{"_val":"multi_core"},
+    "installation_method":{"_val":"E"},
+    "Tamb":{"_val":"20"},
+    "installation_type" : {"_val":"horzperftray_touching"},
+    "no_grpcables":{"_val":"1"},
+    "no_layers":{"_val":"1"},
+    "Tground":{"_val":"30"},
+    "soil_thermal_resistivity":{"_val":"0.5"},
+    "underground_spacing":{"_val":"C250"},
+    "voltage_drop_calculation":{"_val":"no"},
+    "cable_section_manual" : {"_val":"16"},
+    "cable_run":{"_val":"50"},
+    "allowable_drop":{"_val":"5"},
+    "short_circuit_calculation":{"_val":"no"},
+    "I_sc":{"_val":"10000"},
+    "t_fault":{"_val":"0.01"},
+    "Tc_basis":{"_val":"default"},
+    "Tc_init":{"_val":"75"},
+    "Tc_final":{"_val":"160"}
+  },
+
+  "result": {
+    "FLC": {"_val":""},
+    "Ibase": {"_val":""},
+    "Ibase_ref":{"_val":""},
+    "Iderated": {"_val":""},
+
+    "k1":{"_val":""},
+    "k1_ref":{"_val":""},
+
+    "k2":{"_val":""},
+    "k2_ref":{"_val":""},
+
+    "k3":{"_val":""},
+    "k3_ref":{"_val":""},
+
+    "cable_section":{"_val":""}
+
+  },
+
+  "errors": []
+}

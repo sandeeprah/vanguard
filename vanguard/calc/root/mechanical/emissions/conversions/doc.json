@@ -1,0 +1,41 @@
+{
+  "sub_url": "/calculate/mechanical/emissions/conversions",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Emission Measurement Conversions & Corrections",
+    "docInstance_title": "Emission Measurement Conversions & Corrections",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "temperature" : "C",
+    "pressure" : "kPa",
+    "molecularMass" : "g/mol"
+  },
+
+  "input": {
+    "specie" : {"_val": "NOx"},
+    "MW" : {"_val": "46", "_dim":"molecularMass"},
+    "concentration_measured" : {"_val": "100"},
+    "from_units" : {"_val": "ppmv"},
+    "sampling_basis" : {"_val": "wet"},
+    "H2O_measured" : {"_val": "12"},
+    "oxygen_correction" : {"_val": "yes"},
+    "O2_measured" : {"_val": "3.5"},
+    "O2_reference" : {"_val": "3"},
+    "to_units" : {"_val": "mg/Nm3"},
+    "Ts" : {"_val": "25", "_dim":"temperature"},
+    "Ps" : {"_val": "101.325", "_dim":"pressure"}
+  },
+
+  "result": {
+    "concentration" : {"_val": ""},
+    "units" : {"_val": ""}
+  },
+
+  "errors": []
+}

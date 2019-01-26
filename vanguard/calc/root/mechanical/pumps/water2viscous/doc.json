@@ -1,0 +1,46 @@
+{
+  "sub_url": "/calculate/mechanical/pumps/water2viscous",
+  "meta": {
+    "project_no": "0000",
+    "project_title": "Local",
+    "docClass_code": "aaa",
+    "docClass_title": "Centrifugal Pump Viscosity Correction",
+    "docInstance_title": "Centrifugal Pump Viscosity Correction",
+    "doc_no":"0000-MEC-CAL-PMP-W2V-01",
+    "rev": "A",
+    "date":""
+  },
+
+
+  "units": {
+    "length": "m",
+    "flow" : "m3/hr",
+    "density":"kg/m3",
+    "dynViscosity":"cP",
+    "kinViscosity":"cSt"
+  },
+
+  "input": {
+    "Qbep": {"_val":"110", "_dim":"flow"},
+    "Hbep": {"_val":"77", "_dim":"length"},
+    "speed": {"_val":"2950"},
+    "Q": {"_val":"66", "_dim":"flow"},
+    "H": {"_val":"87.3", "_dim":"length"},
+    "eta": {"_val":"60"},
+    "viscosity_basis" : {"_val":"kinematic"},
+    "nu" :{"_val":"120", "_dim":"kinViscosity"},
+    "mu" :{"_val":"", "_dim":"dynViscosity"},
+    "rho": {"_val":"", "_dim":"density"}
+  },
+
+  "result": {
+    "Cq": {"_val":""},
+    "Ch": {"_val":""},
+    "Ceta": {"_val":""},
+    "Qvis": {"_val":"", "_dim":"flow"},
+    "Hvis": {"_val":"", "_dim":"length"},
+    "etavis": {"_val":""}
+  },
+
+  "errors": []
+}

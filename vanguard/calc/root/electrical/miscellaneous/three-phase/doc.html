@@ -1,0 +1,345 @@
+{% extends "document.html" %}
+{% block title %}3 Phase Parameters{% endblock title %}
+
+{% block meta_description %}
+Obtain the required power factor compensation in kVAr if active power and the actual and desired power factors are known.
+{% endblock meta_description %}
+
+{% block meta_keywords %}
+calculation three phase active power reactive apparent current power factor
+{% endblock meta_keywords %}
+
+{% block content %}
+<div style="overflow:auto;">
+<div class="datasheet">
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculations/">Calculations</a></li>
+      <li><a href="/calculations/electrical/">Electrical</a></li>
+      <li class="is-active"><a href="#">3-Phase</a></li>
+    </ul>
+  </nav>
+  <table class="main">
+    <thead>
+        <tr style='border-top:0px;'>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <td colspan="10">
+            <i>Calculation Performed at www.codecalculation.com</i>
+        </td>
+    </tfoot>
+    <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8" class="has-text-centered">
+            <h1 class="title is-5">[[ doc['meta']['docClass_title'] ]]</h1>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Project</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Project No:</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['project_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w8">Project Title:</span>
+          <span class="w36"><input class="inp" v-model="doc['meta']['project_title']"/></span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Document No:</span>
+          <span class="w16"><input class="inp" v-model="doc['meta']['doc_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Revision No:</span>
+          <span class="w4"><input class="inp" v-model="doc['meta']['rev']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Date :</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['date']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Inputs</h2>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+
+
+    <tbody>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Solve Using </span>
+          <span class="w14">
+            <select v-model="doc['input']['solve_using']['_val']">
+              <option value="current">Current (I)</option>
+              <option value="active_power">Active Power (kW)</option>
+              <option value="apparent_power">Apparent Power (kVA)</option>
+              <option value="reactive_power">Reactive Power (kVAr)</option>
+            </select>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['solve_using'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Line to Line Voltage (VLL)</span>
+          <span class="w6"><input type="number" v-model="doc['input']['VLL']['_val']"/></span>
+          <span class="w6">V</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['VLL'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Power Factor (pf)</span>
+          <span class="w6"><input type="number" v-model="doc['input']['pf']['_val']"/></span>
+          <span class="w6">V</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['pf'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="solve_using=='current'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Current (I)</span>
+          <span class="w6"><input type="number" v-model="doc['input']['I']['_val']"/></span>
+          <span class="w6">A</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['I'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="solve_using=='active_power'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Active Power (kW)</span>
+          <span class="w6"><input type="number" v-model="doc['input']['kW']['_val']"/></span>
+          <span class="w6">A</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['kW'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="solve_using=='apparent_power'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Apparent Power (kVA)</span>
+          <span class="w6"><input type="number" v-model="doc['input']['kVA']['_val']"/></span>
+          <span class="w6">kVA</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['kVA'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="solve_using=='reactive_power'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Reactive Power (kVAr)</span>
+          <span class="w6"><input type="number" v-model="doc['input']['kVAr']['_val']"/></span>
+          <span class="w6">kVA</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['kVAr'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+
+    </tbody>
+    <tbody >
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="hideprint" style='border-top:0px;'>
+        <td style='border-left:0px;'></td>
+        <td colspan="8" style="text-align:center" >
+          <span class="w8">
+            <button class="button is-primary" @click="calculate" style="width:100%">Calculate</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="openModal('unitsModalisActive')" style="width:100%">Units</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="saveDoc()" style="width:100%">Save</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="openModal('uploadModalisActive')" style="width:100%">Load</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="pdf_download()" style="width:100%">PDF</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="launch_help" style="width:100%">Help</button>
+          </span>
+        </td>
+        <td style='border-right:0px;'></td>
+      </tr>
+      <tr style='border-top:0px;' class="hideprint">
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td style='border-top:0px;'colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+    </tbody>
+    <tbody v-if="doc['errors'].length > 0">
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <p class="help is-danger"><b>Errors</b></p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <p class="help is-danger" v-for="err in doc['errors']">[[ err ]]</p>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Results</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="solve_using!='current'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Current (I)</span>
+          <span class="w6 result">[[ retSilent(doc,['result','I', '_val']) ]]</span>
+          <span class="w6">A</span>
+        </td>
+        <td colspan="4"></td>
+        <td></td>
+      </tr>
+      <tr v-show="solve_using!='active_power'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Active Power (kW)</span>
+          <span class="w6 result">[[ retSilent(doc,['result','kW', '_val']) ]]</span>
+          <span class="w6">kW</span>
+        </td>
+        <td colspan="4"></td>
+        <td></td>
+      </tr>
+      <tr v-show="solve_using!='apparent_power'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Apparent Power (kW)</span>
+          <span class="w6 result">[[ retSilent(doc,['result','kVA', '_val']) ]]</span>
+          <span class="w6">kVA</span>
+        </td>
+        <td colspan="4"></td>
+        <td></td>
+      </tr>
+      <tr v-show="solve_using!='reactive_power'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Reactive Power (kW)</span>
+          <span class="w6 result">[[ retSilent(doc,['result','kVAr', '_val']) ]]</span>
+          <span class="w6">kVA</span>
+        </td>
+        <td colspan="4"></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+{% endblock content %}
+
+
+{% block script_vueapp %}
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        delimiters : ['[[',']]'],
+        mixins: [app_common, app_doc],
+        data: {
+            doc : {{ doc | safe }},
+            fixed:{}
+        },
+        computed: {
+          solve_using : function(){
+            return this.doc['input']['solve_using']['_val'];
+          }
+        },
+        methods: {}
+    });
+</script>
+{% endblock script_vueapp %}

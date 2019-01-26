@@ -1,0 +1,348 @@
+{% extends "document.html" %}
+
+{% block title %}Thermophysical Properties - Water/Steam{% endblock title %}
+
+{% block meta_description %}
+Get thermophysical properties of water and steam. The inputs include state variables of pressure and temperature for determination of properties for superheated steam or compressed water. For saturated state the inputs required are Pressure-Quality or Temperature-Quality. Outputs include phase information,
+saturation temperature or pressure and specific volume, enthalphy, entropy, internal energy etc.
+{% endblock meta_description %}
+
+{% block meta_keywords %}
+thermophysical properties water steam
+{% endblock meta_keywords %}
+
+{% block content %}
+
+<div style="overflow:auto;">
+<div class="datasheet">
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculations/">Calculations</a></li>
+      <li><a href="/calculations/process/">Process</a></li>
+      <li class="is-active"><a href="#">Thermophysical-Water and Steam</a></li>
+    </ul>
+  </nav>
+
+  <table class="main">
+    <thead>
+        <tr style='border-top:0px;'>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <td colspan="10" style="text-align:right;">
+            <i>Calculation Performed at www.codecalculation.com</i>
+        </td>
+    </tfoot>
+    <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8" class="has-text-centered">
+            <h1 class="title is-5">[[ doc['meta']['docClass_title'] ]]</h1>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Project</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Project No:</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['project_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w8">Project Title:</span>
+          <span class="w36"><input class="inp" v-model="doc['meta']['project_title']"/></span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Document No:</span>
+          <span class="w16"><input class="inp" v-model="doc['meta']['doc_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Revision No:</span>
+          <span class="w4"><input class="inp" v-model="doc['meta']['rev']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Date :</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['date']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Inputs</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">State</span>
+          <span class="w16">
+            <select class="inp" placeholder="fluid" v-model="doc['input']['state']['_val']">
+              <option v-for="item in fixed['state_options']" :value="item" v-text="item"></option>
+            </select>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['state'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="(state=='Saturated_P') || (state=='Superheated_or_Compressed')">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Pressure</span>
+          <span class="w6"><input class="inp" type="text" v-model="doc['input']['P']['_val']"/></span>
+          <span class="w6">[[ gUL('pressure') ]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['P'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="(state=='Saturated_T') || (state=='Superheated_or_Compressed')">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Temperature</span>
+          <span class="w6"><input class="inp" type="text" v-model="doc['input']['T']['_val']"/></span>
+          <span class="w6">[[ gUL('temperature') ]]</span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['T'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+      <tr v-show="(state=='Saturated_T') || (state=='Saturated_P')">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Quality</span>
+          <span class="w6"><input class="inp" type="text" v-model="doc['input']['Q']['_val']"/></span>
+        </td>
+        <td colspan="4">
+          <p class="help is-danger" v-for="err in getErrs(['Q'])">[[err]]</p>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+
+          <tbody >
+            <tr>
+              <td style='border-left:0px;'>&nbsp;</td>
+              <td colspan="8">&nbsp;</td>
+              <td style='border-right:0px;'>&nbsp;</td>
+            </tr>
+            <tr class="hideprint" style='border-top:0px;'>
+              <td style='border-left:0px;'></td>
+              <td colspan="8" style="text-align:center" >
+                <span class="w8">
+                  <button class="button is-primary" @click="calculate" style="width:100%">Calculate</button>
+                </span>
+                <span class="w8">
+                  <button class="button is-primary" @click="openModal('unitsModalisActive')" style="width:100%">Units</button>
+                </span>
+                <span class="w8">
+                  <button class="button is-primary" @click="saveDoc()" style="width:100%">Save</button>
+                </span>
+                <span class="w8">
+                  <button class="button is-primary" @click="openModal('uploadModalisActive')" style="width:100%">Load</button>
+                </span>
+                <span class="w8">
+                  <button class="button is-primary" @click="pdf_download()" style="width:100%">PDF</button>
+                </span>
+                <span class="w8">
+                  <button class="button is-primary" @click="launch_help" style="width:100%">Help</button>
+                </span>
+              </td>
+              <td style='border-right:0px;'></td>
+            </tr>
+            <tr style='border-top:0px;' class="hideprint">
+              <td style='border-left:0px;'>&nbsp;</td>
+              <td style='border-top:0px;'colspan="8">&nbsp;</td>
+              <td style='border-right:0px;'>&nbsp;</td>
+            </tr>
+          </tbody>
+
+    <tbody v-if="doc['errors'].length > 0">
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <p class="help is-danger"><b>Errors</b></p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <p class="help is-danger" v-for="err in doc['errors']">[[ err ]]</p>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Results</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Phase</span>
+          <span class="w6 result">[[ retSilent(doc,['result','phase', '_val']) ]]</span>
+          <span class="w6">[[ gUL('molecularMass') ]]</span>
+        </td>
+        <td colspan="4"></td>
+        <td></td>
+      </tr>
+      <tr v-show="state=='Saturated_T'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Psat</span>
+          <span class="w6 result">[[ retSilent(doc,['result','Psat', '_val']) ]]</span>
+          <span class="w6">[[ gUL('pressure') ]]</span>
+        </td>
+        <td colspan="4"></td>
+        <td></td>
+      </tr>
+      <tr v-show="state=='Saturated_P'">
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Tsat</span>
+          <span class="w6 result">[[ retSilent(doc,['result','Tsat', '_val']) ]]</span>
+          <span class="w6">[[ gUL('temperature') ]]</span>
+        </td>
+        <td colspan="4"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Density</span>
+          <span class="w6 result">[[ retSilent(doc,['result','rho', '_val']) ]]</span>
+          <span class="w6">[[ gUL('density') ]]</span>
+        </td>
+        <td colspan="4"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Specific Volume</span>
+          <span class="w6 result">[[ retSilent(doc,['result','v', '_val']) ]]</span>
+          <span class="w6">[[ gUL('specificVolume') ]]</span>
+        </td>
+        <td colspan="4"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Specific Enthalphy</span>
+          <span class="w6 result">[[ retSilent(doc,['result','h', '_val']) ]]</span>
+          <span class="w6">[[ gUL('specificEnergy') ]]</span>
+        </td>
+        <td colspan="4"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Specific Internal Energy</span>
+          <span class="w6 result">[[ retSilent(doc,['result','u', '_val']) ]]</span>
+          <span class="w6">[[ gUL('specificEnergy') ]]</span>
+        </td>
+        <td colspan="4"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w14">Specific Entropy</span>
+          <span class="w6 result">[[ retSilent(doc,['result','s', '_val']) ]]</span>
+          <span class="w6">[[ gUL('specificHeat') ]]</span>
+        </td>
+        <td colspan="4"></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+{% endblock content %}
+
+
+{% block script_vueapp %}
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        delimiters : ['[[',']]'],
+        mixins: [app_common, app_doc],
+        data: {
+            doc : {{ doc | safe }},
+            fixed:{
+              state_options:["Saturated_T", "Saturated_P", "Superheated_or_Compressed"]
+            }
+        },
+        computed: {
+          state : function(){
+            return this.doc['input']['state']['_val'];
+          }
+        },
+        methods: {}
+    });
+</script>
+{% endblock script_vueapp %}

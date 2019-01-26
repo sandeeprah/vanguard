@@ -1,0 +1,61 @@
+{
+  "sub_url": "/calculate/instrumentation/relief-valves/liquid-service",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Pressure Relief Valve Sizing (API 520)- Liquid Relief",
+    "docInstance_title": "Pressure Relief Valve Sizing (API 520)- Liquid Relief",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length_mili": "m",
+    "length": "m",
+    "area": "mm2",
+    "pressure": "kPa",
+    "temperature": "K",
+    "flow": "lpm",
+    "molecularMass" : "kg/mol",
+    "density":"kg/m3",
+    "dynViscosity":"cP",
+    "kinViscosity":"cSt"
+
+  },
+
+  "input": {
+    "Pset": {"_val":"1734", "_dim":"pressure"},
+    "Pover": {"_val":"10"},
+    "Psuper" : {"_val" : "30", "_dim":"pressure"},
+    "Psuper_is_const" : {"_val":"No"},
+    "Pbuiltup" : {"_val":"10", "_dim":"pressure"},
+    "valve_design" : {"_val":"Conventional"},
+    "rupture_disc" : {"_val":"No"},
+    "Q": {"_val":"6814", "_dim":"flow"},
+    "rho": {"_val":"900", "_dim":"density"},
+    "viscosity_basis" : {"_val":"Dynamic"},
+    "mu": {"_val":"400", "_dim":"dynViscosity"},
+    "nu": {"_val":"", "_dim":"kinViscosity"},
+    "ssu": {"_val":""},
+    "Kd_basis": {"_val":"Default"},
+    "Kd_manual": {"_val":""},
+    "Kw_basis": {"_val":"Default"},
+    "Kw_manual": {"_val":""},
+    "Kc_basis": {"_val":"Default"},
+    "Kc_manual": {"_val":""}
+  },
+
+  "result": {
+    "valve_design_remark":{"_val":""},
+    "Kv": {"_val":""},
+    "A": {"_val":"", "_dim":"area"},
+    "A_letter": {"_val":""},
+    "A_sel": {"_val":"","_dim":"area"},
+    "Qrated": {"_val":"", "_dim":"flow"},
+    "Ratio_Q": {"_val":""}
+  },
+
+  "errors": []
+}

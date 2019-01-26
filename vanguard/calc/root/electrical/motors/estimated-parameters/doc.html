@@ -1,0 +1,405 @@
+{% extends "document.html" %}
+{% block title %}LV Motor Parameters{% endblock title %}
+{% block meta_description %}
+Get estimated motor parameters for LV (415 V/50 Hz) squirrel cage induction motor, TEFC, IE2 efficiency class.
+{% endblock meta_description %}
+{% block meta_keywords %}
+estimated LV  motor parameters
+{% endblock meta_keywords %}
+{% block content %}
+<div style="overflow:auto;">
+  <div class="datasheet">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/calculations/">Calculations</a></li>
+        <li><a href="/calculations/electrical/">Electrical</a></li>
+        <li class="is-active"><a href="#">LV Motors - Estimated Parameters</a></li>
+      </ul>
+    </nav>
+    <table class="main">
+      <thead>
+        <tr style='border-top:0px;'>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <td colspan="10" style="text-align:right;">
+          <i>Calculation Performed at www.codecalculation.com</i>
+        </td>
+      </tfoot>
+      <tbody>
+        <tr class="section_title">
+          <td></td>
+          <td colspan="8" class="has-text-centered">
+            <h1 class="title is-5">[[ doc['meta']['docClass_title'] ]]</h1>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+        <tr class="section_title">
+          <td></td>
+          <td colspan="8">
+            <h2 class="title is-6">Project</h2>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w8">Project No:</span>
+            <span class="w8"><input class="inp" v-model="doc['meta']['project_no']"/></span>
+          </td>
+          <td colspan="4">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="6">
+            <span class="w8">Project Title:</span>
+            <span class="w36"><input class="inp" v-model="doc['meta']['project_title']"/></span>
+          </td>
+          <td colspan="2">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w8">Document No:</span>
+            <span class="w16"><input class="inp" v-model="doc['meta']['doc_no']"/></span>
+          </td>
+          <td colspan="4">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w8">Revision No:</span>
+            <span class="w4"><input class="inp" v-model="doc['meta']['rev']"/></span>
+          </td>
+          <td colspan="4">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w8">Date :</span>
+            <span class="w8"><input class="inp" v-model="doc['meta']['date']"/></span>
+          </td>
+          <td colspan="4">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+        <tr class="section_title">
+          <td></td>
+          <td colspan="8">
+            <h2 class="title is-6">Inputs</h2>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w2"></span>
+            <span class="w14">Motor Shaft Power</span>
+            <span class="w6"><input type="number" v-model="doc['input']['motor_power']['_val']"/></span>
+            <span class="w6">[[ gUL('power')]]</span>
+          </td>
+          <td colspan="4">
+            <p class="help is-danger" v-for="err in getErrs(['motor_power'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w2"></span>
+            <span class="w14">Poles</span>
+            <span class="w6"><input type="number" v-model="doc['input']['poles']['_val']"/></span>
+            <span class="w6"></span>
+          </td>
+          <td colspan="4">
+            <p class="help is-danger" v-for="err in getErrs(['poles'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tbody >
+        <tr>
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+        <tr class="hideprint" style='border-top:0px;'>
+          <td style='border-left:0px;'></td>
+          <td colspan="8" style="text-align:center" >
+            <span class="w8">
+              <button class="button is-primary" @click="calculate" style="width:100%">Calculate</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="openModal('unitsModalisActive')" style="width:100%">Units</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="saveDoc()" style="width:100%">Save</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="openModal('uploadModalisActive')" style="width:100%">Load</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="pdf_download()" style="width:100%">PDF</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="launch_help" style="width:100%">Help</button>
+            </span>
+          </td>
+          <td style='border-right:0px;'></td>
+        </tr>
+        <tr style='border-top:0px;' class="hideprint">
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td style='border-top:0px;'colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+      </tbody>
+      <tbody v-if="doc['errors'].length > 0">
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger"><b>Errors</b></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger" v-for="err in doc['errors']">[[ err ]]</p>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr class="section_title">
+          <td></td>
+          <td colspan="8">
+            <h2 class="title is-6">Results</h2>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w2"></span>
+            <span class="w14">Motor Rating</span>
+            <span class="w6 result">[[ retSilent(doc,['result','motor_rating', '_val']) ]]</span>
+            <span class="w6">[[ gUL('power') ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w2"></span>
+            <span class="w14">Speed</span>
+            <span class="w6 result">[[ retSilent(doc,['result','Speed', '_val']) ]]</span>
+            <span class="w6">rpm</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w2"></span>
+            <span class="w14">Efficiency (100% load)</span>
+            <span class="w6 result">[[ retSilent(doc,['result','eta_full', '_val']) ]]</span>
+            <span class="w6">%</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w2"></span>
+            <span class="w14">Efficiency (75% load)</span>
+            <span class="w6 result">[[ retSilent(doc,['result','eta_three_fourth', '_val']) ]]</span>
+            <span class="w6">%</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w2"></span>
+            <span class="w14">Efficiency (50% load)</span>
+            <span class="w6 result">[[ retSilent(doc,['result','eta_half', '_val']) ]]</span>
+            <span class="w6">%</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w2"></span>
+            <span class="w14">Power Factor </span>
+            <span class="w6 result">[[ retSilent(doc,['result','pf', '_val']) ]]</span>
+            <span class="w6"></span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w2"></span>
+            <span class="w14">I<sub>n</sub>(Full Load Current)</span>
+            <span class="w6 result">[[ retSilent(doc,['result','In', '_val']) ]]</span>
+            <span class="w6">A</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w2"></span>
+            <span class="w14">I<sub>s</sub>(Starting Current)</span>
+            <span class="w6 result">[[ retSilent(doc,['result','Is', '_val']) ]]</span>
+            <span class="w6">A</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w2"></span>
+            <span class="w14">I<sub>s</sub>/I<sub>n</sub></span>
+            <span class="w6 result">[[ retSilent(doc,['result','Is_by_In', '_val']) ]]</span>
+            <span class="w6"></span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w2"></span>
+            <span class="w14">T<sub>n</sub>(Full Load Torque)</span>
+            <span class="w6 result">[[ retSilent(doc,['result','Tn', '_val']) ]]</span>
+            <span class="w6">N.m</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w2"></span>
+            <span class="w14">T<sub>i</sub>(Starting Torque)</span>
+            <span class="w6 result">[[ retSilent(doc,['result','Ti', '_val']) ]]</span>
+            <span class="w6">N.m</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w2"></span>
+            <span class="w14">T<sub>i</sub>/T<sub>n</sub></span>
+            <span class="w6 result">[[ retSilent(doc,['result','Ti_by_Tn', '_val']) ]]</span>
+            <span class="w6"></span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w2"></span>
+            <span class="w14">T<sub>b</sub>(Breakdown Torque)</span>
+            <span class="w6 result">[[ retSilent(doc,['result','Tb', '_val']) ]]</span>
+            <span class="w6">N.m</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w2"></span>
+            <span class="w14">T<sub>b</sub>/T<sub>n</sub></span>
+            <span class="w6 result">[[ retSilent(doc,['result','Tb_by_Tn', '_val']) ]]</span>
+            <span class="w6"></span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w2"></span>
+            <span class="w14">Moment of Inertia</span>
+            <span class="w6 result">[[ retSilent(doc,['result','J', '_val']) ]]</span>
+            <span class="w6">kg.m²</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w2"></span>
+            <span class="w14">Weight</span>
+            <span class="w6 result">[[ retSilent(doc,['result','weight', '_val']) ]]</span>
+            <span class="w6">kg</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock content %} {% block script_vueapp %}
+<script type="text/javascript">
+  var app = new Vue({
+    el: '#app',
+    delimiters: ['[[', ']]'],
+    mixins: [app_common, app_doc],
+    data: {
+      doc: {{doc | safe}},
+      fixed: {}
+    },
+    computed: {},
+    methods: {}
+  });
+</script>
+{% endblock script_vueapp %}

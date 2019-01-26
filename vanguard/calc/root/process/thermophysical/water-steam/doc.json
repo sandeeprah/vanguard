@@ -1,0 +1,46 @@
+{
+  "sub_url": "/calculate/process/thermophysical/water-steam",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Thermophysical Properties of Water",
+    "docInstance_title": "Thermophysical Properties of Water",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length": "m",
+    "pressure": "bar",
+    "temperature": "C",
+    "molecularMass" : "kg/mol",
+    "density":"kg/m3",
+    "specificVolume":"m3/kg",
+    "specificEnergy":"J/kg",
+    "specificHeat":"J/kg.K",
+    "specificHeatMolar":"J/mol.K",
+    "dynViscosity":"Pa.s",
+    "thermalConductivity":"W/m.K"
+  },
+
+  "input": {
+    "state" : {"_val":"Saturated_P"},
+    "P": {"_val":"1", "_dim":"pressure"},
+    "T": {"_val":"35", "_dim":"temperature"},
+    "Q": {"_val":"0.5"}
+  },
+
+  "result": {
+    "phase": {"_val":""},
+    "rho": {"_val":"", "_dim":"density"},
+    "Tsat": {"_val":"", "_dim":"temperature"},
+    "Psat": {"_val":"", "_dim":"pressure"},
+    "v": {"_val":"", "_dim":"specificVolume"},
+    "h": {"_val":"", "_dim":"specificEnergy"},
+    "u": {"_val":"", "_dim":"specificEnergy"},
+    "s": {"_val":"", "_dim":"specificHeat"}
+  },
+  "errors": []
+}

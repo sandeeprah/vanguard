@@ -1,0 +1,309 @@
+{
+  "sub_url": "/calculate/process/pressure-drop/hooper-2K",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Liquid Line Pressure Drop using Hooper 2K Method",
+    "docInstance_title": "Liquid Line Pressure Drop using Hooper 2K Method",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length": "m",
+    "length_mili": "mm",
+    "angle": "degrees",
+    "speed": "m/s",
+    "pressure": "bar",
+    "flow": "m3/hr",
+    "temperature": "C",
+    "density":"kg/m3",
+    "dynViscosity":"cP"
+  },
+
+  "input": {
+
+    "fluidData": {
+      "Q": {
+        "_val": 100,
+        "_dim": "flow"
+      },
+
+      "medium": {
+        "_val": "Water"
+      },
+      "rho": {
+        "_val": "1000",
+        "_dim": "density"
+      },
+      "mu": {
+        "_val": "1",
+        "_dim": "dynViscosity"
+      }
+    },
+
+    "pipe": {
+      "size_definition": {
+        "_val": "NPS"
+      },
+      "NPS": {
+        "_val": "4"
+      },
+      "schedule": {
+        "_val": "40"
+      },
+      "Dia_inner": {
+        "_val": "",
+        "_dim": "length_mili"
+      },
+      "roughness_basis": {
+        "_val": "Material"
+      },
+      "material": {
+        "_val": "Carbon Steel(corroded)"
+      },
+      "roughness": {
+        "_val": "",
+        "_dim": "length_mili"
+      },
+      "length": {
+        "_val": "20",
+        "_dim": "length"
+      },
+      "elevation": {
+        "_val": "0",
+        "_dim": "length"
+      }
+    },
+
+    "entrance": {
+      "entry_type": {
+        "_val": "Sharp"
+      },
+      "Rc": {
+        "_val": "",
+        "_dim": "length_mili"
+      },
+      "angle": {
+        "_val": "",
+        "_dim":"angle"
+      },
+      "wall_thickness": {
+        "_val": "",
+        "_dim": "length_mili"
+      }
+    },
+
+    "exit": {
+      "exit_type": {
+        "_val": "Normal"
+      }
+    },
+
+    "fittings": [
+        {
+          "index": "1",
+          "quantity": "0"
+        },
+        {
+          "index": "2",
+          "quantity": "0"
+        },
+        {
+          "index": "3",
+          "quantity": "0"
+        },
+        {
+          "index": "4",
+          "quantity": "0"
+        },
+        {
+          "index": "5",
+          "quantity": "0"
+        },
+        {
+          "index": "6",
+          "quantity": "0"
+        },
+        {
+          "index": "7",
+          "quantity": "0"
+        },
+        {
+          "index": "8",
+          "quantity": "0"
+        },
+        {
+          "index": "9",
+          "quantity": "0"
+        },
+        {
+          "index": "10",
+          "quantity": "0"
+        },
+        {
+          "index": "11",
+          "quantity": "0"
+        },
+        {
+          "index": "12",
+          "quantity": "0"
+        },
+        {
+          "index": "13",
+          "quantity": "0"
+        },
+        {
+          "index": "15",
+          "quantity": "0"
+        },
+        {
+          "index": "16",
+          "quantity": "0"
+        },
+        {
+          "index": "17",
+          "quantity": "0"
+        },
+        {
+          "index": "18",
+          "quantity": "0"
+        },
+        {
+          "index": "19",
+          "quantity": "0"
+        },
+        {
+          "index": "20",
+          "quantity": "0"
+        },
+        {
+          "index": "21",
+          "quantity": "0"
+        },
+        {
+          "index": "22",
+          "quantity": "0"
+        },
+        {
+          "index": "23",
+          "quantity": "0"
+        },
+        {
+          "index": "24",
+          "quantity": "0"
+        },
+        {
+          "index": "25",
+          "quantity": "0"
+        },
+        {
+          "index": "26",
+          "quantity": "0"
+        },
+        {
+          "index": "27",
+          "quantity": "0"
+        },
+        {
+          "index": "28",
+          "quantity": "0"
+        },
+        {
+          "index": "29",
+          "quantity": "0"
+        },
+        {
+          "index": "30",
+          "quantity": "0"
+        },
+        {
+          "index": "31",
+          "quantity": "0"
+        }
+      ],
+
+    "contractions_sharp": {
+      "_coldim": {
+        "D1": "length_mili",
+        "D2": "length_mili"
+      },
+      "_list": []
+    },
+
+    "contractions_rounded": {
+      "_coldim": {
+        "D1": "length_mili",
+        "D2": "length_mili",
+        "Rc": "length_mili"
+      },
+      "_list": []
+    },
+
+    "contractions_conical": {
+      "_coldim": {
+        "D1": "length_mili",
+        "D2": "length_mili",
+        "L": "length_mili"
+      },
+      "_list": []
+    },
+
+    "contractions_reducer": {
+      "_coldim": {},
+      "_list": []
+    },
+
+    "expansions_sharp": {
+      "_coldim": {
+        "D1": "length_mili",
+        "D2": "length_mili"
+      },
+      "_list": []
+    },
+
+    "expansions_rounded": {
+      "_coldim": {
+        "D1": "length_mili",
+        "D2": "length_mili",
+        "Rc": "length_mili"
+      },
+      "_list": []
+    },
+
+    "expansions_conical": {
+      "_coldim": {
+        "D1": "length_mili",
+        "D2": "length_mili",
+        "L": "length_mili"
+      },
+      "_list": []
+    },
+
+    "expansions_reducer": {
+      "_coldim": {},
+      "_list": []
+    },
+
+    "fixed_K_losses": {
+      "_coldim": {},
+        "_list": []
+    },
+
+    "fixed_LbyD_losses": {
+      "_coldim": {},
+      "_list": []
+    },
+
+    "fixed_deltaP_losses": {
+      "_coldim": {"deltaP": "pressure"},
+      "_list": []
+    }
+  },
+
+  "result": {},
+
+  "errors": []
+}

@@ -1,0 +1,67 @@
+{
+  "sub_url": "/calculate/mechanical/noise/background-correction",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Background Noise Correction",
+    "docInstance_title": "Background Noise Correction",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length": "m"
+  },
+
+  "input": {
+
+    "correction_option" : {"_val": "spectrum"},
+
+    "totalSpectrum":{
+            "f63":"0",
+            "f125":"0",
+            "f250":"0",
+            "f500":"0",
+            "f1000":"0",
+            "f2000":"0",
+            "f4000":"0",
+            "f8000":"0"
+        },
+
+        "backgroundSpectrum" : {
+            "f63":"0",
+            "f125":"0",
+            "f250":"0",
+            "f500":"0",
+            "f1000":"0",
+            "f2000":"0",
+            "f4000":"0",
+            "f8000":"0"
+        },
+
+        "totalNoise" : {"_val":"0"},
+        "backgroundNoise" : {"_val":"0"}
+
+  },
+
+  "result": {
+
+    "sourceSpectrum" : {
+        "f63":"0",
+        "f125":"0",
+        "f250":"0",
+        "f500":"0",
+        "f1000":"0",
+        "f2000":"0",
+        "f4000":"0",
+        "f8000":"0"
+    },
+    "sourceNoise" : {"_val":"0"}
+
+
+  },
+
+  "errors": []
+}

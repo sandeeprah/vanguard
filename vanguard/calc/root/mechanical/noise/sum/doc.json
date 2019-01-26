@@ -1,0 +1,27 @@
+{
+  "sub_url": "/calculate/mechanical/noise/sum",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Noise Addition",
+    "docInstance_title": "Noise Addition",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length": "m"
+  },
+
+  "input": {
+    "noiseLevelList" : ["90","88","92"]
+  },
+
+  "result": {
+    "noiseTotal" : {"_val": ""}
+  },
+
+  "errors": []
+}

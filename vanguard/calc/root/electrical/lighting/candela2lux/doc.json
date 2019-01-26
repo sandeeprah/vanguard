@@ -1,0 +1,33 @@
+{
+  "sub_url": "/calculate/electrical/lighting/candela2lux",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Candela-Lux Conversions",
+    "docInstance_title": "Candela-Lux Conversions",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length": "m",
+    "area": "m2",
+    "angle" : "degrees"
+  },
+
+  "input": {
+    "convert" : {"_val":"cd2lux"},
+    "candela": {"_val":"200"},
+    "lux": {"_val":""},
+    "distance": {"_val":"2", "_dim":"length"}
+  },
+
+  "result": {
+    "candela": {"_val":""},
+    "lux": {"_val":""}
+  },
+
+  "errors": []
+}

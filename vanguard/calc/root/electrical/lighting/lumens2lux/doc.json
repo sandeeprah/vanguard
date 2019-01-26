@@ -1,0 +1,35 @@
+{
+  "sub_url": "/calculate/electrical/lighting/lumens2lux",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Lumens-Lux Conversions",
+    "docInstance_title": "Lumens-Lux Conversions",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length": "m",
+    "area": "m2",
+    "angle" : "degrees"
+  },
+
+  "input": {
+    "convert" : {"_val":"lumens2lux"},
+    "lumens": {"_val":"200"},
+    "lux": {"_val":""},
+    "area_basis" : {"_val":"radius"},
+    "radius": {"_val":"2", "_dim":"length"},
+    "area": {"_val":"2", "_dim":"area"}
+  },
+
+  "result": {
+    "lumens": {"_val":""},
+    "lux": {"_val":""}
+  },
+
+  "errors": []
+}

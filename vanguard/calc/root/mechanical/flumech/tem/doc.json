@@ -1,0 +1,51 @@
+{
+  "_id": "",
+  "meta": {
+    "projectID": "0000",
+    "project_title": "Local",
+    "discipline" : "pro",
+    "docCategory": "cal",
+    "docSubCategory": "sto",
+    "docClass": "rcv",
+    "docClass_title": "Sizing of Air/Nitrogen Receiver",
+    "docInstance": "1",
+    "docInstance_title": "Sizing of Air/Nitrogen Receiver",
+    "doc_no":"0000-PRO-CAL-STO-RCV-01",
+    "rev": "A",
+    "date":"",
+    "status": "",
+    "performer": "",
+    "reviewer": "",
+    "approver": ""
+  },
+
+  "units": {
+    "time" : "min",
+    "flow" : "m3/hr",
+    "volume" : "m3",
+    "temperature" : "C",
+    "pressure" : "bar",
+    "volume" : "m3"
+  },
+
+
+  "input": {
+    "sizing_basis" : {"_val": "buffer_time"},
+    "Pstd" : {"_val": "1.01325", "_dim":"pressure"},
+    "Tstd" : {"_val": "15", "_dim":"temperature"},
+    "t" : {"_val": "5", "_dim":"time"},
+    "fs" : {"_val": "60"},
+    "Qin" : {"_val": "200", "_dim":"flow"},
+    "Qout" : {"_val": "100", "_dim":"flow"},
+    "Pu" : {"_val": "8", "_dim":"pressure"},
+    "Pl" : {"_val": "5", "_dim":"pressure"},
+    "margin" : {"_val": "20"},
+    "Tmax" : {"_val": "55", "_dim":"temperature"}
+  },
+
+  "result": {
+    "V" : {"_val": "", "_dim":"volume"}
+  },
+
+  "errors": []
+}

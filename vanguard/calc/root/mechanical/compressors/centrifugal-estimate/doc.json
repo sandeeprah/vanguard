@@ -1,0 +1,74 @@
+{
+  "sub_url": "/calculate/mechanical/pumps/water2viscous",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Centrifugal Compressor Estimations",
+    "docInstance_title": "Centrifugal Compressor Estimations",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length": "m",
+    "pressure": "bar",
+    "temperature": "C",
+    "flow": "m3/hr",
+    "power": "kW",
+    "massflow": "kg/hr",
+    "molecularMass" : "kg/mol",
+    "density":"kg/m3"
+  },
+
+  "input": {
+    "P1": {"_val":"66.7", "_dim":"pressure"},
+    "T1": {"_val":"55", "_dim":"temperature"},
+    "P2": {"_val":"148.5", "_dim":"pressure"},
+    "m": {"_val":"212065", "_dim":"massflow"},
+    "kZ_basis" : {"_val":"A"},
+    "MW" : {"_val":"0.0218", "_dim":"molecularMass"},
+    "k1": {"_val":"1.48"},
+    "k2": {"_val":"1.45"},
+    "Z1": {"_val":"0.85"},
+    "Z2": {"_val":"0.9"},
+    "predict_etaP" : {"_val":"No"},
+    "etaP": {"_val":"0.77"},
+    "Tlimit": {"_val":"160", "_dim":"temperature"},
+    "interstage_cooling": {"_val":"No"},
+    "Tcoolant": {"_val":"35", "_dim":"temperature"},
+    "Tapproach": {"_val":"11"},
+    "deltaP_cooler": {"_val":"1", "_dim":"pressure"},
+    "Pinlet_cooler_basis": {"_val":"as_specified"},
+    "Pinlet_cooler": {"_val":"100", "_dim":"pressure"},
+    "mixture":[
+      {"fluid" : "Air", "molefraction" :"0"},
+      {"fluid" : "Oxygen", "molefraction" :"0"},
+      {"fluid" : "Nitrogen", "molefraction" :"0"},
+      {"fluid" : "Water", "molefraction" :"0"},
+      {"fluid" : "CarbonMonoxide", "molefraction" :"0"},
+      {"fluid" : "CarbonDioxide", "molefraction" :"0"},
+      {"fluid" : "HydrogenSulfide", "molefraction" :"0"},
+      {"fluid" : "Hydrogen", "molefraction" :"0"},
+      {"fluid" : "Methane", "molefraction" :"0.70"},
+      {"fluid" : "Ethylene", "molefraction" :"0"},
+      {"fluid" : "Ethane", "molefraction" :"0.20"},
+      {"fluid" : "Propylene", "molefraction" :"0"},
+      {"fluid" : "n-Propane", "molefraction" :"0.10"},
+      {"fluid" : "IsoButane", "molefraction" :"0"},
+      {"fluid" : "n-Butane", "molefraction" :"0"},
+      {"fluid" : "Isopentane", "molefraction" :"0"},
+      {"fluid" : "n-Pentane", "molefraction" :"0"},
+      {"fluid" : "n-Hexane", "molefraction" :"0"}
+    ]
+
+    },
+
+  "result": {
+    "Pabs" : {"_val":"", "_dim":"power"}
+  },
+
+
+  "errors": []
+}

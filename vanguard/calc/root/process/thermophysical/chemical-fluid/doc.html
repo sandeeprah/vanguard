@@ -1,0 +1,517 @@
+{% extends "document.html" %}
+
+{% block title %}Thermophysical properties - chemical fluid{% endblock title %}
+
+{% block meta_description %}
+The inputs include state variables of pressure and temperature. Outputs include several properties including critical presssure, temperature, acentric factor, specific volume, enthalphy, entropy, internal energy, specific heat, global warming potential,
+ozone depletion potential etc,
+
+{% endblock meta_description %}
+
+{% block meta_keywords %}
+thermophysical properties fluid
+{% endblock meta_keywords %}
+
+{% block content %}
+<div style="overflow:auto;">
+  <div class="datasheet">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/calculations/">Calculations</a></li>
+        <li><a href="/calculations/process/">Process</a></li>
+        <li class="is-active"><a href="#">Thermophysical-Fluid</a></li>
+      </ul>
+    </nav>
+
+    <table class="main">
+        <thead>
+            <tr style='border-top:0px;'>
+              <th style="border:0px;">&nbsp;</th>
+              <th style="border:0px;">&nbsp;</th>
+              <th style="border:0px;">&nbsp;</th>
+              <th style="border:0px;">&nbsp;</th>
+              <th style="border:0px;">&nbsp;</th>
+              <th style="border:0px;">&nbsp;</th>
+              <th style="border:0px;">&nbsp;</th>
+              <th style="border:0px;">&nbsp;</th>
+              <th style="border:0px;">&nbsp;</th>
+              <th style="border:0px;">&nbsp;</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <td colspan="10" style="text-align:right;">
+                <i>Calculation Performed at www.codecalculation.com</i>
+            </td>
+        </tfoot>
+      <tbody>
+        <tr class="section_title">
+          <td></td>
+          <td colspan="8" class="has-text-centered">
+              <h1 class="title is-5">[[ doc['meta']['docClass_title'] ]]</h1>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+        <tr class="section_title">
+          <td></td>
+          <td colspan="8">
+            <h2 class="title is-6">Project</h2>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w8">Project No:</span>
+            <span class="w8"><input class="inp" v-model="doc['meta']['project_no']"/></span>
+          </td>
+          <td colspan="4">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="6">
+            <span class="w8">Project Title:</span>
+            <span class="w36"><input class="inp" v-model="doc['meta']['project_title']"/></span>
+          </td>
+          <td colspan="2">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w8">Document No:</span>
+            <span class="w16"><input class="inp" v-model="doc['meta']['doc_no']"/></span>
+          </td>
+          <td colspan="4">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w8">Revision No:</span>
+            <span class="w4"><input class="inp" v-model="doc['meta']['rev']"/></span>
+          </td>
+          <td colspan="4">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w8">Date :</span>
+            <span class="w8"><input class="inp" v-model="doc['meta']['date']"/></span>
+          </td>
+          <td colspan="4">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+        <tr class="section_title">
+          <td></td>
+          <td colspan="8">
+            <h2 class="title is-6">Inputs</h2>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w14">Fluid</span>
+            <span class="w16">
+              <select class="inp" placeholder="fluid" v-model="doc['input']['fluid']['_val']">
+                <option v-for="item in fixed['fluid_list']" :value="item" v-text="item"></option>
+              </select>
+          </td>
+          <td colspan="4">
+            <p class="help is-danger" v-for="err in getErrs(['fluid'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w14">Pressure</span>
+            <span class="w6"><input class="inp" type="text" v-model="doc['input']['P']['_val']"/></span>
+            <span class="w6">[[ gUL('pressure') ]]</span>
+          </td>
+          <td colspan="4">
+            <p class="help is-danger" v-for="err in getErrs(['P'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w14">Temperature</span>
+            <span class="w6"><input class="inp" type="text" v-model="doc['input']['T']['_val']"/></span>
+            <span class="w6">[[ gUL('temperature') ]]</span>
+          </td>
+          <td colspan="4">
+            <p class="help is-danger" v-for="err in getErrs(['T'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+
+            <tbody >
+              <tr>
+                <td style='border-left:0px;'>&nbsp;</td>
+                <td colspan="8">&nbsp;</td>
+                <td style='border-right:0px;'>&nbsp;</td>
+              </tr>
+              <tr class="hideprint" style='border-top:0px;'>
+                <td style='border-left:0px;'></td>
+                <td colspan="8" style="text-align:center" >
+                  <span class="w8">
+                    <button class="button is-primary" @click="calculate" style="width:100%">Calculate</button>
+                  </span>
+                  <span class="w8">
+                    <button class="button is-primary" @click="openModal('unitsModalisActive')" style="width:100%">Units</button>
+                  </span>
+                  <span class="w8">
+                    <button class="button is-primary" @click="saveDoc()" style="width:100%">Save</button>
+                  </span>
+                  <span class="w8">
+                    <button class="button is-primary" @click="openModal('uploadModalisActive')" style="width:100%">Load</button>
+                  </span>
+                  <span class="w8">
+                    <button class="button is-primary" @click="pdf_download()" style="width:100%">PDF</button>
+                  </span>
+                  <span class="w8">
+                    <button class="button is-primary" @click="launch_help" style="width:100%">Help</button>
+                  </span>
+                </td>
+                <td style='border-right:0px;'></td>
+              </tr>
+              <tr style='border-top:0px;' class="hideprint">
+                <td style='border-left:0px;'>&nbsp;</td>
+                <td style='border-top:0px;'colspan="8">&nbsp;</td>
+                <td style='border-right:0px;'>&nbsp;</td>
+              </tr>
+            </tbody>
+      <tbody v-if="doc['errors'].length > 0">
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger"><b>Errors</b></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger" v-for="err in doc['errors']">[[ err ]]</p>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr class="section_title">
+          <td></td>
+          <td colspan="8">
+            <h2 class="title is-6">Results</h2>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w14">Molecular Mass</span>
+            <span class="w6 result">[[ retSilent(doc, ['result','MW','_val']) ]]</span>
+            <span class="w6">[[ gUL('molecularMass') ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w14">Critical Pressure</span>
+            <span class="w6 result">[[ retSilent(doc, ['result','Pcritical','_val']) ]]</span>
+            <span class="w6">[[ gUL('pressure') ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w14">Critical Temperature</span>
+            <span class="w6 result">[[ retSilent(doc, ['result','Tcritical','_val']) ]]</span>
+            <span class="w6">[[ gUL('temperature') ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w14">Triple Point Pressure</span>
+            <span class="w6 result">[[ retSilent(doc, ['result','Ptriple','_val']) ]]</span>
+            <span class="w6">[[ gUL('pressure') ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w14">Triple Point Temperature</span>
+            <span class="w6 result">[[ retSilent(doc, ['result', 'Ttriple', '_val']) ]]</span>
+            <span class="w6">[[ gUL('temperature') ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w14">Accentric Factor</span>
+            <span class="w6 result"> [[ retSilent(doc, ['result','acentric','_val']) ]] </span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w14">Phase</span>
+            <span class="w16 result"> [[ retSilent(doc,['result','phase','_val']) ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w14">Compressibility Factor</span>
+            <span class="w6 result">[[ retSilent(doc,['result','Z','_val']) ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w14">Density</span>
+            <span class="w6 result">[[ retSilent(doc,['result','rho','_val']) ]]</span>
+            <span class="w6">[[ gUL('density') ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w14">Specific Volume</span>
+            <span class="w6 result">[[ retSilent(doc,['result','v','_val']) ]]</span>
+            <span class="w6">[[ gUL('specificVolume') ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w14">Specific Enthalphy</span>
+            <span class="w6 result">[[ retSilent(doc,['result','h','_val']) ]]</span>
+            <span class="w6">[[ gUL('specificEnergy') ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w14">Specific Internal Energy</span>
+            <span class="w6 result">[[ retSilent(doc,['result','u','_val']) ]]</span>
+            <span class="w6">[[ gUL('specificEnergy') ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w14">Specific Entropy</span>
+            <span class="w6 result">[[ retSilent(doc,['result','s','_val']) ]]</span>
+            <span class="w6">[[ gUL('specificHeat') ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w14">Gibbs Free Energy</span>
+            <span class="w6 result">[[ retSilent(doc,['result','gibbs','_val']) ]]</span>
+            <span class="w6">[[ gUL('specificEnergy') ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w14">Helmholtz Energy</span>
+            <span class="w6 result">[[ retSilent(doc,['result','helmholtz','_val']) ]]</span>
+            <span class="w6">[[ gUL('specificEnergy') ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w18">Specific Heat - Const Pressure (Cp)</span>
+            <span class="w6 result">[[ retSilent(doc,['result','Cp','_val']) ]]</span>
+            <span class="w6">[[ gUL('specificHeat') ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w18">Specific Heat - Const Volume (Cv)</span>
+            <span class="w6 result">[[ retSilent(doc,['result','Cv','_val']) ]]</span>
+            <span class="w6">[[ gUL('specificHeat') ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w22">Molar Specific Heat Const Pressure (Cp_molar)</span>
+            <span class="w6 result">[[ retSilent(doc,['result','Cp_molar','_val']) ]]</span>
+            <span class="w2">[[ gUL('specificHeatMolar') ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w22">Molar Specific Heat Const Volume (Cv_molar)</span>
+            <span class="w6 result">[[ retSilent(doc,['result','Cv_molar','_val']) ]]</span>
+            <span class="w2">[[ gUL('specificHeatMolar') ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w22">Specific Heat - Ideal Gas (Cp0)</span>
+            <span class="w6 result">[[ retSilent(doc,['result','Cp0','_val']) ]]</span>
+            <span class="w2">[[ gUL('specificHeat') ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w14">Prandtl No.</span>
+            <span class="w6 result">[[ retSilent(doc,['result','Prandtl','_val']) ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w14">Dynamic Viscosity</span>
+            <span class="w6 result">[[ retSilent(doc,['result','dynViscosity','_val']) ]]</span>
+            <span class="w2">[[ gUL('dynViscosity') ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w14">Thermal Conductivity</span>
+            <span class="w6 result">[[ retSilent(doc,['result','conductivity','_val']) ]]</span>
+            <span class="w2">[[ gUL('thermalConductivity') ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w18">Health Hazard</span>
+            <span class="w6 result">[[ retSilent(doc,['result','HH','_val']) ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w18">Phyisical Hazard</span>
+            <span class="w6 result">[[ retSilent(doc,['result','PH','_val']) ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w18">Global Warming Potential (100yrs)</span>
+            <span class="w6 result">[[ retSilent(doc,['result','GWP','_val']) ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w18">Ozone Depletion Potential</span>
+            <span class="w6 result">[[ retSilent(doc,['result','ODP','_val']) ]]</span>
+          </td>
+          <td colspan="4"></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+{% endblock content %}
+
+
+{% block script_vueapp %}
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        delimiters : ['[[',']]'],
+        mixins: [app_common, app_doc],
+        data: {
+            doc : {{ doc | safe }},
+            fixed: {
+                "fluid_list" : ["1-Butene", "Acetone", "Air", "Ammonia", "Argon", "Benzene", "CarbonDioxide", "CarbonMonoxide", "CarbonylSulfide", "cis-2-Butene", "CycloHexane", "Cyclopentane", "CycloPropane", "D4", "D5", "D6", "Deuterium", "Dichloroethane", "DiethylEther", "DimethylCarbonate", "DimethylEther", "Ethane", "Ethanol", "EthylBenzene", "Ethylene", "EthyleneOxide", "Fluorine", "HeavyWater", "Helium", "HFE143m", "Hydrogen", "HydrogenChloride", "HydrogenSulfide", "IsoButane", "IsoButene", "Isohexane", "Isopentane", "Krypton", "m-Xylene", "MD2M", "MD3M", "MD4M", "MDM", "Methane", "Methanol", "MethylLinoleate", "MethylLinolenate", "MethylOleate", "MethylPalmitate", "MethylStearate", "MM", "n-Butane", "n-Decane", "n-Dodecane", "n-Heptane", "n-Hexane", "n-Nonane", "n-Octane", "n-Pentane", "n-Propane", "n-Undecane", "Neon", "Neopentane", "Nitrogen", "NitrousOxide", "Novec649", "o-Xylene", "OrthoDeuterium", "OrthoHydrogen", "Oxygen", "p-Xylene", "ParaDeuterium", "ParaHydrogen", "Propylene", "Propyne", "R11", "R113", "R114", "R115", "R116", "R12", "R123", "R1233zd(E)", "R1234yf", "R1234ze(E)", "R1234ze(Z)", "R124", "R125", "R13", "R134a", "R13I1", "R14", "R141b", "R142b", "R143a", "R152A", "R161", "R21", "R218", "R22", "R227EA", "R23", "R236EA", "R236FA", "R245ca", "R245fa", "R32", "R365MFC", "R40", "R404A", "R407C", "R41", "R410A", "R507A", "RC318", "SES36", "SulfurDioxide", "SulfurHexafluoride", "Toluene", "trans-2-Butene", "Water", "Xenon"]
+            }
+        },
+        computed: {},
+        methods: {}
+    });
+</script>
+{% endblock script_vueapp %}

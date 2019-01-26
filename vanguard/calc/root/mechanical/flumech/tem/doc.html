@@ -1,0 +1,449 @@
+{% extends "document.html" %}
+{% block title %}
+Receiver Sizing Calculation
+{% endblock title %}
+{% block meta_description %}
+Calculation to obtain the volume of receiver vessels based on hold up time consideration or maximum permissible switching(load/unload) frequency of the associated compressor.
+{% endblock meta_description %}
+{% block meta_keywords %} Air Nitrogen Receivers hold up time switching frequency load unload
+{% endblock meta_keywords %}
+{% block sharing %}
+<meta property='og:title' content='Receiver Sizing Calculation' />
+<meta property='og:image' content='http://docs.codecalculation.com/_images/receiver-sizing.png'/>
+<meta property='og:description' content='Calculation to obtain the volume of receiver vessels based on hold up time consideration or maximum permissible switching(load/unload) frequency of the associated compressor.'/>
+<meta property='og:url' content='https://www.codecalculation.com/calculations/process/storage/receiver-sizing/' />
+{% endblock sharing %}
+{% block content %}
+<div class="overflowme">
+  <div class="datasheet">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/calculations/">Calculations</a></li>
+        <li><a href="/calculations/process/">Process</a></li>
+        <li class="is-active"><a href="#">Receiver Sizing</a></li>
+      </ul>
+    </nav>
+    <table class="main">
+      <thead>
+        <tr style='border-top:0px;'>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <td colspan="10" style="text-align:right;">
+          <i>Calculation Performed at www.codecalculation.com</i>
+        </td>
+      </tfoot>
+      <tbody>
+        <tr class="section_title">
+          <td></td>
+          <td colspan="8" class="has-text-centered">
+            <h1 class="title is-5">[[ doc['meta']['docClass_title'] ]]</h1>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+        <tr class="section_title">
+          <td></td>
+          <td colspan="8">
+            <h2 class="title is-6">Project</h2>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w8">Project No:</span>
+            <span class="w8"><input class="inp" v-model="doc['meta']['project_no']"/></span>
+          </td>
+          <td colspan="4">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="6">
+            <span class="w8">Project Title:</span>
+            <span class="w36"><input class="inp" v-model="doc['meta']['project_title']"/></span>
+          </td>
+          <td colspan="2">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w8">Document No:</span>
+            <span class="w16"><input class="inp" v-model="doc['meta']['doc_no']"/></span>
+          </td>
+          <td colspan="4">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w8">Revision No:</span>
+            <span class="w4"><input class="inp" v-model="doc['meta']['rev']"/></span>
+          </td>
+          <td colspan="4">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4">
+            <span class="w8">Date :</span>
+            <span class="w8"><input class="inp" v-model="doc['meta']['date']"/></span>
+          </td>
+          <td colspan="4">
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+        <tr class="section_title">
+          <td></td>
+          <td colspan="8">
+            <h2 class="title is-6">Inputs</h2>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w6">Sizing Basis</span>
+            <span></span>
+            <span class="w20">
+            <select class="inp" v-model="doc['input']['sizing_basis']['_val']">
+              <option value="buffer_time">Hold Up/Buffer time</option>
+              <option value="switching_frequency">Switching Frequency of Compressor</option>
+            </select>
+          </span>
+            <span class="w6"></span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['sizing_basis'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w16">Pressure Standard Conditions</span>
+            <span class="w4"><i>P<sub>std</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Pstd']['_val']"/></span>
+            <span class="w6">[[gUL('pressure')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['Pstd'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w16">Temperature Standard Conditions</span>
+            <span class="w4"><i>T<sub>std</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Tstd']['_val']"/></span>
+            <span class="w6">[[gUL('temperature')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['Tstd'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="sizing_basis=='buffer_time'">
+          <td></td>
+          <td colspan="5">
+            <span class="w16">Hold up time</span>
+            <span class="w4"><i>t</i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['t']['_val']"/></span>
+            <span class="w6">[[gUL('time')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['t'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="sizing_basis=='switching_frequency'">
+          <td></td>
+          <td colspan="5">
+            <span class="w16">Load/Unload Frequency</span>
+            <span class="w4"><i>f<sub>s</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['fs']['_val']"/></span>
+            <span class="w6">cycles/hr</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['fs'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w16" v-show="sizing_basis=='switching_frequency'">Unload/Cut out pressure</span>
+            <span class="w16" v-show="sizing_basis=='buffer_time'">Initial Pressure</span>
+            <span class="w4"><i>P<sub>u</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Pu']['_val']"/></span>
+            <span class="w6">[[gUL('pressure')]],a</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['Pu'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w16" v-show="sizing_basis=='switching_frequency'">Load/Cut in pressure</span>
+            <span class="w16" v-show="sizing_basis=='buffer_time'">Final Pressure</span>
+            <span class="w4"><i>P<sub>l</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Pl']['_val']"/></span>
+            <span class="w6">[[gUL('pressure')]],a</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['Pl'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="sizing_basis=='switching_frequency'">
+          <td></td>
+          <td colspan="5">
+            <span class="w16">Supply Flow Rate to receiver</span>
+            <span class="w4"><i>Q<sub>in</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Qin']['_val']"/></span>
+            <span class="w6">S[[gUL('flow')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['Qin'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="sizing_basis=='switching_frequency'">
+          <td></td>
+          <td colspan="8">
+            <span class="w2"></span>
+            <span>
+              <p class="has-text-info">For above, use delivery flow rate of compressor for receiver charging</p>
+            </span>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w16">Demand Flow Rate from receiver</span>
+            <span class="w4"><i>Q<sub>out</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Qout']['_val']"/></span>
+            <span class="w6">S[[gUL('flow')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['Qout'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="sizing_basis=='switching_frequency'">
+          <td></td>
+          <td colspan="8">
+            <span class="w2"></span>
+            <span>
+              <p class="has-text-info">For above, if unknown, use 50% of the supply flow rate as a worst case scenario for receiver sizing</p>
+            </span>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w16">Receiver Max. Temperature</span>
+            <span class="w4"><i>T<sub>max</sub></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['Tmax']['_val']"/></span>
+            <span class="w6">[[gUL('temperature')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['Tmax'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <span class="w2"></span>
+            <span>
+              <p class="has-text-info">For above, if fed from an air cooler, use maximum ambient plus air cooler approach (~ 10 degree C)</p>
+            </span>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span class="w16">Design Margin</span>
+            <span class="w4"><i><i>ζ</i></i></span>
+            <span class="w6"><input class="inp" type="number" type="number" v-model="doc['input']['margin']['_val']"/></span>
+            <span class="w6">%</span>
+          </td>
+          <td colspan="3">
+            <p class="help is-danger" v-for="err in getErrs(['margin'])">[[err]]</p>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tbody >
+        <tr>
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+        <tr class="hideprint" style='border-top:0px;'>
+          <td style='border-left:0px;'></td>
+          <td colspan="8" style="text-align:center" >
+            <span class="w8">
+              <button class="button is-primary" @click="calculate" style="width:100%">Calculate</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="openModal('unitsModalisActive')" style="width:100%">Units</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="saveDoc()" style="width:100%">Save</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="openModal('uploadModalisActive')" style="width:100%">Load</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="pdf_download()" style="width:100%">PDF</button>
+            </span>
+            <span class="w8">
+              <button class="button is-primary" @click="launch_help" style="width:100%">Help</button>
+            </span>
+          </td>
+          <td style='border-right:0px;'></td>
+        </tr>
+        <tr style='border-top:0px;' class="hideprint">
+          <td style='border-left:0px;'>&nbsp;</td>
+          <td style='border-top:0px;'colspan="8">&nbsp;</td>
+          <td style='border-right:0px;'>&nbsp;</td>
+        </tr>
+      </tbody>
+
+      <tbody v-if="doc['errors'].length > 0">
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger"><b>Errors</b></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="8">
+            <p class="help is-danger" v-for="err in doc['errors']">[[ err ]]</p>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr class="section_title">
+          <td></td>
+          <td colspan="8">
+            <h2 class="title is-6">Results</h2>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <span></span>
+            <span class="w16">Volume</span>
+            <span class="w6"><i>V</i></span>
+            <span class="w6 result">[[ retSilent(doc, ['result', 'V', '_val']) ]]</span>
+            <span class="w4">[[gUL('volume')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="has-text-info"></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="sizing_basis=='switching_frequency'">
+          <td></td>
+          <td colspan="5">
+            <span></span>
+            <span class="w16">Specified Load Factor</span>
+            <span class="w6"><i>χ=Q<sub>out</sub>/Q<sub>in</sub></i></span>
+            <span class="w6 result">[[ retSilent(doc, ['result', 'chi', '_val']) ]]</span>
+            <span class="w4"></span>
+          </td>
+          <td colspan="3">
+            <p class="has-text-info"></p>
+          </td>
+          <td></td>
+        </tr>
+        <tr v-show="sizing_basis=='switching_frequency'">
+          <td></td>
+          <td colspan="5">
+            <span></span>
+            <span class="w16">Volume Recommended</span>
+            <span class="w6"><i>V<sub>rec</sub></i></span>
+            <span class="w6 result">[[ retSilent(doc, ['result', 'Vrec', '_val']) ]]</span>
+            <span class="w4">[[gUL('volume')]]</span>
+          </td>
+          <td colspan="3">
+            <p class="has-text-info">for worst case load factor of 0.5</p>
+          </td>
+          <td></td>
+        </tr>
+        </tbody>
+    </table>
+  </div>
+
+  <div class="datasheet" style="text-align:left;">
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block contributors %}
+<p>
+  <a href=""></a>
+</p>
+{% endblock contributors %}
+
+{% block script_vueapp %}
+<script type="text/javascript">
+  var app = new Vue({
+    el: '#app',
+    delimiters: ['[[', ']]'],
+    mixins: [app_common, app_doc],
+    data: {
+      doc: {{doc | safe}},
+      fixed: {},
+      help_url:"http://docs.codecalculation.com/process/storage/receiver-sizing.html"
+    },
+    computed: {
+      sizing_basis: function() {
+        var shp = this.doc['input']['sizing_basis']['_val'];
+        return shp;
+      }
+    },
+    methods: {}
+  });
+</script>
+{% endblock script_vueapp %}

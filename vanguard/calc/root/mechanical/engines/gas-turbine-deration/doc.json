@@ -1,0 +1,43 @@
+{
+  "sub_url": "/calculate/mechanical/engines/gas-turbine-deration",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Gas Turbine Deration Calculations",
+    "docInstance_title": "Gas Turbine Deration Calculations",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length": "m",
+    "length_mili": "mm",
+    "temperature": "C",
+    "power": "kW"
+  },
+
+  "input": {
+    "Piso": {"_val":"10000", "_dim":"power"},
+    "Tsite": {"_val":"15", "_dim":"temperature"},
+    "Hsite" : {"_val" : "0", "_dim":"length"},
+    "RHsite" : {"_val":"50"},
+    "delPinlet" : {"_val" : "0", "_dim":"length_mili"},
+    "delPoutlet" : {"_val" : "0", "_dim":"length_mili"},
+    "fueltype" : {"_val":"naturalgas"}
+  },
+
+  "result": {
+    "Ltemperature": {"_val":""},
+    "Lhumidity": {"_val":""},
+    "Laltitude": {"_val":""},
+    "Linlet": {"_val":""},
+    "Loutlet": {"_val":""},
+    "Lfuel": {"_val":""},
+    "Ltotal": {"_val":""},
+    "Psite": {"_val":"", "_dim":"power"}
+  },
+
+  "errors": []
+}

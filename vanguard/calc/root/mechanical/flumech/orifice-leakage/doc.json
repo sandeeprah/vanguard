@@ -1,0 +1,45 @@
+{
+  "sub_url": "/calculate/mechanical/flumech/orifice-leakage",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Orifice Leakage Rate",
+    "docInstance_title": "Orifice Leakage Rate",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+  "units": {
+    "time" : "min",
+    "area" : "mm2",
+    "flow" : "m3/hr",
+    "massflow" : "kg/hr",
+    "volume" : "m3",
+    "speed" : "m/s",
+    "temperature" : "C",
+    "pressure" : "bar",
+    "volume" : "m3",
+    "molecularMass" : "kg/kmol"
+  },
+
+
+  "input": {
+    "Pi" : {"_val": "4", "_dim":"pressure"},
+    "Pe" : {"_val": "1.01325", "_dim":"pressure"},
+    "Ti" : {"_val": "25", "_dim":"temperature"},
+    "MW" : {"_val": "28", "_dim":"molecularMass"},
+    "k" : {"_val": "1.4"},
+    "A" : {"_val": "15.72", "_dim":"area"},
+    "Cd" : {"_val": "1"}
+  },
+
+  "result": {
+    "v" : {"_val": "", "_dim":"speed"},
+    "Q" : {"_val": "", "_dim":"flow"},
+    "G" : {"_val": "", "_dim":"massflow"},
+    "isChoked" : {"_val": ""}
+  },
+
+  "errors": []
+}

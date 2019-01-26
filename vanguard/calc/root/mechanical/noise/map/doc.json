@@ -1,0 +1,52 @@
+{
+  "sub_url": "/calculate/mechanical/noise/map",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Noise Map",
+    "docInstance_title": "Noise Map",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+  "units": {
+    "length": "m"
+  },
+
+  "input": {
+    "emissionPoints": {
+      "_coldim":{
+        "x":"length",
+        "y":"length"
+      },
+      "_list":[
+        {"tag" : "", "pwl":"90","Q":"2","x":"1","y":"3"}
+      ]
+    },
+
+
+    "mapArea":{
+      "x1" : {"_val":"0","_dim":"length"},
+      "y1" : {"_val":"0","_dim":"length"},
+      "x2" : {"_val":"4","_dim":"length"},
+      "y2" : {"_val":"4","_dim":"length"},
+      "x_step" : {"_val":"1","_dim":"length"},
+      "y_step" : {"_val":"1","_dim":"length"}
+    }
+
+  },
+
+  "result": {
+    "noiseField" : {
+      "_coldim":{
+        "x":"length",
+        "y":"length"
+      },
+      "_list" : []
+    }
+  },
+
+  "errors": []
+}

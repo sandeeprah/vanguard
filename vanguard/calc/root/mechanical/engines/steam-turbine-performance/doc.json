@@ -1,0 +1,66 @@
+{
+  "sub_url": "/calculate/mechanical/engines/steam-turbine-performance",
+  "meta": {
+    "project_no": "",
+    "project_title": "",
+    "docClass_code": "",
+    "docClass_title": "Steam Turbine Performance Calculations",
+    "docInstance_title": "Steam Turbine Performance Calculations",
+    "doc_no":"",
+    "rev": "",
+    "date":""
+  },
+
+
+  "units": {
+    "length": "m",
+    "length_mili": "mm",
+    "temperature": "C",
+    "pressure": "bar",
+    "specificEnergy": "kJ/kg",
+    "specificHeat": "kJ/kg.K",
+    "massflow" : "kg/s",
+    "power": "kW"
+  },
+
+  "input": {
+    "solve_for" : {"_val": "outlet_properties"},
+    "inlet_definition" :{"_val": "P-T"},
+    "P_inlet" : {"_val":"100", "_dim":"pressure"},
+    "T_inlet" : {"_val":"450", "_dim":"temperature"},
+    "h_inlet" : {"_val":"", "_dim":"specificEnergy"},
+    "s_inlet" : {"_val":"", "_dim":"specificHeat"},
+    "Q_inlet" : {"_val":""},
+    "turbine_definition" :{"_val": "power_output"},
+    "mass_flow" :{"_val": "100", "_dim": "massflow"},
+    "power_output" :{"_val": "200", "_dim": "power"},
+    "isentropic_efficiency" :{"_val": "65"},
+    "generator_efficiency" :{"_val": "95"},
+    "outlet_definition" :{"_val": "P-T"},
+    "P_outlet" : {"_val":"4", "_dim":"pressure"},
+    "T_outlet" : {"_val":"165", "_dim":"temperature"},
+    "h_outlet" : {"_val":"2786.3", "_dim":"specificEnergy"},
+    "s_outlet" : {"_val":"7.01", "_dim":"specificHeat"},
+    "Q_outlet" : {"_val":"0.9"}
+  },
+
+  "result": {
+    "P_inlet" : {"_val":"", "_dim":"pressure"},
+    "T_inlet" : {"_val":"", "_dim":"temperature"},
+    "h_inlet" : {"_val":"", "_dim":"specificEnergy"},
+    "s_inlet" : {"_val":"", "_dim":"specificHeat"},
+    "phase_inlet" : {"_val":""},
+    "mass_flow" :{"_val": "", "_dim": "massflow"},
+    "energy_output" :{"_val": "", "_dim": "power"},
+    "isentropic_efficiency" :{"_val": ""},
+    "generator_efficiency" :{"_val": ""},
+    "power_output" :{"_val": "", "_dim": "power"},
+    "P_outlet" : {"_val":"", "_dim":"pressure"},
+    "T_outlet" : {"_val":"", "_dim":"temperature"},
+    "h_outlet" : {"_val":"", "_dim":"specificEnergy"},
+    "s_outlet" : {"_val":"", "_dim":"specificHeat"},
+    "phase_outlet" : {"_val":""}
+  },
+
+  "errors": []
+}

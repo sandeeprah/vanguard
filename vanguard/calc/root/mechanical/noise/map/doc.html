@@ -1,0 +1,448 @@
+{% extends "document.html" %}
+
+{% block title %}Noise Map{% endblock title %}
+
+{% block meta_description %}
+Get noise levels on a predifined area(grid) due to multiple noise sources located on ground. Inputs include the sound power level, directivity factor and the x & y coordinate locations.
+{% endblock meta_description %}
+
+{% block meta_keywords %}
+calculation multiple noise sources map
+{% endblock meta_keywords %}
+
+
+{% block content %}
+<div style="overflow:auto;">
+<div class="datasheet">
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/calculations/">Calculations</a></li>
+      <li><a href="/calculations/mechanical/">Mechanical</a></li>
+      <li class="is-active"><a href="#">Noise - Map</a></li>
+    </ul>
+  </nav>
+  <table class="main">
+    <thead>
+      <tr style='border-top:0px;'>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+          <th style="border:0px;">&nbsp;</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <td colspan="10" style="text-align:right;">
+            <i>Template URL : </i>
+            <a href="https://www.clappets.com/htm/document/tpl/root/mec/cal/nos/sum/">https://www.clappets.com/htm/document/tpl/root/mec/cal/nos/sum/</a>
+        </td>
+    </tfoot>
+    <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8" class="has-text-centered">
+            <h1 class="title is-5">[[ doc['meta']['docClass_title'] ]]</h1>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Project</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Project No:</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['project_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w8">Project Title:</span>
+          <span class="w36"><input class="inp" v-model="doc['meta']['project_title']"/></span>
+        </td>
+        <td colspan="2">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Document No:</span>
+          <span class="w16"><input class="inp" v-model="doc['meta']['doc_no']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Revision No:</span>
+          <span class="w4"><input class="inp" v-model="doc['meta']['rev']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Date :</span>
+          <span class="w8"><input class="inp" v-model="doc['meta']['date']"/></span>
+        </td>
+        <td colspan="4">
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Inputs</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <span class="w16">Emission Sources</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w14">Tag</span>
+          <span class="w6">PWL(dB)</span>
+          <span class="w6">Q</span>
+          <span class="w6">X  ([[gUL('length')]])</span>
+          <span class="w6">Y  ([[gUL('length')]])</span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr v-for="(item, index) in doc['input']['emissionPoints']['_list']" >
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w14">
+            <input class="inp" type="text" v-model="item['tag']" @focus = "setActiveIndex(index)">
+            <p class="help is-danger" v-for="err in getErrs(['emissionPoints','_list',index,'tag'])">[[err]]</p>
+          </span>
+          <span class="w6">
+            <input class="inp" type="number" v-model="item['pwl']" @focus = "setActiveIndex(index)">
+            <p class="help is-danger" v-for="err in getErrs(['emissionPoints','_list',index,'pwl'])">[[err]]</p>
+          </span>
+          <span class="w6">
+            <input class="inp" type="number" v-model="item['Q']" @focus = "setActiveIndex(index)">
+            <p class="help is-danger" v-for="err in getErrs(['emissionPoints','_list',index,'Q'])">[[err]]</p>
+          </span>
+          <span class="w6">
+            <input class="inp" type="number" v-model="item['x']" @focus = "setActiveIndex(index)">
+            <p class="help is-danger" v-for="err in getErrs(['emissionPoints','_list',index,'x'])">[[err]]</p>
+          </span>
+          <span class="w6">
+            <input class="inp" type="number" v-model="item['y']" @focus = "setActiveIndex(index)">
+            <p class="help is-danger" v-for="err in getErrs(['emissionPoints','_list',index,'y'])">[[err]]</p>
+          </span>
+          <span class="" v-show="index==activeindex">
+
+          <span class="w1 hideprint">
+            <a @click="removeItem(index)" style="width:100%;">❌</a>
+          </span>
+          <span class="w1 hideprint">
+            <a @click="upItem(index)" style="width:100%;">▲</a>
+          </span>
+          <span class="w1 hideprint">
+            <a @click="downItem(index)" style="width:100%;">▼</a>
+          </span>
+        </span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr class="hideprint">
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w10">
+            <a class="button is-small is-info" style="width:100%" v-on:click="addItem">Add Emission Source</a>
+          </span>
+        </td>
+        <td colspan="4"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w8">Grid Area for Noise Map</span>
+        </td>
+        <td colspan="4"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w6">X1  ([[gUL('length')]])</span>
+          <span class="w4">
+            <input class="inp" type="number" v-model="doc['input']['mapArea']['x1']['_val']">
+            <p class="help is-danger" v-for="err in getErrs(['mapArea','x1'])">[[err]]</p>
+          </span>
+          <span class="w4"></span>
+          <span class="w6">Y1  ([[gUL('length')]])</span>
+          <span class="w4">
+            <input class="inp" type="number" v-model="doc['input']['mapArea']['y1']['_val']">
+            <p class="help is-danger" v-for="err in getErrs(['mapArea','y1'])">[[err]]</p>
+          </span>
+        </td>
+        <td colspan="4"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w6">X2 ([[gUL('length')]])</span>
+          <span class="w4">
+            <input class="inp" v-model="doc['input']['mapArea']['x2']['_val']">
+            <p class="help is-danger" v-for="err in getErrs(['mapArea','x2'])">[[err]]</p>
+          </span>
+          <span class="w4"></span>
+          <span class="w6">Y2 ([[gUL('length')]])</span>
+          <span class="w4">
+            <input class="inp" v-model="doc['input']['mapArea']['y2']['_val']">
+            <p class="help is-danger" v-for="err in getErrs(['mapArea','y2'])">[[err]]</p>
+          </span>
+        </td>
+        <td colspan="4"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4">
+          <span class="w2"></span>
+          <span class="w6">X step ([[gUL('length')]])</span>
+          <span class="w4">
+            <input class="inp" v-model="doc['input']['mapArea']['x_step']['_val']">
+            <p class="help is-danger" v-for="err in getErrs(['mapArea','x_step'])">[[err]]</p>
+          </span>
+          <span class="w4"></span>
+          <span class="w6">Y step ([[gUL('length')]])</span>
+          <span class="w4">
+            <input class="inp" type="number" v-model="doc['input']['mapArea']['y_step']['_val']">
+            <p class="help is-danger" v-for="err in getErrs(['mapArea','y_step'])">[[err]]</p>
+          </span>
+        </td>
+        <td colspan="4"></td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody >
+      <tr>
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+      <tr class="hideprint" style='border-top:0px;'>
+        <td style='border-left:0px;'></td>
+        <td colspan="8" style="text-align:center" >
+          <span class="w8">
+            <button class="button is-primary" @click="calculate" style="width:100%">Calculate</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="openModal('unitsModalisActive')" style="width:100%">Units</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="saveDoc()" style="width:100%">Save</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="openModal('uploadModalisActive')" style="width:100%">Load</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="pdf_download()" style="width:100%">PDF</button>
+          </span>
+          <span class="w8">
+            <button class="button is-primary" @click="launch_help" style="width:100%">Help</button>
+          </span>
+        </td>
+        <td style='border-right:0px;'></td>
+      </tr>
+      <tr style='border-top:0px;' class="hideprint">
+        <td style='border-left:0px;'>&nbsp;</td>
+        <td style='border-top:0px;'colspan="8">&nbsp;</td>
+        <td style='border-right:0px;'>&nbsp;</td>
+      </tr>
+    </tbody>
+    <tbody v-if="doc['errors'].length > 0">
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <p class="help is-danger"><b>Errors</b></p>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="8">
+          <p class="help is-danger" v-for="err in doc['errors']">[[ err ]]</p>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr class="section_title">
+        <td></td>
+        <td colspan="8">
+          <h2 class="title is-6">Results</h2>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w6">
+            X ([[gUL('length')]])
+          </span>
+          <span class="w6">
+            Y ([[gUL('length')]])
+          </span>
+          <span class="w6">
+            SPL (dB)
+          </span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+      <tr v-for="(item, index) in retSilent(doc, ['result','noiseField','_list'])" >
+        <td></td>
+        <td colspan="6">
+          <span class="w2"></span>
+          <span class="w6">
+            [[ item['x'] ]]
+          </span>
+          <span class="w6">
+            [[ item['y'] ]]
+          </span>
+          <span class="w6">
+            [[ item['noise'] ]]
+          </span>
+        </td>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+{% endblock content %}
+
+
+{% block script_vueapp %}
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        delimiters : ['[[',']]'],
+        mixins: [app_common, app_doc],
+        data: {
+            doc : {{ doc | safe }},
+            activeindex : '2',
+        },
+        computed: {
+        },
+        methods: {
+          removeItem: function(index) {
+            this.doc['input']['emissionPoints']['_list'].splice(index,1);
+          },
+          addItem: function() {
+            new_item = {
+              "tag":"xyz",
+              "pwl":"92",
+              "Q":"2",
+              "x":"4",
+              "y":"5"
+            }
+            this.doc['input']['emissionPoints']['_list'].push(new_item);
+          },
+
+          upItem: function(index){
+
+            emissionPoints = this.doc['input']['emissionPoints']['_list']
+
+            if ((index > 0) && (index==this.activeindex) ){
+              var temp_tag = emissionPoints[index]['tag']
+              emissionPoints[index]['tag']= emissionPoints[index-1]['tag'];
+              emissionPoints[index-1]['tag']=temp_tag;
+              var temp_pwl = emissionPoints[index]['pwl']
+              emissionPoints[index]['pwl']= emissionPoints[index-1]['pwl'];
+              emissionPoints[index-1]['pwl']=temp_pwl;
+              var temp_x = emissionPoints[index]['x']
+              emissionPoints[index]['x']= emissionPoints[index-1]['x'];
+              emissionPoints[index-1]['x']=temp_x;
+              var temp_y = emissionPoints[index]['y']
+              emissionPoints[index]['y']= emissionPoints[index-1]['y'];
+              emissionPoints[index-1]['y']=temp_y;
+              this.activeindex = index - 1;
+            }
+
+
+          },
+          downItem: function(index){
+            emissionPoints = this.doc['input']['emissionPoints']['_list']
+            if ((index < emissionPoints.length-1) && (index==this.activeindex) ){
+              var temp_tag = emissionPoints[index]['tag']
+              emissionPoints[index]['tag']= emissionPoints[index+1]['tag'];
+              emissionPoints[index+1]['tag']=temp_tag;
+              var temp_pwl = emissionPoints[index]['pwl']
+              emissionPoints[index]['pwl']= emissionPoints[index+1]['pwl'];
+              emissionPoints[index+1]['pwl']=temp_pwl;
+              var temp_x = emissionPoints[index]['x']
+              emissionPoints[index]['x']= emissionPoints[index+1]['x'];
+              emissionPoints[index+1]['x']=temp_x;
+              var temp_y = emissionPoints[index]['y']
+              emissionPoints[index]['y']= emissionPoints[index+1]['y'];
+              emissionPoints[index+1]['y']=temp_y;
+              this.activeindex = index+1;
+            }
+          },
+
+      setActiveIndex : function(index){
+        this.activeindex = index;
+      }
+
+
+
+
+
+
+
+
+        }
+    });
+</script>
+{% endblock script_vueapp %}
