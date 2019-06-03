@@ -102,11 +102,7 @@ var app_doc = {
         else{
           hurl = 'http://docs.codecalculation.com/' + surl + "/help.html"
         }
-        alert(hurl);
         window.open(hurl, 'helpwindow',"height=640,width=960,toolbar=no,menubar=no,scrollbars=no,location=no,status=no");
-
-//        help_url = "/static"+ this.url_subpath + "help.html";
-//        window.open(help_url, 'helpwindow',"height=640,width=960,toolbar=no,menubar=no,scrollbars=no,location=no,status=no");
       },
 
 
