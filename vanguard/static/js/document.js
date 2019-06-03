@@ -51,7 +51,7 @@ var app_doc = {
           fn_success =function(){};
           this.doc['result'] ={};
           this.doc['errors'] =[];
-          calculation_url = "/api"+ this.url_subpath;
+          calculation_url = "/api/calculate/"+ this.doc.sub_url;
           this.process_resource("doc", calculation_url, fn_success);
       },
 
@@ -95,8 +95,18 @@ var app_doc = {
       },
 
       launch_help : function(){
-        help_url = "/static"+ this.url_subpath + "help.html";
-        window.open(help_url, 'helpwindow',"height=640,width=960,toolbar=no,menubar=no,scrollbars=no,location=no,status=no");
+        surl = this.doc.sub_url;
+        if (surl==null){
+          hurl = 'http://docs.codecalculation.com/'
+        }
+        else{
+          hurl = 'http://docs.codecalculation.com/' + surl + "/help.html"
+        }
+        alert(hurl);
+        window.open(hurl, 'helpwindow',"height=640,width=960,toolbar=no,menubar=no,scrollbars=no,location=no,status=no");
+
+//        help_url = "/static"+ this.url_subpath + "help.html";
+//        window.open(help_url, 'helpwindow',"height=640,width=960,toolbar=no,menubar=no,scrollbars=no,location=no,status=no");
       },
 
 
